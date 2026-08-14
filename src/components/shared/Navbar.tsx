@@ -4,60 +4,52 @@
  */
 
 import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
-import { Menu, X, ArrowUpRight, ShieldCheck, Mail } from 'lucide-react';
-import { BRAND_COMPANY } from '../../data.ts';
+import { Menu, X, ArrowUpRight, Bot, Sparkles } from 'lucide-react';
+import { BRAND_COMPANY, BRAND_TAGLINE } from '../../data.ts';
 
-export default function Navbar() {
+interface NavbarProps {
+  onOpenCal?: () => void;
+}
+
+export default function Navbar({ onOpenCal }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
-  const path = location.pathname;
+  const navigate = useNavigate();
+  const currentPath = location.pathname;
 
-  const isHomeRoute = path === '/home';
-  const isAdminRoute = path.startsWith('/admin');
+  const isAdminRoute = currentPath.startsWith('/admin');
 
-  // Specific logo toggle destination
-  const logoDestination = isHomeRoute ? '/' : '/home';
-  const logoSub = isHomeRoute ? 'Authority Hub' : 'Conversion Funnel';
-
-  const menuItems = isHomeRoute
-    ? [
-        { name: 'Services', href: '/home#services' },
-        { name: 'Frameworks', href: '/home#frameworks' },
-        { name: 'Case Studies', href: '/home#results' },
-        { name: 'Resources', href: '/home#resources' },
-        { name: 'Ebook / Blog', href: '/blog' },
-        { name: 'Founder Profile', href: '/home#founder' },
-        { name: 'Contact', href: '/contact' }
-      ]
-    : [
-        { name: 'The Content Trap', href: '/#problem' },
-        { name: 'Daughter\'s Story', href: '/origin-story' },
-        { name: 'The Velocity Method', href: '/#method' },
-        { name: 'Case Studies', href: '/#results' },
-        { name: 'Our Work', href: '/#services' },
-        { name: 'Contact Us', href: '/contact' }
-      ];
+  const navLinks = [
+    { name: 'Services', href: '/services' },
+    { name: 'Work & Proof', href: '/work' },
+    { name: 'The Method', href: '/method' },
+    { name: 'Insights & Ebook', href: '/insights' },
+    { name: 'About', href: '/about' },
+    { name: 'Contact', href: '/contact' }
+  ];
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
   if (isAdminRoute) {
     return (
-      <header className="sticky top-0 z-50 w-full bg-slate-950 border-b border-slate-800 px-6 py-4 flex items-center justify-between text-white">
+      <header className="sticky top-0 z-50 w-full bg-[#121212] border-b border-neutral-800 px-6 py-4 flex items-center justify-between text-white">
         <div className="flex items-center gap-3">
-          <Link to="/" className="font-display font-black text-xl tracking-tight text-white flex items-center gap-2">
-            <span className="w-8 h-8 rounded bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center font-black text-slate-950 text-sm">V</span>
-            <span>VELOCITY<span className="text-orange-500 font-bold">S</span></span>
+          <Link to="/" className="font-display font-bold text-lg tracking-tight text-white flex items-center gap-2">
+            <span className="w-8 h-8 rounded bg-gradient-to-br from-brand-orange-warm to-amber-600 flex items-center justify-center font-black text-white text-sm">
+              V
+            </span>
+            <span>VELOCITY <span className="text-brand-orange-warm">CONTENTS LAB</span></span>
           </Link>
-          <span className="text-xs font-mono px-2 py-0.5 bg-slate-800 text-slate-400 rounded-full border border-slate-700">
-            INTERNAL OPS ENGINE
+          <span className="text-[10px] font-mono px-2 py-0.5 bg-neutral-800 text-neutral-400 rounded-full border border-neutral-700">
+            PRIVATE CONTENT OPS
           </span>
         </div>
 
         <div className="flex items-center gap-4">
-          <Link to="/home" className="text-xs text-slate-400 hover:text-white font-mono flex items-center gap-1">
-            Back to Public Hub <ArrowUpRight className="w-3.5 h-3.5" />
+          <Link to="/" className="text-xs text-neutral-400 hover:text-white font-mono flex items-center gap-1 transition-colors">
+            Return to Public Website <ArrowUpRight className="w-3.5 h-3.5" />
           </Link>
         </div>
       </header>
@@ -65,73 +57,86 @@ export default function Navbar() {
   }
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 w-full bg-editorial-cream/95 backdrop-blur-md border-b border-[#1A1A1A]/5 px-4 md:px-8 py-5 transition-all duration-200">
-      <div className="max-w-7xl mx-auto flex items-center justify-between h-10">
+    <header className="fixed top-0 left-0 right-0 z-40 w-full bg-editorial-cream/95 backdrop-blur-md border-b border-[#1A1A1A]/8 px-4 md:px-8 py-4 transition-all duration-200">
+      <div className="max-w-7xl mx-auto flex items-center justify-between h-11">
         
-        {/* LOGO WRAPPER: Routes to /home if on Landing, and / if on Home */}
+        {/* BRAND LOGO */}
         <Link 
-          to={logoDestination} 
-          className="group relative flex flex-col justify-center"
-          title={`Click to switch to ${isHomeRoute ? 'Landing Page' : 'Authority Hub'}`}
+          to="/" 
+          className="group flex items-center gap-3"
           id="brand-logo"
+          title="Velocity Contents Lab - Where Strategy Meets Soul"
         >
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 border border-editorial-dark flex items-center justify-center text-editorial-dark font-display font-medium italic text-sm group-hover:bg-editorial-dark group-hover:text-editorial-cream transition-colors duration-200">
-              V
-            </div>
-            <span className="font-display font-semibold italic text-xl text-editorial-dark tracking-tight text-left flex items-center gap-1.5 leading-none">
-              Velocity <span className="font-sans text-[9px] uppercase font-bold tracking-[0.2em] text-brand-orange-warm not-italic block mt-0.5">Content Lab</span>
+          <div className="w-9 h-9 border border-editorial-dark flex items-center justify-center text-editorial-dark font-display font-medium italic text-base group-hover:bg-editorial-dark group-hover:text-editorial-cream transition-all duration-200 shadow-sm">
+            V
+          </div>
+          <div className="flex flex-col text-left">
+            <span className="font-display font-semibold italic text-xl text-editorial-dark tracking-tight leading-none group-hover:text-brand-orange-warm transition-colors">
+              Velocity
+            </span>
+            <span className="font-sans text-[8px] uppercase font-bold tracking-[0.25em] text-brand-orange-warm mt-0.5">
+              Contents Lab
             </span>
           </div>
-          <span className="hidden md:inline-block absolute -bottom-5.5 left-10 text-[8px] uppercase tracking-[0.2em] font-mono text-brand-orange-warm font-bold opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-            Switch to {isHomeRoute ? 'Landing Page' : 'Authority Hub'} &#8594;
-          </span>
-          <span className="md:hidden text-[7px] uppercase tracking-wider font-mono text-slate-400 font-medium">
-            {logoSub} • Click to toggle
-          </span>
         </Link>
 
-        {/* Desktop Nav Actions */}
-        <nav className="hidden lg:flex items-center gap-8">
-          {menuItems.map((item, idx) => {
-            const isAnchor = item.href.includes('#');
-            if (isAnchor) {
-              const [route, anchor] = item.href.split('#');
-              const isCurrentRoute = path === route || (route === '/' && path === '/');
-              return (
-                <a
-                  key={idx}
-                  href={isCurrentRoute ? `#${anchor}` : item.href}
-                  className="text-[10px] tracking-[0.2em] uppercase font-bold text-[#1A1A1A]/70 hover:text-brand-orange-warm transition-colors"
-                >
-                  {item.name}
-                </a>
-              );
-            }
+        {/* Desktop Nav Items */}
+        <nav className="hidden lg:flex items-center gap-7">
+          {navLinks.map((item) => {
+            const isActive = currentPath === item.href || (item.href === '/insights' && currentPath.startsWith('/insights'));
             return (
               <Link
-                key={idx}
+                key={item.href}
                 to={item.href}
-                className="text-[10px] tracking-[0.2em] uppercase font-bold text-[#1A1A1A]/70 hover:text-brand-orange-warm transition-colors"
+                className={`text-[11px] tracking-[0.18em] uppercase font-bold transition-colors py-1 relative ${
+                  isActive
+                    ? 'text-brand-orange-warm'
+                    : 'text-[#1A1A1A]/75 hover:text-brand-orange-warm'
+                }`}
               >
                 {item.name}
+                {isActive && (
+                  <motion.span
+                    layoutId="activeNavIndicator"
+                    className="absolute bottom-0 left-0 right-0 h-[2px] bg-brand-orange-warm rounded-full"
+                  />
+                )}
               </Link>
             );
           })}
         </nav>
 
-        {/* Right Action Trigger */}
-        <div className="hidden lg:flex items-center gap-4">
+        {/* Right Actions */}
+        <div className="hidden lg:flex items-center gap-3">
+          {/* Cal AI quick trigger */}
+          <button
+            onClick={() => {
+              if (onOpenCal) onOpenCal();
+              else {
+                const el = document.getElementById('floating-cal-button');
+                if (el) el.click();
+              }
+            }}
+            className="flex items-center gap-1.5 px-3 py-2 rounded-full bg-editorial-pale hover:bg-editorial-beige text-[#1A1A1A] font-mono text-[10px] font-semibold tracking-wider transition-colors border border-black/10"
+            title="Chat with Cal, our AI representative"
+          >
+            <Bot className="w-3.5 h-3.5 text-brand-orange-warm" />
+            <span>Ask Cal AI</span>
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+          </button>
+
+          {/* Book Call Button */}
           <Link
             to="/contact"
-            className="px-5 py-2.5 rounded-full border border-editorial-dark hover:bg-editorial-dark hover:text-editorial-cream text-editorial-dark font-sans text-[10px] uppercase font-bold tracking-wider transition-all duration-200 flex items-center gap-1.5"
-            id="nav-cta"
+            className="px-5 py-2.5 rounded-full bg-[#1A1A1A] hover:bg-brand-orange-warm text-editorial-cream font-sans text-[11px] uppercase font-bold tracking-wider transition-all duration-200 flex items-center gap-1.5 shadow-sm"
+            id="nav-book-call"
           >
-            Book a Call <ArrowUpRight className="w-3.5 h-3.5" />
+            <span>Book Diagnostic</span>
+            <ArrowUpRight className="w-3.5 h-3.5" />
           </Link>
         </div>
 
-        {/* Mobile Nav Button */}
+        {/* Mobile Menu Button */}
         <button
           onClick={toggleMenu}
           className="lg:hidden p-2 text-editorial-dark hover:text-brand-orange-warm focus:outline-none transition-colors"
@@ -141,7 +146,7 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Mobile Menu Drawer */}
+      {/* Mobile Drawer */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -149,36 +154,54 @@ export default function Navbar() {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.25 }}
-            className="lg:hidden w-full bg-editorial-cream border-b border-black/5 mt-4 overflow-hidden"
+            className="lg:hidden w-full bg-editorial-cream border-b border-black/10 mt-3 overflow-hidden"
           >
-            <div className="flex flex-col gap-4 py-4 px-2">
-              {menuItems.map((item, idx) => {
-                const isAnchor = item.href.includes('#');
+            <div className="flex flex-col gap-3 py-4 px-2">
+              {navLinks.map((item) => {
+                const isActive = currentPath === item.href;
                 return (
-                  <a
-                    key={idx}
-                    href={item.href}
+                  <Link
+                    key={item.href}
+                    to={item.href}
                     onClick={() => setIsOpen(false)}
-                    className="text-[10px] tracking-[0.15em] uppercase font-bold text-editorial-dark hover:text-brand-orange-warm transition-colors py-1 block"
+                    className={`text-xs tracking-[0.15em] uppercase font-bold py-2 px-3 rounded transition-colors ${
+                      isActive 
+                        ? 'bg-editorial-pale text-brand-orange-warm font-black' 
+                        : 'text-editorial-dark hover:text-brand-orange-warm'
+                    }`}
                   >
                     {item.name}
-                  </a>
+                  </Link>
                 );
               })}
-              <div className="pt-4 border-t border-black/5 flex flex-col gap-3">
+              
+              <div className="pt-3 border-t border-black/5 flex flex-col gap-2.5">
+                <button
+                  onClick={() => {
+                    setIsOpen(false);
+                    const el = document.getElementById('floating-cal-button');
+                    if (el) el.click();
+                  }}
+                  className="w-full py-2.5 rounded-full bg-editorial-pale text-editorial-dark font-mono text-xs font-bold flex items-center justify-center gap-2 border border-black/10"
+                >
+                  <Bot className="w-4 h-4 text-brand-orange-warm" />
+                  <span>Talk with Cal AI Customer Care</span>
+                </button>
+
                 <Link
                   to="/contact"
                   onClick={() => setIsOpen(false)}
-                  className="w-full py-3 rounded-full border border-editorial-dark hover:bg-editorial-dark hover:text-editorial-cream text-editorial-dark text-center text-[10px] uppercase font-bold tracking-wider block"
+                  className="w-full py-3 rounded-full bg-[#1A1A1A] hover:bg-brand-orange-warm text-white text-center text-xs uppercase font-bold tracking-wider block transition-colors"
                 >
-                  Book a Strategy Call
+                  Book 15-Min Content Diagnostic
                 </Link>
+
                 <Link
                   to="/admin/login"
                   onClick={() => setIsOpen(false)}
-                  className="w-full py-2.5 rounded-full text-slate-500 font-mono text-[9px] text-center block bg-slate-50 border border-slate-200"
+                  className="w-full py-2 rounded-full text-slate-500 font-mono text-[10px] text-center block bg-slate-100 hover:bg-slate-200 border border-slate-200 transition-colors"
                 >
-                  Admin Portal Login (Private Ops)
+                  Private Content Ops Portal (Admin)
                 </Link>
               </div>
             </div>

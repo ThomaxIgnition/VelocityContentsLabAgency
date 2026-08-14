@@ -8,6 +8,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   ArrowUpRight, 
+  ArrowRight,
   Share2, 
   MailOpen, 
   ShieldCheck, 
@@ -21,7 +22,16 @@ import {
   ChevronDown,
   ChevronUp,
   Mail,
-  Scale
+  Scale,
+  Radio,
+  Layers,
+  Bot,
+  Zap,
+  HelpCircle,
+  Clock,
+  TrendingUp,
+  Globe,
+  Quote
 } from 'lucide-react';
 import { 
   SERVICES, 
@@ -29,1108 +39,982 @@ import {
   RESOURCES, 
   CASE_STUDIES, 
   CHAPTERS, 
-  ORIGIN_STORY_TEXT 
+  ORIGIN_STORY_TEXT,
+  AGENCY_METRICS,
+  BRAND_COMPANY,
+  BRAND_TAGLINE,
+  FOUNDER_NAME,
+  COFFEE_SHOP_TEST_QUOTE
 } from '../data.ts';
 import BrandImage from '../components/shared/BrandImage.tsx';
 import LemonadeStory from '../components/shared/LemonadeStory.tsx';
+import CalAssistant from '../components/shared/CalAssistant.tsx';
 import { LeadCapture } from '../types.ts';
 
 export default function HomePage() {
   const navigate = useNavigate();
 
-  // Word cycling state for Hero
+  // Cyclical word rotator for Hero
   const cycles = [
-    '…that build authority.',
-    '…that fill pipelines.',
-    '…that close clients.'
+    'build undisputed market authority.',
+    'generate predictable organic pipelines.',
+    'turn quiet experts into category leaders.',
+    'close five-figure client retainers.'
   ];
   const [cycleIndex, setCycleIndex] = useState(0);
 
   useEffect(() => {
     const timer = setInterval(() => {
       setCycleIndex((prev) => (prev + 1) % cycles.length);
-    }, 4500);
+    }, 4000);
     return () => clearInterval(timer);
   }, []);
 
-  // Expandable case studies
+  // Case study expander state
   const [expandedCaseStudy, setExpandedCaseStudy] = useState<string | null>(null);
-  const [activeStoryModal, setActiveStoryModal] = useState<'daughter' | 'wife' | 'goodfellas' | null>(null);
 
   const toggleCaseStudy = (id: string) => {
-    if (expandedCaseStudy === id) {
-      setExpandedCaseStudy(null);
-    } else {
-      setExpandedCaseStudy(id);
-    }
+    setExpandedCaseStudy(prev => (prev === id ? null : id));
   };
 
-  // Resources state
-  const [downloadModal, setDownloadModal] = useState<string | null>(null);
-  const [resourceEmail, setResourceEmail] = useState('');
-  const [resourceName, setResourceName] = useState('');
-  const [downloadSuccess, setDownloadSuccess] = useState(false);
+  // Lead capture state for bottom section
+  const [leadForm, setLeadForm] = useState({ name: '', email: '', company: '', budget: '$3,500/mo retainer', message: '' });
+  const [formSubmitted, setFormSubmitted] = useState(false);
 
-  // General contact message state
-  const [contactForm, setContactForm] = useState({ name: '', email: '', company: '', budget: '$3,500/mo retainer', message: '' });
-  const [contactSuccess, setContactSuccess] = useState(false);
-
-  const handleResourceDownload = (e: React.FormEvent) => {
+  const handleLeadSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!resourceEmail || !resourceName) return;
+    if (!leadForm.name || !leadForm.email) return;
 
-    const selectedResource = RESOURCES.find(r => r.keyword === downloadModal);
-    
-    // Log lead capture
-    const lead: LeadCapture = {
-      id: `lead-res-${Date.now()}`,
-      name: resourceName,
-      email: resourceEmail,
-      source: `Resource Download: ${selectedResource?.keyword || 'GENERAL'}`,
-      timestamp: new Date().toISOString()
-    };
-
-    const savedLeads = JSON.parse(localStorage.getItem('vcl_leads') || '[]');
-    savedLeads.push(lead);
-    localStorage.setItem('vcl_leads', JSON.stringify(savedLeads));
-
-    // Update keyword stats in store
-    const localStats = JSON.parse(localStorage.getItem('vcl_keyword_stats') || '[]');
-    const targetIdx = localStats.findIndex((s: any) => s.keyword === downloadModal);
-    if (targetIdx !== -1) {
-      localStats[targetIdx].downloads += 1;
-    } else {
-      localStats.push({ keyword: downloadModal, title: selectedResource?.title || 'Unknown', downloads: 1, completionRate: '90%', conversionRate: '15%' });
-    }
-    localStorage.setItem('vcl_keyword_stats', JSON.stringify(localStats));
-
-    setDownloadSuccess(true);
-    // Track count for dashboard
-    const currentCount = parseInt(localStorage.getItem('vcl_emails_captured') || '0', 10);
-    localStorage.setItem('vcl_emails_captured', (currentCount + 1).toString());
-  };
-
-  const handleContactSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!contactForm.name || !contactForm.email || !contactForm.message) return;
-
-    // Log lead capture
-    const lead: LeadCapture = {
-      id: `lead-con-${Date.now()}`,
-      name: contactForm.name,
-      email: contactForm.email,
-      companySize: contactForm.company,
-      budget: contactForm.budget,
-      source: `Contact Screen Panel`,
+    const newLead: LeadCapture = {
+      id: `lead-home-${Date.now()}`,
+      name: leadForm.name,
+      email: leadForm.email,
+      companySize: leadForm.company,
+      budget: leadForm.budget,
+      source: 'Homepage Master Diagnostic Form',
       timestamp: new Date().toISOString(),
-      message: contactForm.message
+      message: leadForm.message
     };
 
     const savedLeads = JSON.parse(localStorage.getItem('vcl_leads') || '[]');
-    savedLeads.push(lead);
+    savedLeads.push(newLead);
     localStorage.setItem('vcl_leads', JSON.stringify(savedLeads));
 
-    setContactSuccess(true);
-    // Track count for dashboard
+    setFormSubmitted(true);
     const currentCount = parseInt(localStorage.getItem('vcl_emails_captured') || '0', 10);
     localStorage.setItem('vcl_emails_captured', (currentCount + 1).toString());
   };
 
-  const currentMonthName = "June 2026";
-
-  const getFrameworkIcon = (iconName: string) => {
-    switch (iconName) {
-      case 'Share2': return <Share2 className="w-5 h-5" />;
-      case 'MailOpen': return <MailOpen className="w-5 h-5" />;
-      case 'ShieldCheck': return <ShieldCheck className="w-5 h-5" />;
-      case 'Cpu': return <Cpu className="w-5 h-5" />;
-      case 'HeartHandshake': return <HeartHandshake className="w-5 h-5" />;
-      default: return <Cpu className="w-5 h-5" />;
-    }
+  const triggerCal = () => {
+    const el = document.getElementById('floating-cal-button');
+    if (el) el.click();
   };
+
+  const problemPoints = [
+    {
+      num: '01',
+      title: 'Posting Constantly, Yet Pipeline Stays Empty',
+      stat: '92% of organic content yields zero business pipeline',
+      consequence: 'Creative teams spend dozens of hours writing for superficial vanity likes rather than enterprise decision-makers who actually sign retainers.'
+    },
+    {
+      num: '02',
+      title: 'Spending Heavily on Ads with Diminishing Returns',
+      stat: 'Ad CPCs have inflated by over 40% across major platforms',
+      consequence: 'Budgets purchase accidental clicks and bots while authentic buyers develop ad-blindness and seek trusted founder recommendations.'
+    },
+    {
+      num: '03',
+      title: 'Cornerstone Genius Locked Inside Ignored PDFs',
+      stat: 'Less than 8% of proprietary thinking ever gets distributed',
+      consequence: 'Elite institutional intelligence sits dead in archived slide decks, internal Notion docs, and unpublished notes while louder competitors win the market.'
+    }
+  ];
+
+  const methodologyPhases = [
+    {
+      phase: '01',
+      title: 'Deep Listening',
+      icon: <Radio className="w-5 h-5 text-brand-orange-warm" />,
+      desc: 'We extract real objections, sales recordings, support tickets, and raw executive conversations to pinpoint the exact whitespace in your category.'
+    },
+    {
+      phase: '02',
+      title: 'Strategic Creation',
+      icon: <Layers className="w-5 h-5 text-brand-orange-warm" />,
+      desc: 'Thomax and our editorial team craft cornerstone intellectual assets loaded with proprietary frameworks and authentic human voice—never synthetic filler.'
+    },
+    {
+      phase: '03',
+      title: 'Velocity Distribution',
+      icon: <Share2 className="w-5 h-5 text-brand-orange-warm" />,
+      desc: 'Our proprietary engine converts 1 weekly cornerstone session into 10+ tailored derivative formats across LinkedIn, X, newsletters, carousels, and media pitches.'
+    },
+    {
+      phase: '04',
+      title: 'Human Engagement',
+      icon: <HeartHandshake className="w-5 h-5 text-brand-orange-warm" />,
+      desc: 'We deploy The 7-Touch Fortune Framework to engage key decision-makers naturally, converting public authority into qualified inbound discovery calls.'
+    }
+  ];
 
   return (
-    <div className="pt-16 pb-0 overflow-hidden bg-editorial-cream text-[#2A2421]" id="home-authority-hub">
+    <div className="pt-24 pb-20 bg-editorial-cream text-[#1A1A1A] overflow-hidden" id="homepage-flagship-root">
       
-      {/* SECTION 1: DYNAMIC cycled HERO WITH PHOTO B */}
-      <section className="w-full relative px-6 md:px-12 py-24 md:py-32 bg-[#121212] text-white overflow-hidden border-b border-white/[0.05]">
-        {/* Abstract cybernetic graphics */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-brand-orange-warm/5 rounded-full blur-3xl pointer-events-none" />
+      {/* ========================================================================= */}
+      {/* SECTION 1: FLAGSHIP HERO */}
+      {/* ========================================================================= */}
+      <section className="relative px-6 md:px-12 pt-12 pb-20 max-w-7xl mx-auto border-b border-[#1A1A1A]/8">
+        
+        {/* Background glow accents */}
+        <div className="absolute top-1/4 -right-20 w-96 h-96 bg-brand-orange-warm/8 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-1/2 -left-20 w-80 h-80 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10 animate-fade-in">
+        <div className="max-w-5xl mx-auto text-center flex flex-col items-center gap-6">
           
-          <div className="lg:col-span-7 flex flex-col gap-6 text-left">
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-brand-orange-warm/10 text-brand-orange-warm border border-brand-orange-warm/25 self-start">
-              <Sparkles className="w-3.5 h-3.5 text-brand-orange-warm" />
-              <span className="text-[10px] uppercase font-mono tracking-[0.25em] font-bold">The Intellectual Headquarters</span>
-            </div>
-            
-            <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-light italic tracking-tight leading-[1.05] text-white">
-              Strategy <br />
-              Meets <span className="text-brand-orange-warm italic">Soul</span>
-            </h1>
+          {/* Top Pill Badge */}
+          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-editorial-pale border border-[#1A1A1A]/10 text-xs font-mono font-medium text-neutral-800">
+            <span className="w-2 h-2 rounded-full bg-brand-orange-warm animate-pulse" />
+            <span className="text-neutral-500 uppercase tracking-widest text-[10px] font-bold">Lagos → Global Content Agency</span>
+            <span className="text-neutral-300">•</span>
+            <span className="text-brand-orange-warm font-semibold">Where Strategy Meets Soul</span>
+          </div>
 
-            {/* Cycling Word Statement */}
-            <div className="h-10 md:h-12 flex items-center">
-              <span className="font-display text-xl md:text-2xl text-slate-300 font-light italic border-l-2 border-brand-orange-warm pl-4">
-                {cycles[cycleIndex]}
+          {/* Master Headline with Dynamic Cycler */}
+          <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light italic text-[#1A1A1A] tracking-tight leading-[1.08] max-w-5xl">
+            We turn cornerstone thinking into distribution systems that{' '}
+            <span className="font-medium text-brand-orange-warm not-italic block mt-1 sm:inline sm:mt-0 underline decoration-brand-orange-warm/30 underline-offset-8">
+              <AnimatePresence mode="wait">
+                <motion.span
+                  key={cycleIndex}
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -15 }}
+                  transition={{ duration: 0.35 }}
+                  className="inline-block"
+                >
+                  {cycles[cycleIndex]}
+                </motion.span>
+              </AnimatePresence>
+            </span>
+          </h1>
+
+          {/* Subheading */}
+          <p className="font-sans text-base sm:text-lg md:text-xl text-neutral-600 max-w-3xl leading-relaxed tracking-normal mt-2">
+            The world's best content doesn't win. The <strong className="text-neutral-900 font-semibold">best distributed</strong> content wins. 
+            We architect high-impact editorial pipelines that convert executive expertise into multi-channel authority and pipeline revenue in 65 minutes a week.
+          </p>
+
+          {/* Primary Action Group */}
+          <div className="flex flex-col sm:flex-row items-center gap-4 mt-4 w-full sm:w-auto">
+            <Link
+              to="/contact"
+              className="w-full sm:w-auto px-8 py-4 rounded-full bg-[#1A1A1A] hover:bg-brand-orange-warm text-editorial-cream font-sans text-xs uppercase font-bold tracking-widest transition-all duration-200 flex items-center justify-center gap-2 shadow-lg shadow-black/10 hover:shadow-orange-500/20 active:scale-95"
+              id="hero-book-diagnostic"
+            >
+              <span>Book 15-Min Content Diagnostic</span>
+              <ArrowUpRight className="w-4 h-4" />
+            </Link>
+
+            <button
+              onClick={triggerCal}
+              className="w-full sm:w-auto px-6 py-4 rounded-full bg-white hover:bg-editorial-pale text-neutral-800 font-sans text-xs font-bold uppercase tracking-widest border border-black/10 transition-all flex items-center justify-center gap-2 shadow-sm"
+              id="hero-talk-cal"
+            >
+              <Bot className="w-4 h-4 text-brand-orange-warm" />
+              <span>Ask Cal (AI Care Representative)</span>
+            </button>
+          </div>
+
+          {/* Micro Guarantee SLA */}
+          <p className="text-[11px] font-mono text-neutral-400 mt-1 flex items-center gap-2">
+            <Check className="w-3.5 h-3.5 text-emerald-600" />
+            <span>Zero sales pressure • Custom 90-day pipeline roadmap presented live • 4-hour response SLA</span>
+          </p>
+
+        </div>
+      </section>
+
+      {/* ========================================================================= */}
+      {/* SECTION 2: PROOF & CLIENT IMPACT METRICS BAR */}
+      {/* ========================================================================= */}
+      <section className="px-6 md:px-12 py-12 max-w-7xl mx-auto border-b border-[#1A1A1A]/8">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 md:gap-8">
+          {AGENCY_METRICS.map((metric, i) => (
+            <div 
+              key={i} 
+              className="flex flex-col text-left p-4 rounded-xl bg-editorial-pale border border-[#1A1A1A]/5 hover:border-brand-orange-warm/40 transition-colors"
+            >
+              <span className="font-display font-bold text-2xl md:text-3xl text-brand-orange-warm tracking-tight">
+                {metric.value}
+              </span>
+              <span className="font-sans text-xs font-bold text-[#1A1A1A] mt-1">
+                {metric.label}
+              </span>
+              <span className="font-sans text-[11px] text-neutral-500 mt-1 leading-snug">
+                {metric.desc}
               </span>
             </div>
-            
-            <p className="font-sans text-xs md:text-sm text-slate-400 font-normal max-w-xl leading-relaxed">
-              We design, build, and distribute highly technical Content Systems that turn cold, raw expertise into absolute enterprise authority and qualified marketing revenue pipelines.
-            </p>
-
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2">
-              <a
-                href="#services"
-                className="px-8 py-4 bg-brand-orange-warm text-white font-sans text-[11px] uppercase tracking-widest font-bold text-center hover:bg-[#8F4E34] transition-colors"
-              >
-                Explore Full Services Breakdown
-              </a>
-              <a
-                href="#resources"
-                className="px-8 py-4 bg-[#1E1E1E] text-slate-300 border border-white/10 font-sans text-[11px] uppercase tracking-widest font-bold text-center hover:bg-slate-800 transition-colors"
-              >
-                Download PDF Frameworks ↓
-              </a>
-            </div>
-          </div>
-
-          <div className="lg:col-span-12 xl:col-span-5 relative flex justify-center">
-            <div className="absolute inset-0 bg-brand-orange-warm/5 blur-3xl opacity-30 pointer-events-none" />
-            <BrandImage
-              src="/photos/1000335398.png"
-              alt="Thomax Photo B reflecting holographic backdrop and professional black turtleneck"
-              stylingType="photoB"
-              aspectRatio="1:1"
-              className="w-full max-w-sm border border-white/10 shadow-2xl relative z-10"
-            />
-          </div>
-
+          ))}
         </div>
       </section>
 
-      {/* SECTION 2: SERVICES PARTNERSHIP BREAKDOWN */}
-      <section id="services" className="w-full py-24 px-6 md:px-12 bg-editorial-cream border-b border-black/5">
-        <div className="max-w-7xl mx-auto flex flex-col gap-14">
-          
-          <div className="text-center max-w-xl mx-auto flex flex-col gap-3">
-            <span className="text-[10px] font-mono text-brand-orange-warm tracking-[0.25em] uppercase font-bold">The Strategic Menu</span>
-            <h2 className="font-display text-3xl md:text-4xl font-light italic text-editorial-dark tracking-tight">
-              Strategic Services &amp; Architectures
-            </h2>
-            <p className="text-xs text-slate-500 font-sans tracking-normal leading-relaxed">
-              Radically transparent retainers built to capture real revenue outcomes. No hidden line items.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {SERVICES.map((service, idx) => (
-              <div 
-                key={service.id} 
-                className="bg-editorial-pale border border-[#1A1A1A]/10 p-8 hover:bg-[#F4F2EE] transition-all flex flex-col justify-between"
-              >
-                <div>
-                  <div className="flex items-start justify-between gap-4 border-b border-[#1A1A1A]/10 pb-5 mb-6">
-                    <div>
-                      <span className="inline-block text-[8px] font-mono tracking-wider uppercase bg-[#1A1A1A]/5 text-[#1A1A1A] border border-[#1A1A1A]/10 px-2 py-0.5 font-bold">
-                        {service.id.includes('sprint') || service.id.includes('launch') ? 'Fixed Scope' : 'Ongoing Retainer'}
-                      </span>
-                      <h3 className="font-display italic font-semibold text-[#1A1A1A] text-lg mt-2 leading-tight">
-                        {service.name}
-                      </h3>
-                    </div>
-                    <span className="font-display text-xl md:text-2xl font-light italic text-brand-orange-warm bg-white px-4 py-2 border border-[#1A1A1A]/10 shrink-0">
-                      {service.price}
-                    </span>
-                  </div>
-
-                  <p className="font-sans text-xs text-slate-600 leading-relaxed font-normal mb-6">
-                    {service.description}
-                  </p>
-
-                  <h4 className="text-[9px] font-mono text-slate-400 font-bold uppercase tracking-wider mb-3">What Is Included:</h4>
-                  <ul className="space-y-2.5 mb-8">
-                    {service.includes.map((incl, id) => (
-                      <li key={id} className="flex items-start gap-3 text-xs text-slate-705 leading-normal">
-                        <div className="w-4 h-4 rounded-full bg-brand-orange-warm/15 text-brand-orange-warm flex items-center justify-center shrink-0 mt-0.5">
-                          <Check className="w-2.5 h-2.5" />
-                        </div>
-                        <span className="font-normal font-sans text-slate-700">{incl}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="pt-6 mt-6 border-t border-[#1A1A1A]/10 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <span className="block text-[8px] uppercase font-mono tracking-wider text-slate-400">Perfect For:</span>
-                    <span className="block text-xs font-bold text-editorial-dark pr-1">{service.bestFor}</span>
-                  </div>
-                  <div>
-                    <span className="block text-[8px] uppercase font-mono tracking-wider text-slate-400">Execution Schedule:</span>
-                    <span className="block text-xs font-bold text-editorial-dark">{service.timeline}</span>
-                  </div>
-                  <div className="sm:col-span-2 mt-3">
-                    <a 
-                      href="#contact" 
-                      className="w-full text-center block text-[10px] uppercase tracking-wider font-bold font-sans text-editorial-cream bg-editorial-dark hover:bg-brand-orange-warm py-4 transition-all"
-                    >
-                      Start Here — Setup Engagement
-                    </a>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
+      {/* ========================================================================= */}
+      {/* SECTION 3: THE PROBLEM ("THE CONTENT TRAP") */}
+      {/* ========================================================================= */}
+      <section className="px-6 md:px-12 py-20 max-w-7xl mx-auto border-b border-[#1A1A1A]/8" id="problem">
+        <div className="max-w-3xl mb-12 text-left">
+          <span className="text-[10px] uppercase font-mono text-brand-orange-warm tracking-[0.25em] font-black block mb-2">
+            The Industry Blindspot
+          </span>
+          <h2 className="font-display text-3xl md:text-5xl font-light italic text-[#1A1A1A] tracking-tight leading-tight">
+            The Content Trap: Why Great Ideas Die in Silence
+          </h2>
+          <p className="font-sans text-sm md:text-base text-neutral-600 mt-3 leading-relaxed">
+            Most companies mistakenly believe their content problem is a <span className="italic">creation</span> deficit. In reality, it is almost always a <span className="font-semibold text-neutral-900">distribution bottleneck</span> coupled with robotic voice alienation.
+          </p>
         </div>
-      </section>
 
-      {/* SECTION 4: CASE STUDIES WITH EXPANDABLE PANEL */}
-      <section id="results" className="w-full py-24 px-6 md:px-12 bg-slate-50/40 border-y border-slate-100">
-        <div className="max-w-7xl mx-auto flex flex-col gap-14">
-          
-          <div className="text-center max-w-xl mx-auto flex flex-col gap-2">
-            <span className="text-[10px] font-mono text-brand-orange-warm tracking-widest uppercase font-bold">The Proof Stack</span>
-            <h2 className="font-display text-2xl md:text-3xl font-black text-brand-blue-deep tracking-tight">
-              Case Studies &amp; Real Outcomes
-            </h2>
-            <p className="text-xs text-slate-500 font-sans tracking-tight">
-              We do not track vague "engagement factors." We measure actual pipelines, converted leads, and business revenue.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
-            {CASE_STUDIES.map((study) => {
-              const isOpen = expandedCaseStudy === study.id;
-              return (
-                <div 
-                  key={study.id} 
-                  className={`border rounded-2xl p-6 flex flex-col justify-between transition-all duration-300 relative overflow-hidden group bg-white ${
-                    isOpen ? 'lg:col-span-5 border-brand-orange-warm shadow-md' : 'lg:col-span-1 border-slate-150 hover:border-slate-350 shadow-sm'
-                  }`}
-                >
-                  {/* Highlight Ribbon */}
-                  <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-brand-orange-warm via-orange-400 to-amber-500" />
-
-                  <div className="flex flex-col gap-4">
-                    <span className="text-[9px] font-mono uppercase text-brand-orange-warm font-bold block">{study.industry}</span>
-                    <h3 className="font-display text-base font-black text-brand-blue-deep">
-                      {study.client}
-                    </h3>
-
-                    {/* Compact Metrics */}
-                    <div className="py-2.5 border-y border-slate-100 font-mono">
-                      <span className="block text-[9px] uppercase text-slate-400 tracking-wider">Before &amp; After:</span>
-                      <span className="block text-xs text-red-600 line-through mt-0.5">{study.metrics.before}</span>
-                      <span className="block text-xs text-emerald-600 font-bold font-mono">{study.metrics.after}</span>
-                    </div>
-
-                    <p className={`text-xs text-slate-600 font-sans leading-relaxed ${isOpen ? 'm-0' : 'line-clamp-3'}`}>
-                      {study.highlightMetric}
-                    </p>
-
-                    {/* EXPANDED CONTENT VIEW */}
-                    <AnimatePresence>
-                      {isOpen && (
-                        <motion.div 
-                          initial={{ opacity: 0, height: 0 }}
-                          animate={{ opacity: 1, height: 'auto' }}
-                          exit={{ opacity: 0, height: 0 }}
-                          className="pt-4 border-t border-slate-100 flex flex-col gap-4 text-left"
-                        >
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-sans text-slate-600">
-                            <div>
-                              <h4 className="font-mono text-[10px] text-brand-orange-warm uppercase font-bold mb-1">The Challenge:</h4>
-                              <p className="leading-relaxed font-normal">{study.challenge}</p>
-                            </div>
-                            <div>
-                              <h4 className="font-mono text-[10px] text-brand-orange-warm uppercase font-bold mb-1">The Strategic Solution:</h4>
-                              <p className="leading-relaxed font-normal">{study.solution}</p>
-                            </div>
-                          </div>
-                          
-                          <div className="p-4 bg-slate-50 border border-slate-100 rounded-xl">
-                            <h4 className="font-mono text-[10px] text-brand-blue-deep uppercase font-bold mb-1">Real Verified Growth Metrics:</h4>
-                            <p className="text-xs text-slate-700 leading-relaxed font-medium">
-                              {study.client} {study.expandedDetails}
-                            </p>
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-
-                  <div className="pt-6 mt-6 border-t border-slate-100 flex items-center justify-between">
-                    <button 
-                      onClick={() => toggleCaseStudy(study.id)}
-                      className="text-xs font-bold font-sans text-brand-blue-deep flex items-center gap-1 hover:text-brand-orange-warm transition-colors"
-                    >
-                      {isOpen ? (
-                        <>Collapse Study <ChevronUp className="w-4 h-4" /></>
-                      ) : (
-                        <>View Full Breakdown <ChevronDown className="w-4 h-4" /></>
-                      )}
-                    </button>
-                    {!isOpen && <ArrowUpRight className="w-4 h-4 text-slate-300 group-hover:text-brand-orange-warm duration-150" />}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-
-        </div>
-      </section>
-
-      {/* SECTION 5: PROPRIETARY FRAMEWORKS SECTION */}
-      <section id="frameworks" className="w-full py-24 px-6 md:px-12 bg-white">
-        <div className="max-w-7xl mx-auto flex flex-col gap-14">
-          
-          <div className="text-center max-w-xl mx-auto flex flex-col gap-2">
-            <span className="text-[10px] font-mono text-brand-orange-warm tracking-widest uppercase font-bold">The Intellectual Property</span>
-            <h2 className="font-display text-2xl md:text-3xl font-black text-brand-blue-deep tracking-tight">
-              Proprietary Frameworks™
-            </h2>
-            <p className="text-xs text-slate-500 font-sans tracking-tight">
-              Our core blueprints. These systems have scaled operations globally, built entirely in-house.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
-            {FRAMEWORKS.map((frame, idx) => (
-              <div 
-                key={frame.id} 
-                className="bg-slate-50 border border-slate-100 rounded-2xl p-6 flex flex-col justify-between hover:border-slate-300 transition-all shadow-sm relative group"
-              >
-                <div className="flex flex-col gap-4">
-                  <div className="w-10 h-10 rounded-lg bg-white shadow-sm flex items-center justify-center text-brand-orange-warm group-hover:bg-brand-orange-warm group-hover:text-white transition-colors duration-200 border border-slate-100">
-                    {getFrameworkIcon(frame.icon)}
-                  </div>
-
-                  <div>
-                    <h3 className="font-display text-sm font-black text-[#1E2A3A] group-hover:text-brand-orange-warm transition-colors pr-1 leading-normal">
-                      {frame.name}
-                    </h3>
-                    <p className="font-mono text-[9px] uppercase tracking-wider text-slate-400 font-semibold mt-1">
-                      {frame.principle}
-                    </p>
-                  </div>
-
-                  <p className="font-sans text-xs text-slate-500 leading-relaxed pr-1">
-                    {frame.description}
-                  </p>
-                </div>
-
-                <div className="pt-6 mt-6 border-t border-slate-100">
-                  <div className="mb-4">
-                    <span className="block text-[8px] uppercase font-mono tracking-wider text-slate-400">Key Outcome:</span>
-                    <span className="block text-xs font-bold font-sans text-slate-800 leading-normal">{frame.result}</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-mono bg-orange-100 text-brand-orange-warm border border-orange-200 px-2 py-0.5 rounded font-black uppercase">
-                      DM: {frame.keyword}
-                    </span>
-                    <a 
-                      href="#resources" 
-                      className="text-slate-300 group-hover:text-brand-orange-warm duration-150"
-                      title="Request Toolkit Download"
-                    >
-                      <Download className="w-4 h-4" />
-                    </a>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-        </div>
-      </section>
-
-      {/* SECTION 6: THE LEMONADE STAND STORY (FULL NARRATIVE EXPOSURE WITH OTHER PHOTOS) */}
-      <section className="w-full py-24 px-6 md:px-12 bg-slate-950 text-white relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-brand-orange-warm/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-brand-blue-deep/15 rounded-full blur-3xl" />
-
-        <div className="max-w-7xl mx-auto flex flex-col gap-16 relative z-10">
-          
-          <div className="text-left max-w-xl flex flex-col gap-1">
-            <span className="text-xs font-mono text-brand-orange-warm tracking-widest uppercase font-bold">The Origin &amp; The Soul</span>
-            <h2 className="font-display text-xl md:text-3xl font-black text-white tracking-tight">
-              The Lemonade Stand Engine (Full Version)
-            </h2>
-            <p className="text-sm text-slate-400 font-sans">
-              Dismantling the entire system, aligning partnership honesty, and accountability roots.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            
-            <div className="lg:col-span-6 space-y-6 font-sans text-xs text-slate-300 leading-relaxed max-w-xl">
-              <h3 className="font-display text-lg text-white font-black border-l-2 border-brand-orange-warm pl-3">
-                "Daddy, my lemonade is not good enough."
-              </h3>
-              <p>
-                My seven-year-old daughter diagnosed her failed lemonade stand incorrectly. She felt her craftsmanship was flawed. 
-                But her lemonade was exceptional. Her distribution channels were broken. 
-                We posted in the WhatsApp groups, placed physical markers, and personally booked friend contacts. Twenty minutes later: sold out.
-              </p>
-              <p className="font-semibold text-brand-orange-warm leading-relaxed">
-                She looked at me and said: "Daddy, it doesn't matter how good it is if nobody knows where to find it."
-              </p>
-              <p>
-                This became the core foundation of VELOCITY CONTENTS LAB. We protect founders from wasting hours creating exceptional intelligence which nobody distributes. 2 hours of creation time. 10 platforms of native distribution. That is the mathematical standard.
-              </p>
-            </div>
-
-            {/* Premium Daughter Picture Placement */}
-            <div className="lg:col-span-6 relative flex justify-center">
-              <div className="w-full max-w-sm rounded-2xl overflow-hidden border border-slate-800 shadow-2xl relative z-10 bg-slate-900 aspect-[3/4]">
-                <BrandImage
-                  src="/photos/VCL_Daughter_Branded_Premium.png"
-                  alt="Daughter Lemonade Branded Premium Image"
-                  stylingType="daughter"
-                  aspectRatio="3:4"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            </div>
-
-          </div>
-
-          {/* Sub narratives: The Wife Origin and Goodfellas Group */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 pt-12 border-t border-slate-900">
-            {/* Wife origin: Coffee shop standard */}
-            <div className="grid grid-cols-1 sm:grid-cols-12 gap-6 items-center">
-              <div className="sm:col-span-5">
-                <BrandImage
-                  src="/photos/1000313924.png"
-                  alt="Thomax and Wife outdoor on camel outfit"
-                  stylingType="couple1"
-                  aspectRatio="1:1"
-                  className="w-full rounded-2xl border border-slate-800"
-                />
-              </div>
-              <div className="sm:col-span-7 flex flex-col gap-3">
-                <span className="font-mono text-[9px] uppercase tracking-wider text-brand-orange-warm font-bold">The Wife Standard</span>
-                <h4 className="font-display text-base font-bold text-slate-100">
-                  The Coffee Shop Test
-                </h4>
-                <p className="text-xs text-slate-400 font-sans leading-relaxed">
-                  My wife read two hours of my best content strategies, put the phone down, and said: <span className="text-white">"If you cannot explain this over a coffee — why would a client trust you with their brand?"</span> This standard removed jargon entirely from our agency operations.
-                </p>
-              </div>
-            </div>
-
-            {/* The Goodfellas: $120k lesson */}
-            <div className="grid grid-cols-1 sm:grid-cols-12 gap-6 items-center">
-              <div className="sm:col-span-5">
-                <BrandImage
-                  src="/photos/1000319397.jpg"
-                  alt="Accountability group the Goodfellas Lagos"
-                  stylingType="goodfellas"
-                  aspectRatio="1:1"
-                  className="w-full rounded-2xl border border-slate-800"
-                />
-              </div>
-              <div className="sm:col-span-7 flex flex-col gap-3">
-                <span className="font-mono text-[9px] uppercase tracking-wider text-brand-orange-warm font-bold">Accountability Stack</span>
-                <h4 className="font-display text-base font-bold text-slate-100">
-                  The Goodfellas Story
-                </h4>
-                <p className="text-xs text-slate-400 font-sans leading-relaxed">
-                  The Lagos accountability crew. Back in July 2024, I sat paralyzed after losing a $120K annual deal. This crew of five founders forced me to stop complaining and build the undisputable Founder Trust Framework™. Proof stacks are updated weekly.
-                </p>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      {/* SECTION 7: FOUNDER DEEP DIVE IDENTITY PROFILE */}
-      <section id="founder" className="w-full py-24 px-6 md:px-12 bg-white">
-        <div className="max-w-7xl mx-auto flex flex-col gap-14">
-          
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            
-            <div className="lg:col-span-5 relative flex justify-center">
-              <div className="absolute inset-0 bg-brand-orange-warm/5 rounded-full blur-2xl pointer-events-none" />
-              <BrandImage
-                src="/photos/1000335399.png"
-                alt="Emmanuel Sunday Thomas cream suit in VCL office"
-                stylingType="photoA"
-                aspectRatio="3:4"
-                className="w-full max-w-sm border border-slate-100 shadow-2xl rounded-2xl relative z-10"
-              />
-            </div>
-
-            <div className="lg:col-span-7 flex flex-col gap-6 text-left">
-              <div>
-                <span className="text-[10px] font-mono text-brand-orange-warm tracking-widest uppercase font-bold">The Creative Director</span>
-                <h2 className="font-display text-2xl md:text-3xl font-black text-brand-blue-deep tracking-tight mt-1">
-                  Founder &amp; Head of Content Strategy
-                </h2>
-              </div>
-              
-              <h3 className="font-display text-lg font-black text-slate-900 flex items-center gap-2">
-                Emmanuel Sunday Thomas (Thomax)
-              </h3>
-
-              <div className="font-mono text-[10px] px-2.5 py-1 bg-slate-100 text-slate-600 rounded border border-slate-200 uppercase font-bold self-start leading-none">
-                Lagos, Nigeria &#8594; Global Scope
-              </div>
-
-              <div className="font-sans text-xs text-slate-600 space-y-4 leading-relaxed tracking-normal max-w-xl">
-                <p>
-                  As a hybrid founder with deep roots in developers architecture and storytelling psychology, my target has been simple: dismantle boring structural blockages that make expert companies sound robotic, generic, and predictable on public digital directories.
-                </p>
-                <p>
-                  Lagos is one of the world's most creative, competitive sandbox environments. Managing operations from here gives us an unmatched energetic output threshold. We do not rest on past milestones; we verify client pipelines daily.
-                </p>
-              </div>
-
-              {/* Three personal stories cards */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t border-slate-100">
-                <Link 
-                  to="/origin-story"
-                  className="p-4 bg-slate-50 border border-slate-100 rounded-xl relative overflow-hidden text-left hover:border-brand-orange-warm hover:bg-[#FDFCFB] hover:shadow-md transition-all duration-300 group cursor-pointer focus:outline-none block"
-                  id="trigger-daughter-story"
-                >
-                  <span className="font-mono text-[10px] text-brand-orange-warm font-bold block mb-1 group-hover:underline">Daughter Story</span>
-                  <p className="text-[11px] font-sans text-slate-500 leading-normal mb-1">
-                    The Lemonade Stand lesson showing distribution is 90% of outcomes.
-                  </p>
-                  <span className="text-[9px] font-mono text-slate-400 block tracking-tight group-hover:text-brand-orange-warm transition-colors">&#8594; Read full story</span>
-                </Link>
-                <button 
-                  onClick={() => setActiveStoryModal('wife')}
-                  className="p-4 bg-slate-50 border border-slate-100 rounded-xl text-left hover:border-brand-orange-warm hover:bg-[#FDFCFB] hover:shadow-md transition-all duration-300 group cursor-pointer focus:outline-none"
-                  id="trigger-wife-story"
-                >
-                  <span className="font-mono text-[10px] text-brand-orange-warm font-bold block mb-1 group-hover:underline">Wife Story</span>
-                  <p className="text-[11px] font-sans text-slate-500 leading-normal mb-1">
-                    The Coffee Shop Test standard showing clarity removes complex jargon.
-                  </p>
-                  <span className="text-[9px] font-mono text-slate-400 block tracking-tight group-hover:text-brand-orange-warm transition-colors">&#8594; Click to read</span>
-                </button>
-                <button 
-                  onClick={() => setActiveStoryModal('goodfellas')}
-                  className="p-4 bg-slate-50 border border-slate-100 rounded-xl text-left hover:border-brand-orange-warm hover:bg-[#FDFCFB] hover:shadow-md transition-all duration-300 group cursor-pointer focus:outline-none"
-                  id="trigger-goodfellas-story"
-                >
-                  <span className="font-mono text-[10px] text-brand-orange-warm font-bold block mb-1 group-hover:underline">Goodfellas Story</span>
-                  <p className="text-[11px] font-sans text-slate-500 leading-normal mb-1">
-                    Lagos accountability crew lesson forcing verified visible trust.
-                  </p>
-                  <span className="text-[9px] font-mono text-slate-400 block tracking-tight group-hover:text-brand-orange-warm transition-colors">&#8594; Click to read</span>
-                </button>
-              </div>
-            </div>
-
-          </div>
-
-        </div>
-      </section>
-
-      {/* SECTION 8: RESOURCE LIBRARY DIRECTORY AND BOOK CAPTURES */}
-      <section id="resources" className="w-full py-24 px-6 md:px-12 bg-slate-50/50 border-t border-slate-100">
-        <div className="max-w-7xl mx-auto flex flex-col gap-14">
-          
-          <div className="text-center max-w-xl mx-auto flex flex-col gap-2">
-            <span className="text-[10px] font-mono text-brand-orange-warm tracking-widest uppercase font-bold">The Free Toolkit Library</span>
-            <h2 className="font-display text-2xl md:text-3xl font-black text-brand-blue-deep tracking-tight">
-              Resources Library &amp; PDF Guides
-            </h2>
-            <p className="text-xs text-slate-500 font-sans tracking-tight">
-              Download our highly praised internal operating structures. All scripts, layouts, and tools are free.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {RESOURCES.map((resource) => (
-              <div 
-                key={resource.keyword} 
-                className="bg-white border border-slate-150 rounded-2xl p-6.5 flex flex-col justify-between hover:border-brand-orange-warm transition-all group shadow-sm hover:shadow"
-              >
-                <div className="flex flex-col gap-4">
-                  <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-mono bg-brand-blue-deep/5 text-brand-blue-deep border border-brand-blue-deep/15 px-2.5 py-0.5 rounded font-black">
-                      DM KEYWORD: {resource.keyword}
-                    </span>
-                    <BookOpen className="w-4 h-4 text-slate-300 group-hover:text-brand-orange-warm transition-colors" />
-                  </div>
-
-                  <h3 className="font-display text-slate-900 text-sm font-black tracking-tight leading-normal mt-1 pr-4">
-                    {resource.title}
-                  </h3>
-                  
-                  <p className="font-sans text-xs text-slate-550 leading-relaxed font-normal">
-                    {resource.description}
-                  </p>
-
-                  <ul className="space-y-1.5 pt-2">
-                    {resource.bulletDesc.map((bullet, id) => (
-                      <li key={id} className="text-[11px] font-sans text-slate-500 flex items-start gap-2">
-                        <span className="text-brand-orange-warm shrink-0 mt-1">•</span>
-                        <span>{bullet}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="pt-6 mt-6 border-t border-slate-100">
-                  <button 
-                    onClick={() => {
-                      setDownloadModal(resource.keyword);
-                      setDownloadSuccess(false);
-                      setResourceEmail('');
-                      setResourceName('');
-                    }}
-                    className="w-full text-center py-3 rounded-lg border border-slate-200 text-brand-blue-deep font-sans text-xs font-bold hover:bg-brand-orange-warm hover:text-white hover:border-brand-orange-warm transition-all flex items-center justify-center gap-2 group-hover:bg-brand-blue-deep group-hover:text-white group-hover:border-brand-blue-deep"
-                  >
-                    Download Free PDF <Download className="w-3.5 h-3.5" />
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-
-        </div>
-      </section>
-
-      {/* SECTION 9: 10-CHAPTER EBOOK VISUAL JOURNEY */}
-      <section id="blog" className="w-full py-24 px-6 md:px-12 bg-white border-t border-slate-100">
-        <div className="max-w-7xl mx-auto flex flex-col gap-14">
-          
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-            <div className="flex flex-col gap-1 text-left">
-              <span className="text-[10px] font-mono text-brand-orange-warm tracking-widest uppercase font-bold">The Velocity Doctrine</span>
-              <h2 className="font-display text-2xl md:text-3xl font-black text-brand-blue-deep tracking-tight mt-1">
-                The 10-Chapter Ebook Roadmap
-              </h2>
-            </div>
-            <Link 
-              to="/blog" 
-              className="px-5 py-2.5 bg-brand-orange-warm text-white font-sans text-xs font-bold rounded-lg shrink-0 self-start hover:bg-orange-600 transition-colors shadow-sm"
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {problemPoints.map((p) => (
+            <div 
+              key={p.num}
+              className="bg-editorial-pale border border-[#1A1A1A]/10 p-8 rounded-2xl flex flex-col justify-between hover:border-brand-orange-warm/50 transition-all text-left relative group"
             >
-              Browse Complete Blog Directory &#8594;
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
-            {CHAPTERS.map((chapter) => (
-              <div 
-                key={chapter.slug} 
-                className="bg-slate-50 hover:bg-slate-50/50 border border-slate-100 rounded-2xl p-5 flex flex-col justify-between transition-all"
-              >
-                <div className="flex flex-col gap-3">
-                  <div className="flex items-center justify-between">
-                    <span className="font-mono text-xs font-black text-brand-orange-warm">
-                      CH.0{chapter.chapterNumber}
-                    </span>
-                    <span className={`text-[8px] font-mono font-bold px-2 py-0.5 rounded uppercase leading-none ${
-                      chapter.status === 'PUBLISHED' 
-                        ? 'bg-emerald-100 text-emerald-800 border border-emerald-200' 
-                        : 'bg-slate-200 text-slate-500 border border-slate-250'
-                    }`}>
-                      {chapter.status}
-                    </span>
-                  </div>
-
-                  <h3 className="font-display text-slate-900 text-xs font-bold leading-normal">
-                    {chapter.title.split('—').pop()?.trim() || chapter.title}
-                  </h3>
-                  
-                  <p className="font-sans text-[11px] text-slate-500 leading-relaxed font-normal line-clamp-3">
-                    {chapter.description}
-                  </p>
-                </div>
-
-                <div className="pt-4 mt-4 border-t border-slate-100">
-                  {chapter.status === 'PUBLISHED' ? (
-                    <Link 
-                      to={`/blog/${chapter.slug}`}
-                      className="text-xs font-bold text-brand-blue-deep hover:text-brand-orange-warm transition-colors inline-flex items-center gap-1 font-sans"
-                    >
-                      Read Chapter <ArrowUpRight className="w-3.5 h-3.5" />
-                    </Link>
-                  ) : (
-                    <span className="text-[10px] text-slate-400 font-mono font-bold">
-                      Coming Summer 2026
-                    </span>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-
-        </div>
-      </section>
-
-      {/* SECTION 10: BOTTOM CONTACT AND CALENDLY SIMULATOR */}
-      <section id="contact" className="w-full py-24 px-6 md:px-12 bg-slate-50 border-t border-slate-100">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 relative z-10">
-          
-          <div className="lg:col-span-5 flex flex-col gap-6 text-left">
-            <div>
-              <span className="text-[10px] font-mono text-brand-orange-warm tracking-widest uppercase font-bold">Work with Us</span>
-              <h2 className="font-display text-2xl md:text-3xl font-black text-brand-blue-deep tracking-tight mt-1">
-                Let us build something your competitors will study.
-              </h2>
-            </div>
-            
-            <p className="text-xs text-slate-550 font-sans leading-relaxed tracking-tight max-w-sm">
-              We do not pitch standard boilerplate scripts. We inspect your business reality first. Fill the grid, or use direct email setup.
-            </p>
-
-            <div className="space-y-3.5 pt-4">
-              <div className="p-4 bg-white border border-slate-150 rounded-xl flex items-center gap-4">
-                <div className="w-10 h-10 rounded-lg bg-orange-100 flex items-center justify-center text-brand-orange-warm shrink-0">
-                  <Mail className="w-5 h-5" />
-                </div>
-                <div>
-                  <span className="block text-[8px] uppercase tracking-wider text-slate-400 font-mono font-bold">Direct Dispatch:</span>
-                  <a href="mailto:hello@velocitycontentlabs.com" className="hover:text-brand-orange-warm text-xs font-bold font-mono text-brand-blue-deep transition-colors">
-                    hello@velocitycontentlabs.com
-                  </a>
-                </div>
-              </div>
-
-              <div className="p-4 bg-white border border-slate-150 rounded-xl flex items-center gap-4">
-                <div className="w-10 h-10 rounded-lg bg-brand-blue-deep/5 flex items-center justify-center text-brand-blue-deep shrink-0">
-                  <Calendar className="w-5 h-5" />
-                </div>
-                <div>
-                  <span className="block text-[8px] uppercase tracking-wider text-slate-400 font-mono font-bold">Availability:</span>
-                  <span className="block text-xs font-bold text-slate-800">
-                    Responses inside 4 hours WAT (UTC+1)
+              <div>
+                <div className="flex items-center justify-between mb-4">
+                  <span className="font-mono text-xs font-bold text-brand-orange-warm bg-brand-orange-warm/10 px-2.5 py-1 rounded">
+                    PHASE {p.num}
+                  </span>
+                  <span className="text-[10px] font-mono text-neutral-400 uppercase tracking-widest">
+                    DIAGNOSTIC
                   </span>
                 </div>
+
+                <h3 className="font-display text-xl font-semibold italic text-[#1A1A1A] leading-snug mb-3">
+                  {p.title}
+                </h3>
+
+                <div className="p-3 bg-red-500/5 border border-red-500/15 rounded-lg mb-4">
+                  <p className="text-xs font-mono font-bold text-red-900">
+                    ⚠️ {p.stat}
+                  </p>
+                </div>
+
+                <p className="font-sans text-xs text-neutral-600 leading-relaxed">
+                  {p.consequence}
+                </p>
+              </div>
+
+              <div className="pt-6 mt-6 border-t border-black/5 flex items-center justify-between text-xs font-mono text-neutral-500">
+                <span>Velocity Solution:</span>
+                <span className="text-brand-orange-warm font-semibold">Native Distribution</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ========================================================================= */}
+      {/* SECTION 4: THE LEMONADE STAND ORIGIN STORY */}
+      {/* ========================================================================= */}
+      <section className="px-6 md:px-12 py-20 max-w-7xl mx-auto border-b border-[#1A1A1A]/8" id="origin-story">
+        <LemonadeStory />
+      </section>
+
+      {/* ========================================================================= */}
+      {/* SECTION 5: THE VELOCITY METHOD */}
+      {/* ========================================================================= */}
+      <section className="px-6 md:px-12 py-20 max-w-7xl mx-auto border-b border-[#1A1A1A]/8" id="method">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14 text-left">
+          <div className="max-w-2xl">
+            <span className="text-[10px] uppercase font-mono text-brand-orange-warm tracking-[0.25em] font-black block mb-2">
+              Our Proprietary Architecture
+            </span>
+            <h2 className="font-display text-3xl md:text-5xl font-light italic text-[#1A1A1A] tracking-tight leading-tight">
+              The Velocity Method: 4 Phases to Undisputed Authority
+            </h2>
+            <p className="font-sans text-sm md:text-base text-neutral-600 mt-3 leading-relaxed">
+              We operate a closed-loop system that takes your raw institutional thinking and deploys it across the exact channels your target enterprise buyers read every single morning.
+            </p>
+          </div>
+
+          <Link
+            to="/method"
+            className="inline-flex items-center gap-1.5 text-xs font-mono font-bold uppercase tracking-wider text-brand-orange-warm hover:text-orange-700 transition-colors shrink-0"
+          >
+            <span>Explore All 5 Frameworks</span>
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {methodologyPhases.map((phase) => (
+            <div 
+              key={phase.phase}
+              className="bg-white border border-[#1A1A1A]/10 p-7 rounded-2xl flex flex-col justify-between hover:shadow-md transition-all text-left"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-6">
+                  <div className="w-10 h-10 rounded-xl bg-editorial-pale border border-black/5 flex items-center justify-center">
+                    {phase.icon}
+                  </div>
+                  <span className="font-mono text-xs font-black text-neutral-400">
+                    {phase.phase}
+                  </span>
+                </div>
+
+                <h3 className="font-display text-lg font-bold italic text-[#1A1A1A] mb-2">
+                  {phase.title}
+                </h3>
+
+                <p className="font-sans text-xs text-neutral-600 leading-relaxed">
+                  {phase.desc}
+                </p>
+              </div>
+
+              <div className="mt-6 pt-4 border-t border-black/5 text-[10px] font-mono text-brand-orange-warm font-semibold uppercase tracking-wider">
+                Continuous Calibration
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ========================================================================= */}
+      {/* SECTION 6: STRATEGIC SERVICES */}
+      {/* ========================================================================= */}
+      <section className="px-6 md:px-12 py-20 max-w-7xl mx-auto border-b border-[#1A1A1A]/8" id="services">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 text-left">
+          <div className="max-w-2xl">
+            <span className="text-[10px] uppercase font-mono text-brand-orange-warm tracking-[0.25em] font-black block mb-2">
+              Transparent Retainers &amp; Sprints
+            </span>
+            <h2 className="font-display text-3xl md:text-5xl font-light italic text-[#1A1A1A] tracking-tight leading-tight">
+              Four High-Impact Engagement Models
+            </h2>
+            <p className="font-sans text-sm md:text-base text-neutral-600 mt-3 leading-relaxed">
+              No hidden fees, no junior hand-offs, no vague agency hours. Every engagement delivers tangible, verifiable distribution assets with Thomax leading the strategy.
+            </p>
+          </div>
+
+          <Link
+            to="/services"
+            className="inline-flex items-center gap-1.5 text-xs font-mono font-bold uppercase tracking-wider text-brand-orange-warm hover:text-orange-700 transition-colors shrink-0"
+          >
+            <span>Compare Detailed Inclusions</span>
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {SERVICES.map((service, index) => {
+            const isFeatured = service.id === 'velocity-engine';
+            return (
+              <div 
+                key={service.id}
+                className={`p-8 rounded-2xl flex flex-col justify-between text-left transition-all relative ${
+                  isFeatured 
+                    ? 'bg-[#121212] text-white border-2 border-brand-orange-warm shadow-xl' 
+                    : 'bg-editorial-pale border border-[#1A1A1A]/10 text-[#1A1A1A] hover:border-brand-orange-warm'
+                }`}
+              >
+                {isFeatured && (
+                  <span className="absolute -top-3.5 right-8 bg-brand-orange-warm text-white font-mono text-[10px] uppercase font-bold tracking-widest px-3 py-1 rounded-full shadow">
+                    Most Popular Retainer
+                  </span>
+                )}
+
+                <div>
+                  <div className="flex items-start justify-between gap-4 mb-3">
+                    <div>
+                      <h3 className={`font-display text-2xl font-bold italic ${isFeatured ? 'text-white' : 'text-[#1A1A1A]'}`}>
+                        {service.name}
+                      </h3>
+                      <p className={`text-xs mt-1 font-sans ${isFeatured ? 'text-neutral-400' : 'text-neutral-600'}`}>
+                        {service.description}
+                      </p>
+                    </div>
+                    <div className="text-right shrink-0">
+                      <span className={`font-display text-2xl font-black ${isFeatured ? 'text-brand-orange-warm' : 'text-[#1A1A1A]'}`}>
+                        {service.price}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Best For & Timeline */}
+                  <div className="my-5 p-3 rounded-lg bg-black/5 dark:bg-white/5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-xs font-mono">
+                    <div>
+                      <span className="text-neutral-400">Best for: </span>
+                      <span className={`font-semibold ${isFeatured ? 'text-neutral-200' : 'text-neutral-800'}`}>{service.bestFor}</span>
+                    </div>
+                    <div className="text-brand-orange-warm font-semibold shrink-0">
+                      ⏱ {service.timeline}
+                    </div>
+                  </div>
+
+                  {/* Includes List */}
+                  <div className="space-y-2.5 my-6">
+                    <span className="text-[11px] font-mono uppercase tracking-widest text-neutral-400 font-bold block mb-2">
+                      Core Deliverables:
+                    </span>
+                    {service.includes.map((inc, i) => (
+                      <div key={i} className="flex items-start gap-2.5 text-xs">
+                        <Check className="w-4 h-4 text-brand-orange-warm shrink-0 mt-0.5" />
+                        <span className={isFeatured ? 'text-neutral-300' : 'text-neutral-700'}>{inc}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="pt-6 border-t border-black/10 dark:border-white/10 flex items-center justify-between gap-4">
+                  <Link
+                    to="/contact"
+                    className={`w-full py-3.5 rounded-full text-center text-xs uppercase font-bold tracking-widest transition-all ${
+                      isFeatured
+                        ? 'bg-brand-orange-warm hover:bg-orange-600 text-white shadow-md'
+                        : 'bg-[#1A1A1A] hover:bg-brand-orange-warm text-white'
+                    }`}
+                  >
+                    Select {service.name} →
+                  </Link>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* ========================================================================= */}
+      {/* SECTION 7: THE 65-MINUTE AI-HUMAN HYBRID ENGINE */}
+      {/* ========================================================================= */}
+      <section className="px-6 md:px-12 py-20 max-w-7xl mx-auto border-b border-[#1A1A1A]/8">
+        <div className="bg-[#121212] text-white p-8 md:p-12 rounded-3xl relative overflow-hidden text-left">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-brand-orange-warm/10 rounded-full blur-3xl pointer-events-none" />
+          
+          <div className="max-w-3xl mb-10">
+            <span className="text-[10px] uppercase font-mono text-brand-orange-warm tracking-[0.25em] font-black block mb-2">
+              The Anti-Robot Creation Protocol
+            </span>
+            <h2 className="font-display text-3xl md:text-4xl font-light italic text-white tracking-tight leading-tight">
+              The 65-Minute Weekly Hybrid Content Engine™
+            </h2>
+            <p className="font-sans text-sm text-neutral-400 mt-2 leading-relaxed">
+              We leverage AI where machines excel (rapid synthesis, outline mapping, multi-platform formatting) while strictly protecting human emotional depth, personal war stories, and soul.
+            </p>
+          </div>
+
+          {/* 5-Step Timeline Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+            <div className="p-5 rounded-2xl bg-neutral-900 border border-neutral-800 flex flex-col justify-between">
+              <div>
+                <span className="font-mono text-xs font-bold text-emerald-400 bg-emerald-950 px-2 py-0.5 rounded border border-emerald-800/40">
+                  00–20m • AI
+                </span>
+                <h4 className="font-display text-base font-bold italic text-white mt-3 mb-1">
+                  Structural Mapping
+                </h4>
+                <p className="text-xs text-neutral-400 font-sans leading-relaxed">
+                  Competitor whitespace audit, semantic outline generation, and angle exploration.
+                </p>
+              </div>
+              <span className="text-[10px] font-mono text-neutral-500 mt-4">Speed Multiplier</span>
+            </div>
+
+            <div className="p-5 rounded-2xl bg-neutral-900 border border-brand-orange-warm/40 flex flex-col justify-between">
+              <div>
+                <span className="font-mono text-xs font-bold text-brand-orange-warm bg-orange-950 px-2 py-0.5 rounded border border-orange-800/40">
+                  20–30m • HUMAN
+                </span>
+                <h4 className="font-display text-base font-bold italic text-white mt-3 mb-1">
+                  Soul &amp; War Stories
+                </h4>
+                <p className="text-xs text-neutral-300 font-sans leading-relaxed">
+                  Thomax stitches your unreplicable personal lessons, client numbers, and proprietary opinions.
+                </p>
+              </div>
+              <span className="text-[10px] font-mono text-brand-orange-warm font-semibold mt-4">Zero Robotic Filler</span>
+            </div>
+
+            <div className="p-5 rounded-2xl bg-neutral-900 border border-neutral-800 flex flex-col justify-between">
+              <div>
+                <span className="font-mono text-xs font-bold text-emerald-400 bg-emerald-950 px-2 py-0.5 rounded border border-emerald-800/40">
+                  30–45m • AI
+                </span>
+                <h4 className="font-display text-base font-bold italic text-white mt-3 mb-1">
+                  Derivative Drafting
+                </h4>
+                <p className="text-xs text-neutral-400 font-sans leading-relaxed">
+                  Drafting 40+ customized variants tailored to LinkedIn, X, newsletters, and visual slides.
+                </p>
+              </div>
+              <span className="text-[10px] font-mono text-neutral-500 mt-4">10 Channels in Minutes</span>
+            </div>
+
+            <div className="p-5 rounded-2xl bg-neutral-900 border border-brand-orange-warm/40 flex flex-col justify-between">
+              <div>
+                <span className="font-mono text-xs font-bold text-brand-orange-warm bg-orange-950 px-2 py-0.5 rounded border border-orange-800/40">
+                  45–60m • HUMAN
+                </span>
+                <h4 className="font-display text-base font-bold italic text-white mt-3 mb-1">
+                  Voice &amp; Soul Edit
+                </h4>
+                <p className="text-xs text-neutral-300 font-sans leading-relaxed">
+                  Sentence cadence fine-tuning, removal of generic SaaS jargon, and punchy hook calibration.
+                </p>
+              </div>
+              <span className="text-[10px] font-mono text-brand-orange-warm font-semibold mt-4">The Coffee Shop Test</span>
+            </div>
+
+            <div className="p-5 rounded-2xl bg-neutral-900 border border-neutral-800 flex flex-col justify-between">
+              <div>
+                <span className="font-mono text-xs font-bold text-blue-400 bg-blue-950 px-2 py-0.5 rounded border border-blue-800/40">
+                  60–65m • OPS
+                </span>
+                <h4 className="font-display text-base font-bold italic text-white mt-3 mb-1">
+                  Auto Distribution
+                </h4>
+                <p className="text-xs text-neutral-400 font-sans leading-relaxed">
+                  Scheduled multi-channel broadcasting across your brand and founder personal profiles.
+                </p>
+              </div>
+              <span className="text-[10px] font-mono text-neutral-500 mt-4">100% Scheduled</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ========================================================================= */}
+      {/* SECTION 8: EMBEDDED CAL AI CUSTOMER CARE SHOWCASE */}
+      {/* ========================================================================= */}
+      <section className="px-6 md:px-12 py-20 max-w-7xl mx-auto border-b border-[#1A1A1A]/8" id="cal-ai">
+        <div className="text-center max-w-3xl mx-auto mb-10">
+          <span className="text-[10px] uppercase font-mono text-brand-orange-warm tracking-[0.25em] font-black block mb-2">
+            Intelligent Customer Care
+          </span>
+          <h2 className="font-display text-3xl md:text-5xl font-light italic text-[#1A1A1A] tracking-tight leading-tight">
+            Meet Cal: Your AI Care Representative
+          </h2>
+          <p className="font-sans text-sm md:text-base text-neutral-600 mt-3 leading-relaxed">
+            Have questions about our retainer models, the 65-minute workflow, or want to book a direct 15-minute diagnostic with Thomax? Chat with Cal in real-time below.
+          </p>
+        </div>
+
+        {/* Embedded Cal Assistant Component */}
+        <CalAssistant embedded={true} />
+      </section>
+
+      {/* ========================================================================= */}
+      {/* SECTION 9: CASE STUDIES & PROOF STACK */}
+      {/* ========================================================================= */}
+      <section className="px-6 md:px-12 py-20 max-w-7xl mx-auto border-b border-[#1A1A1A]/8" id="results">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 text-left">
+          <div className="max-w-2xl">
+            <span className="text-[10px] uppercase font-mono text-brand-orange-warm tracking-[0.25em] font-black block mb-2">
+              Verified Client Proof
+            </span>
+            <h2 className="font-display text-3xl md:text-5xl font-light italic text-[#1A1A1A] tracking-tight leading-tight">
+              The Proof Stack: Results Across 5 Continents
+            </h2>
+            <p className="font-sans text-sm md:text-base text-neutral-600 mt-3 leading-relaxed">
+              Abstractions die; verified proof lives. Review actual client transformations across B2B SaaS, executive advisory, direct-to-consumer, and high-ticket service firms.
+            </p>
+          </div>
+
+          <Link
+            to="/work"
+            className="inline-flex items-center gap-1.5 text-xs font-mono font-bold uppercase tracking-wider text-brand-orange-warm hover:text-orange-700 transition-colors shrink-0"
+          >
+            <span>View Complete Case Studies</span>
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+        </div>
+
+        <div className="space-y-6">
+          {CASE_STUDIES.map((study) => {
+            const isExpanded = expandedCaseStudy === study.id;
+            return (
+              <div 
+                key={study.id}
+                className="bg-editorial-pale border border-[#1A1A1A]/10 rounded-2xl p-6 md:p-8 hover:border-brand-orange-warm transition-all text-left"
+              >
+                <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+                  
+                  {/* Left Client info */}
+                  <div className="max-w-xl">
+                    <div className="flex items-center gap-3 mb-2">
+                      <span className="font-display font-bold text-xl text-[#1A1A1A]">
+                        {study.client}
+                      </span>
+                      <span className="text-[10px] font-mono bg-black/5 text-neutral-700 px-2.5 py-0.5 rounded font-bold uppercase">
+                        {study.industry}
+                      </span>
+                    </div>
+
+                    <p className="text-sm font-sans font-semibold text-brand-orange-warm leading-snug">
+                      ✨ {study.highlightMetric}
+                    </p>
+                  </div>
+
+                  {/* Middle Metrics Before/After */}
+                  <div className="flex items-center gap-4 text-xs font-mono">
+                    <div className="p-3 bg-white border border-black/5 rounded-xl">
+                      <span className="text-neutral-400 block text-[9px] uppercase">Before</span>
+                      <span className="font-semibold text-neutral-700">{study.metrics.before}</span>
+                    </div>
+                    <span className="text-brand-orange-warm font-bold">→</span>
+                    <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-xl">
+                      <span className="text-emerald-700 block text-[9px] uppercase font-bold">After (90 Days)</span>
+                      <span className="font-bold text-emerald-950">{study.metrics.after}</span>
+                    </div>
+                  </div>
+
+                  {/* Right Button */}
+                  <button
+                    onClick={() => toggleCaseStudy(study.id)}
+                    className="self-start lg:self-center px-4 py-2 rounded-full border border-black/15 hover:bg-black hover:text-white text-xs font-mono font-semibold transition-colors flex items-center gap-1.5 shrink-0"
+                  >
+                    <span>{isExpanded ? 'Collapse Blueprint' : 'Inspect Strategy'}</span>
+                    {isExpanded ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+                  </button>
+                </div>
+
+                {/* Expanded Details Drawer */}
+                <AnimatePresence>
+                  {isExpanded && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.25 }}
+                      className="mt-6 pt-6 border-t border-black/10 grid grid-cols-1 md:grid-cols-2 gap-6 overflow-hidden"
+                    >
+                      <div className="p-4 bg-white rounded-xl border border-black/5">
+                        <span className="text-[10px] font-mono uppercase text-red-700 font-bold block mb-1">
+                          The Core Bottleneck:
+                        </span>
+                        <p className="text-xs text-neutral-700 leading-relaxed font-sans">
+                          {study.challenge}
+                        </p>
+                      </div>
+
+                      <div className="p-4 bg-white rounded-xl border border-black/5">
+                        <span className="text-[10px] font-mono uppercase text-emerald-800 font-bold block mb-1">
+                          Velocity Method Deployed:
+                        </span>
+                        <p className="text-xs text-neutral-700 leading-relaxed font-sans">
+                          {study.solution} {study.expandedDetails}
+                        </p>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* ========================================================================= */}
+      {/* SECTION 10: PROPRIETARY FRAMEWORKS PREVIEW */}
+      {/* ========================================================================= */}
+      <section className="px-6 md:px-12 py-20 max-w-7xl mx-auto border-b border-[#1A1A1A]/8">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 text-left">
+          <div className="max-w-2xl">
+            <span className="text-[10px] uppercase font-mono text-brand-orange-warm tracking-[0.25em] font-black block mb-2">
+              Intellectual Infrastructure
+            </span>
+            <h2 className="font-display text-3xl md:text-5xl font-light italic text-[#1A1A1A] tracking-tight leading-tight">
+              Battle-Tested Growth Frameworks
+            </h2>
+            <p className="font-sans text-sm md:text-base text-neutral-600 mt-3 leading-relaxed">
+              Every system we deploy is documented into step-by-step frameworks engineered to bypass friction, cultivate instant buyer trust, and convert attention into contracts.
+            </p>
+          </div>
+
+          <Link
+            to="/insights"
+            className="inline-flex items-center gap-1.5 text-xs font-mono font-bold uppercase tracking-wider text-brand-orange-warm hover:text-orange-700 transition-colors shrink-0"
+          >
+            <span>Download PDF Toolkits</span>
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {FRAMEWORKS.map((fw) => (
+            <div 
+              key={fw.id}
+              className="bg-white border border-[#1A1A1A]/10 p-7 rounded-2xl flex flex-col justify-between hover:border-brand-orange-warm hover:shadow-md transition-all text-left"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-[9px] font-mono bg-brand-orange-warm/10 text-brand-orange-warm px-2 py-0.5 rounded font-bold uppercase">
+                    KEYWORD: {fw.keyword}
+                  </span>
+                  <span className="text-[10px] font-mono text-neutral-400">VCL-IP</span>
+                </div>
+
+                <h3 className="font-display text-lg font-bold italic text-[#1A1A1A] mb-1">
+                  {fw.name}
+                </h3>
+                <p className="text-xs font-mono text-brand-orange-warm mb-3 font-semibold">
+                  "{fw.principle}"
+                </p>
+
+                <p className="font-sans text-xs text-neutral-600 leading-relaxed">
+                  {fw.description}
+                </p>
+              </div>
+
+              <div className="mt-6 pt-4 border-t border-black/5">
+                <span className="text-[11px] font-sans font-bold text-emerald-800 block">
+                  🎯 Verified Result: {fw.result}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ========================================================================= */}
+      {/* SECTION 11: THE FOUNDER & PHILOSOPHY */}
+      {/* ========================================================================= */}
+      <section className="px-6 md:px-12 py-20 max-w-7xl mx-auto border-b border-[#1A1A1A]/8" id="founder">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center text-left">
+          
+          {/* Left Column Profile Card */}
+          <div className="lg:col-span-5">
+            <div className="relative">
+              <BrandImage
+                src="/photos/1000335399.png"
+                alt="Thomax - Emmanuel Sunday Thomas"
+                aspectRatio="3:4"
+                stylingType="photoA"
+                className="w-full shadow-2xl rounded-2xl"
+              />
+              <div className="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur p-4 rounded-xl border border-black/10 shadow-lg">
+                <h4 className="font-display text-base font-bold italic text-neutral-900 leading-none">
+                  {FOUNDER_NAME}
+                </h4>
+                <p className="text-[11px] font-mono text-brand-orange-warm mt-1 font-semibold">
+                  Founder &amp; Chief Content Architect
+                </p>
+                <p className="text-[10px] text-neutral-500 mt-1">
+                  Lagos, Nigeria • Leading Global Distribution Strategy
+                </p>
               </div>
             </div>
           </div>
 
-          <div className="lg:col-span-7">
-            <div className="bg-white border border-slate-150 rounded-2xl p-6 md:p-8 shadow-sm">
-              
-              {!contactSuccess ? (
-                <form onSubmit={handleContactSubmit} className="space-y-4 text-left" id="con-main-form">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div className="flex flex-col gap-1.5">
-                      <label className="text-[10px] font-mono text-slate-400 uppercase font-black">Full Name</label>
-                      <input 
-                        type="text" 
-                        placeholder="Emmanuel Sunday" 
+          {/* Right Column Editorial Narrative */}
+          <div className="lg:col-span-7 space-y-6">
+            <span className="text-[10px] uppercase font-mono text-brand-orange-warm tracking-[0.25em] font-black block">
+              Founder Profile &amp; Ethos
+            </span>
+
+            <h2 className="font-display text-3xl md:text-5xl font-light italic text-[#1A1A1A] tracking-tight leading-tight">
+              "Where Strategy Meets Soul is not a slogan. It is an operational standard."
+            </h2>
+
+            <p className="font-sans text-sm md:text-base text-neutral-700 leading-relaxed">
+              I founded Velocity Contents Lab after a sobering realization in Lagos: the most brilliant minds and transformative software products in the world were losing deals to mediocre competitors simply because they lacked distribution discipline.
+            </p>
+
+            <p className="font-sans text-sm md:text-base text-neutral-700 leading-relaxed">
+              We reject the wave of lazy, synthetic AI spam flooding the internet today. When you work with Velocity Contents Lab, you get cutting-edge semantic speed combined with the unreplicable warmth, wisdom, and punch of true human voice.
+            </p>
+
+            {/* The Coffee Shop Test Callout */}
+            <div className="p-6 bg-editorial-pale border-l-4 border-brand-orange-warm rounded-r-xl">
+              <div className="flex items-center gap-2 text-xs font-mono font-bold text-brand-orange-warm uppercase mb-1">
+                <Quote className="w-4 h-4" />
+                <span>The Coffee Shop Test Standard</span>
+              </div>
+              <p className="font-display text-base italic font-semibold text-neutral-900 leading-relaxed">
+                "{COFFEE_SHOP_TEST_QUOTE}"
+              </p>
+            </div>
+
+            <div className="flex flex-wrap gap-4 pt-2">
+              <Link
+                to="/about"
+                className="px-6 py-3 rounded-full bg-[#1A1A1A] hover:bg-brand-orange-warm text-white font-sans text-xs uppercase font-bold tracking-wider transition-colors inline-flex items-center gap-2"
+              >
+                <span>Read Full Biography &amp; Origin</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+
+              <Link
+                to="/contact"
+                className="px-6 py-3 rounded-full border border-black/20 hover:border-black text-neutral-900 font-sans text-xs uppercase font-bold tracking-wider transition-colors inline-flex items-center gap-2"
+              >
+                <span>Book 1-on-1 with Thomax</span>
+                <ArrowUpRight className="w-4 h-4" />
+              </Link>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* ========================================================================= */}
+      {/* SECTION 12: FINAL HIGH-CONVERSION DIAGNOSTIC CTA */}
+      {/* ========================================================================= */}
+      <section className="px-6 md:px-12 pt-20 max-w-7xl mx-auto" id="contact">
+        <div className="bg-[#121212] text-white p-8 md:p-16 rounded-3xl relative overflow-hidden text-left border border-neutral-800">
+          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-orange-warm/10 rounded-full blur-3xl pointer-events-none" />
+          
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 relative z-10 items-center">
+            
+            {/* Left pitch */}
+            <div className="lg:col-span-6 space-y-5">
+              <span className="text-[10px] uppercase font-mono text-brand-orange-warm tracking-[0.25em] font-black block">
+                Direct Partnership Inquiry
+              </span>
+
+              <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-light italic text-white tracking-tight leading-tight">
+                Ready to turn your knowledge into an incontestable pipeline?
+              </h2>
+
+              <p className="font-sans text-sm text-neutral-300 leading-relaxed">
+                Book a complimentary 15-Minute Content Diagnostic with Thomax. We will review your public distribution footprint, identify immediate pipeline leaks, and outline a tailored 90-day roadmap.
+              </p>
+
+              <div className="space-y-3 pt-2">
+                <div className="flex items-center gap-3 text-xs text-neutral-300">
+                  <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+                  <span>Direct diagnostic led personally by Thomax (Founder)</span>
+                </div>
+                <div className="flex items-center gap-3 text-xs text-neutral-300">
+                  <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+                  <span>Guaranteed response SLA within 4 business hours</span>
+                </div>
+                <div className="flex items-center gap-3 text-xs text-neutral-300">
+                  <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+                  <span>Zero hard-sell tactics—pure structural diagnostic value</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Right form */}
+            <div className="lg:col-span-6 bg-white text-neutral-900 p-8 rounded-2xl shadow-2xl">
+              {formSubmitted ? (
+                <div className="py-8 text-center space-y-4">
+                  <div className="w-14 h-14 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto">
+                    <Check className="w-7 h-7" />
+                  </div>
+                  <h3 className="font-display text-2xl font-bold italic text-neutral-900">
+                    Diagnostic Request Received!
+                  </h3>
+                  <p className="text-xs text-neutral-600 max-w-sm mx-auto leading-relaxed">
+                    Thomax and the Velocity team are reviewing your brand footprint. Expect a calendar confirmation link in your inbox within 4 business hours.
+                  </p>
+                  <button
+                    onClick={() => setFormSubmitted(false)}
+                    className="text-xs font-mono text-brand-orange-warm font-semibold hover:underline mt-2"
+                  >
+                    Submit another inquiry →
+                  </button>
+                </div>
+              ) : (
+                <form onSubmit={handleLeadSubmit} className="space-y-4">
+                  <h3 className="font-display text-xl font-bold italic text-neutral-900 mb-1">
+                    Book 15-Min Diagnostic Call
+                  </h3>
+                  <p className="text-xs text-neutral-500 font-sans mb-4">
+                    Fill out the details below to schedule your audit session.
+                  </p>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-[10px] font-mono uppercase text-neutral-500 font-bold mb-1">
+                        Your Full Name *
+                      </label>
+                      <input
+                        type="text"
                         required
-                        value={contactForm.name}
-                        onChange={(e) => setContactForm({ ...contactForm, name: e.target.value })}
-                        className="w-full px-4 py-3 rounded-lg bg-slate-50 border border-slate-150 text-slate-800 font-sans text-xs focus:outline-none focus:border-brand-orange-warm transition-colors"
+                        value={leadForm.name}
+                        onChange={(e) => setLeadForm({ ...leadForm, name: e.target.value })}
+                        placeholder="e.g. Alex Morgan"
+                        className="w-full px-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-lg text-xs focus:outline-none focus:border-brand-orange-warm"
                       />
                     </div>
-                    <div className="flex flex-col gap-1.5">
-                      <label className="text-[10px] font-mono text-slate-400 uppercase font-black">Business Email</label>
-                      <input 
-                        type="email" 
-                        placeholder="hello@firm.com" 
+
+                    <div>
+                      <label className="block text-[10px] font-mono uppercase text-neutral-500 font-bold mb-1">
+                        Work Email *
+                      </label>
+                      <input
+                        type="email"
                         required
-                        value={contactForm.email}
-                        onChange={(e) => setContactForm({ ...contactForm, email: e.target.value })}
-                        className="w-full px-4 py-3 rounded-lg bg-slate-50 border border-slate-150 text-slate-800 font-sans text-xs focus:outline-none focus:border-brand-orange-warm transition-colors"
+                        value={leadForm.email}
+                        onChange={(e) => setLeadForm({ ...leadForm, email: e.target.value })}
+                        placeholder="alex@company.com"
+                        className="w-full px-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-lg text-xs focus:outline-none focus:border-brand-orange-warm"
                       />
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div className="flex flex-col gap-1.5">
-                      <label className="text-[10px] font-mono text-slate-400 uppercase font-black">Company Name</label>
-                      <input 
-                        type="text" 
-                        placeholder="Pulse Digital" 
-                        value={contactForm.company}
-                        onChange={(e) => setContactForm({ ...contactForm, company: e.target.value })}
-                        className="w-full px-4 py-3 rounded-lg bg-slate-50 border border-slate-150 text-slate-800 font-sans text-xs focus:outline-none focus:border-brand-orange-warm transition-colors"
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-[10px] font-mono uppercase text-neutral-500 font-bold mb-1">
+                        Company &amp; Website
+                      </label>
+                      <input
+                        type="text"
+                        value={leadForm.company}
+                        onChange={(e) => setLeadForm({ ...leadForm, company: e.target.value })}
+                        placeholder="Acme Analytics (acme.com)"
+                        className="w-full px-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-lg text-xs focus:outline-none focus:border-brand-orange-warm"
                       />
                     </div>
-                    <div className="flex flex-col gap-1.5">
-                      <label className="text-[10px] font-mono text-slate-400 uppercase font-black">Advisory Budget Range</label>
-                      <select 
-                        value={contactForm.budget}
-                        onChange={(e) => setContactForm({ ...contactForm, budget: e.target.value })}
-                        className="w-full px-4 py-3 rounded-lg bg-slate-50 border border-slate-150 text-slate-800 font-sans text-xs focus:outline-none focus:border-brand-orange-warm transition-colors"
+
+                    <div>
+                      <label className="block text-[10px] font-mono uppercase text-neutral-500 font-bold mb-1">
+                        Target Engagement
+                      </label>
+                      <select
+                        value={leadForm.budget}
+                        onChange={(e) => setLeadForm({ ...leadForm, budget: e.target.value })}
+                        className="w-full px-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-lg text-xs focus:outline-none focus:border-brand-orange-warm"
                       >
-                        <option value="$3,500/mo retainer">The Velocity Engine — $3,500/mo</option>
-                        <option value="$2,500/mo retainer">The Authority Accelerator — $2,500/mo</option>
-                        <option value="$5,000 one-time">The Launch System — $5,000 one-time</option>
-                        <option value="$1,500 one-time">The Strategic Sprint — $1,500 one-time</option>
+                        <option value="$3,500/mo retainer">The Velocity Engine ($3,500/mo)</option>
+                        <option value="$2,500/mo retainer">The Authority Accelerator ($2,500/mo)</option>
+                        <option value="$5,000 one-time">The Launch System ($5,000 one-time)</option>
+                        <option value="$1,500 one-time">The Strategic Sprint ($1,500 one-time)</option>
+                        <option value="Custom/Enterprise">Custom Enterprise Scope</option>
                       </select>
                     </div>
                   </div>
 
-                  <div className="flex flex-col gap-1.5">
-                    <label className="text-[10px] font-mono text-slate-400 uppercase font-black">Your Objectives &amp; Platforms</label>
-                    <textarea 
-                      placeholder="My team is creating pristine technical briefs, but we lack native multi-platform distribution..." 
-                      rows={4}
-                      required
-                      value={contactForm.message}
-                      onChange={(e) => setContactForm({ ...contactForm, message: e.target.value })}
-                      className="w-full px-4 py-3 rounded-lg bg-slate-50 border border-slate-150 text-slate-800 font-sans text-xs focus:outline-none focus:border-brand-orange-warm transition-colors font-sans"
+                  <div>
+                    <label className="block text-[10px] font-mono uppercase text-neutral-500 font-bold mb-1">
+                      What is your biggest content or distribution bottleneck?
+                    </label>
+                    <textarea
+                      rows={3}
+                      value={leadForm.message}
+                      onChange={(e) => setLeadForm({ ...leadForm, message: e.target.value })}
+                      placeholder="e.g. We have great technical case studies but no time to repurpose them across LinkedIn and newsletter channels..."
+                      className="w-full px-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-lg text-xs focus:outline-none focus:border-brand-orange-warm resize-none"
                     />
                   </div>
 
-                  <button 
-                    type="submit" 
-                    className="w-full py-4 rounded-xl bg-brand-orange-warm hover:bg-orange-600 text-white font-sans text-xs font-bold shadow-lg shadow-orange-500/10 transition-colors flex items-center justify-center gap-2"
+                  <button
+                    type="submit"
+                    className="w-full py-4 rounded-full bg-brand-orange-warm hover:bg-orange-600 text-white font-sans text-xs uppercase font-bold tracking-widest transition-colors flex items-center justify-center gap-2 shadow-md shadow-orange-500/20"
                   >
-                    Submit Booking Request
+                    <span>Request Diagnostic Schedule</span>
                     <ArrowUpRight className="w-4 h-4" />
                   </button>
                 </form>
-              ) : (
-                <div className="py-12 text-center flex flex-col items-center gap-4">
-                  <div className="w-12 h-12 bg-emerald-100 text-brand-green-emerald rounded-full flex items-center justify-center mb-2">
-                    <Check className="w-6 h-6" />
-                  </div>
-                  <h3 className="font-display text-lg font-bold text-[#1E2A3A]">Your Booking Package Is Saved!</h3>
-                  <p className="text-xs text-slate-500 font-sans max-w-sm leading-relaxed">
-                    Thomax will review your company's digital presence (Lagos team will draft diagnostic data maps beforehand) and email a Calendly scheduler to <span className="text-[#1E2A3A] font-bold font-mono">{contactForm.email}</span> within 4 business hours.
-                  </p>
-                </div>
               )}
-
             </div>
-          </div>
 
+          </div>
         </div>
       </section>
-
-      {/* DOWNLOAD INTERCEPT MODAL DIALOG */}
-      <AnimatePresence>
-        {downloadModal && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
-            {/* Backdrop */}
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setDownloadModal(null)}
-              className="absolute inset-0 bg-slate-950/70 backdrop-blur-sm"
-            />
-
-            {/* Content Container */}
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.95, y: 30 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 30 }}
-              className="bg-white border border-slate-150 rounded-2xl p-6.5 md:p-8 max-w-md w-full relative z-10 shadow-xl"
-            >
-              <h3 className="font-display text-base font-black text-brand-blue-deep mb-2">
-                Download Free Blueprint
-              </h3>
-              
-              <p className="text-xs text-slate-550 font-sans leading-relaxed mb-6">
-                Enter your professional business email to capture the full PDF file for keyword: <span className="font-mono font-bold text-brand-orange-warm bg-orange-50 px-1.5 py-0.5 border border-orange-200/50 rounded">{downloadModal}</span>.
-              </p>
-
-              {!downloadSuccess ? (
-                <form onSubmit={handleResourceDownload} className="space-y-4">
-                  <div className="flex flex-col gap-1.5 text-left">
-                    <label className="text-[10px] font-mono text-slate-400 uppercase font-black">Your Name</label>
-                    <input 
-                      type="text" 
-                      placeholder="Emmanuel Thomas" 
-                      required
-                      value={resourceName}
-                      onChange={(e) => setResourceName(e.target.value)}
-                      className="w-full px-4 py-3 rounded-lg bg-slate-50 border border-slate-150 text-slate-800 font-sans text-xs focus:outline-none focus:border-brand-orange-warm"
-                    />
-                  </div>
-                  <div className="flex flex-col gap-1.5 text-left">
-                    <label className="text-[10px] font-mono text-slate-400 uppercase font-black">Business Email</label>
-                    <input 
-                      type="email" 
-                      placeholder="hello@company.com" 
-                      required
-                      value={resourceEmail}
-                      onChange={(e) => setResourceEmail(e.target.value)}
-                      className="w-full px-4 py-3 rounded-lg bg-slate-50 border border-slate-150 text-slate-800 font-sans text-xs focus:outline-none focus:border-brand-orange-warm"
-                    />
-                  </div>
-
-                  <button 
-                    type="submit" 
-                    className="w-full py-4.5 bg-brand-orange-warm text-white font-sans text-xs font-bold rounded-xl shadow-lg transition-colors flex items-center justify-center gap-2"
-                  >
-                    Authorize Decent &amp; Email Copy <Download className="w-3.5 h-3.5" />
-                  </button>
-                </form>
-              ) : (
-                <div className="py-6 text-center flex flex-col items-center gap-4">
-                  <div className="w-10 h-10 bg-emerald-100 text-brand-green-emerald rounded-full flex items-center justify-center">
-                    <Check className="w-5 h-5 animate-bounce" />
-                  </div>
-                  <h4 className="font-display text-sm font-bold text-[#1E2A3A]">Download Process Complete!</h4>
-                  <p className="text-[11px] text-slate-500 font-sans leading-relaxed">
-                    Your PDF resource is compiled. The VCL dispatcher has injected the PDF download link directly to <span className="text-[#1E2A3A] font-bold font-mono">{resourceEmail}</span>. The 5-stage strategic nurture has begun.
-                  </p>
-                  <button 
-                    onClick={() => setDownloadModal(null)}
-                    className="mt-2 text-xs font-mono font-bold text-brand-orange-warm underline"
-                  >
-                    Back to Library
-                  </button>
-                </div>
-              )}
-
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
-
-      {/* PERSONAL STORY DETAIL MODAL */}
-      <AnimatePresence>
-        {activeStoryModal && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
-            {/* Backdrop */}
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setActiveStoryModal(null)}
-              className="absolute inset-0 bg-[#0F0D0D]/75 backdrop-blur-sm"
-              id="story-modal-backdrop"
-            />
-
-            {/* Content Box */}
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.95, y: 30 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 30 }}
-              className="bg-white border border-[#1A1A1A]/10 p-6 md:p-8 max-w-lg w-full relative z-10 shadow-2xl max-h-[90vh] overflow-y-auto"
-              id="story-modal-dialog"
-            >
-              {activeStoryModal === 'daughter' && (
-                <div className="flex flex-col gap-4 text-left">
-                  <span className="text-[10px] uppercase font-mono text-brand-orange-warm tracking-[0.25em] font-black leading-none">
-                    The Origin Story • July 2024
-                  </span>
-                  <h3 className="font-display italic text-2xl font-semibold text-[#1A1A1A] leading-tight">
-                    The Lemonade Stand
-                  </h3>
-                  
-                  {/* Quote element style */}
-                  <div className="p-5 bg-orange-50/50 border-l-4 border-brand-orange-warm pl-4 my-2">
-                    <p className="font-display italic text-sm text-brand-orange-warm font-semibold leading-relaxed">
-                      "Daddy, it doesn't matter how good it is if nobody knows where to find it."
-                    </p>
-                    <span className="text-[9px] font-mono text-slate-400 mt-2 block uppercase tracking-wider font-bold">
-                      — The daughter of Thomax. Age 7.
-                    </span>
-                  </div>
-
-                  <div className="font-sans text-xs text-slate-600 space-y-3 leading-relaxed">
-                    <p>
-                      My daughter started a lemonade stand. She made the best lemonade I have ever tasted in Lagos. But nobody came.
-                    </p>
-                    <p>
-                      After an hour, she was devastated. <span className="italic">"Daddy, my lemonade is not good enough."</span>
-                    </p>
-                    <p className="font-mono text-[10px] text-brand-orange-warm uppercase tracking-wider font-bold">
-                      Wrong diagnosis entirely.
-                    </p>
-                    <p>
-                      Her lemonade was exceptional. Her distribution was broken.
-                    </p>
-                    <p>
-                      We fixed three things: posted inside the neighborhood WhatsApp group, put up clear signboards where people actually walked, and she personally invited her friends' parents.
-                    </p>
-                    <p>
-                      Twenty minutes later — 15 customers. $43 earned. Sold out.
-                    </p>
-                    <p className="font-semibold text-[#1A1A1A]">
-                      From a 7-year-old: she solved the entire digital content distribution problem in one single elegant sentence. That is the soul and the infrastructure running inside VELOCITY CONTENTS LAB.
-                    </p>
-                  </div>
-                </div>
-              )}
-
-              {activeStoryModal === 'wife' && (
-                <div className="flex flex-col gap-4 text-left">
-                  <span className="text-[10px] uppercase font-mono text-brand-orange-warm tracking-[0.25em] font-black leading-none">
-                    The Operational Filter
-                  </span>
-                  <h3 className="font-display italic text-2xl font-semibold text-[#1A1A1A] leading-tight">
-                    The Coffee Shop Test
-                  </h3>
-                  
-                  <div className="p-5 bg-orange-50/50 border-l-4 border-brand-orange-warm pl-4 my-2">
-                    <p className="font-display italic text-sm text-brand-orange-warm font-semibold leading-relaxed">
-                      "If you cannot explain this over a coffee — why would a client trust you with their brand?"
-                    </p>
-                    <span className="text-[9px] font-mono text-slate-400 mt-2 block uppercase tracking-wider font-bold">
-                      — The Wife Standard Standardizer
-                    </span>
-                  </div>
-
-                  <div className="font-sans text-xs text-slate-600 space-y-3 leading-relaxed">
-                    <p>
-                      My wife read two full hours of my most complex, highly technical content strategy architectures. She put the phone down, sighed, and said: <span className="italic">"If you cannot explain this to someone over a coffee — why would a client trust you with their brand?"</span>
-                    </p>
-                    <p>
-                      This standard immediately removed useless administrative jargon and complexity from our entire agency's framework. Every strategy must be simple enough to outline elegantly on a paper napkin.
-                    </p>
-                  </div>
-                </div>
-              )}
-
-              {activeStoryModal === 'goodfellas' && (
-                <div className="flex flex-col gap-4 text-left">
-                  <span className="text-[10px] uppercase font-mono text-brand-orange-warm tracking-[0.25em] font-black leading-none">
-                    The Accountability Stack
-                  </span>
-                  <h3 className="font-display italic text-2xl font-semibold text-[#1A1A1A] leading-tight">
-                    The Goodfellas Story
-                  </h3>
-                  
-                  <div className="p-5 bg-orange-50/50 border-l-4 border-brand-orange-warm pl-4 my-2">
-                    <p className="font-display italic text-sm text-brand-orange-warm font-semibold leading-relaxed">
-                      "Abstractions die. Proof lives. Stop complaining and build the undisputable framework."
-                    </p>
-                    <span className="text-[9px] font-mono text-slate-400 mt-2 block uppercase tracking-wider font-bold">
-                      — Lagos Accountability Crew
-                    </span>
-                  </div>
-
-                  <div className="font-sans text-xs text-slate-600 space-y-3 leading-relaxed">
-                    <p>
-                      Back in July 2024, I sat completely paralyzed after losing a major $120,000 annual contract. I complained about geographic bias and skepticism due to serving global clients from Lagos, Nigeria.
-                    </p>
-                    <p>
-                      My crew of five fellow high-ticket founders meeting weekly—known affectionately as the Goodfellas—did not offer cheap words of comfort. Instead, they demanded absolute, undeniable transparency.
-                    </p>
-                    <p>
-                      This forced us to build the **Founder Trust Framework™**, updating and proof-stacking client revenue results and metric proofs on a weekly schedule. If our authority is bulletproof, geographic skepticism disappears.
-                    </p>
-                  </div>
-                </div>
-              )}
-
-              <div className="mt-8 pt-4 border-t border-[#1A1A1A]/10 flex justify-end">
-                <button 
-                  onClick={() => setActiveStoryModal(null)}
-                  className="px-5 py-2.5 bg-[#1A1A1A] hover:bg-brand-orange-warm text-[#F8F6F2] font-sans text-xs uppercase tracking-wider font-bold transition-all cursor-pointer focus:outline-none"
-                  id="close-story-modal-btn"
-                >
-                  Close Story
-                </button>
-              </div>
-
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
 
     </div>
   );
