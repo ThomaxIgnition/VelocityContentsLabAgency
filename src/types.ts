@@ -81,22 +81,3 @@ export interface LeadCapture {
   message?: string;
 }
 
-export interface ChatMessage {
-  id: string;
-  sender: 'user' | 'cal' | 'system';
-  text: string;
-  timestamp: string;
-  suggestedActions?: Array<{
-    label: string;
-    action: 'link' | 'prompt' | 'call' | 'resource';
-    payload?: string;
-  }>;
-}
-
-export interface CalSession {
-  sessionId: string;
-  startedAt: string;
-  lastActive: string;
-  messagesCount: number;
-}
-

@@ -106,8 +106,9 @@ export default function HomePage() {
   };
 
   const triggerCal = () => {
-    const el = document.getElementById('floating-cal-button');
-    if (el) el.click();
+    window.dispatchEvent(new CustomEvent('velocity-open-cal'));
+    const launcher = document.querySelector('.cal-launcher') as HTMLButtonElement | null;
+    if (launcher) launcher.click();
   };
 
   const problemPoints = [

@@ -11,8 +11,9 @@ export default function Footer() {
   const currentYear = 2026;
 
   const triggerCal = () => {
-    const el = document.getElementById('floating-cal-button');
-    if (el) el.click();
+    window.dispatchEvent(new CustomEvent('velocity-open-cal'));
+    const launcher = document.querySelector('.cal-launcher') as HTMLButtonElement | null;
+    if (launcher) launcher.click();
   };
 
   return (

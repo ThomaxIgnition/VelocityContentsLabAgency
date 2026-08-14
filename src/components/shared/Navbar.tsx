@@ -112,10 +112,9 @@ export default function Navbar({ onOpenCal }: NavbarProps) {
           <button
             onClick={() => {
               if (onOpenCal) onOpenCal();
-              else {
-                const el = document.getElementById('floating-cal-button');
-                if (el) el.click();
-              }
+              window.dispatchEvent(new CustomEvent('velocity-open-cal'));
+              const launcher = document.querySelector('.cal-launcher') as HTMLButtonElement | null;
+              if (launcher) launcher.click();
             }}
             className="flex items-center gap-1.5 px-3 py-2 rounded-full bg-editorial-pale hover:bg-editorial-beige text-[#1A1A1A] font-mono text-[10px] font-semibold tracking-wider transition-colors border border-black/10"
             title="Chat with Cal, our AI representative"
@@ -179,8 +178,9 @@ export default function Navbar({ onOpenCal }: NavbarProps) {
                 <button
                   onClick={() => {
                     setIsOpen(false);
-                    const el = document.getElementById('floating-cal-button');
-                    if (el) el.click();
+                    window.dispatchEvent(new CustomEvent('velocity-open-cal'));
+                    const launcher = document.querySelector('.cal-launcher') as HTMLButtonElement | null;
+                    if (launcher) launcher.click();
                   }}
                   className="w-full py-2.5 rounded-full bg-editorial-pale text-editorial-dark font-mono text-xs font-bold flex items-center justify-center gap-2 border border-black/10"
                 >
