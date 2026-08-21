@@ -1,10 +1,8 @@
-OLD FILE 
-
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { ArrowUp, ChevronDown, ChevronUp, MessageCircle, Plus, X } from 'lucide-react';
 import './CalWidget.css';
 
-const N8N_ENDPOINT = 'https://thomax4chelsea.app.n8n.cloud/webhook/4928ed2a-47d2-4a2a-9e25-9fa6497869ed/chat';
+const N8N_ENDPOINT = 'https://markdan.app.n8n.cloud/webhook/4928ed2a-47d2-4a2a-9e25-9fa6497869ed/chat';
 
 const INITIAL_MESSAGE = `I'm Cal — the customer-care representative at Velocity Contents Lab.
 
