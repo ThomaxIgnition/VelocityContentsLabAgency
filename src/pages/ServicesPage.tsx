@@ -1,271 +1,280 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
-
-import React, { useState } from 'react';
+import { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'motion/react';
-import { Check, ArrowUpRight, ArrowRight, ShieldCheck, Zap, HelpCircle, Bot, Sparkles, Clock } from 'lucide-react';
-import { SERVICES, BRAND_COMPANY } from '../data.ts';
+import { ArrowDown, Check, Hand } from 'lucide-react';
+import {
+  AUTOMATION_PRICING,
+  AUTOMATION_SYSTEMS,
+  COFFEE_SHOP_TEST,
+  CONTENT_PRICING,
+  ENGAGEMENT_MODELS,
+  ENGINEERING_STACK,
+  METHODS,
+  PRICING_NOTE,
+  SERVICE_LINES,
+  ServiceLine
+} from '../content.ts';
+import { Button, ClosingCTA, Container, Eyebrow, PageHero, Reveal, SectionHeader } from '../components/ui.tsx';
 
 export default function ServicesPage() {
-  const [activeTab, setActiveTab] = useState<'all' | 'retainers' | 'sprints'>('all');
-
-  const filteredServices = SERVICES.filter(s => {
-    if (activeTab === 'retainers') return s.price.includes('/month');
-    if (activeTab === 'sprints') return s.price.includes('one-time');
-    return true;
-  });
-
-  const faqs = [
-    {
-      q: "How does Thomax work with our internal team?",
-      a: "Thomax acts as your fractional Chief Content Architect. For retainers, we conduct a 45-minute weekly or bi-weekly strategic extraction session with your founders or subject matter experts, and our team handles 100% of the copywriting, repurposing, design formatting, and multi-channel scheduling."
-    },
-    {
-      q: "How long until we see measurable pipeline momentum?",
-      a: "For The Authority Accelerator and The Velocity Engine, visibility and executive reach compound significantly within 30–60 days. Inbound pipeline attribution and inbound discovery inquiries typically surge between day 60 and 90."
-    },
-    {
-      q: "Do you write with AI or human writers?",
-      a: "We utilize our proprietary AI-Human Hybrid Content System™. AI is used for structural research, whitespace identification, and initial adaptation across technical specs, but 100% of the narrative stories, editorial nuance, client data, and final polish are handcrafted by human strategists led by Thomax."
-    },
-    {
-      q: "What platforms do you distribute to?",
-      a: "Our distribution engine covers LinkedIn (personal profiles + company pages), Twitter/X (standalone posts + threads), Substack / Email newsletters, Medium / Blog cornerstone articles, Instagram (carousels + stories), and direct outbound executive sequences."
-    }
-  ];
+  const [content, automation, software] = SERVICE_LINES;
 
   return (
-    <div className="pt-28 pb-20 bg-editorial-cream min-h-screen text-[#1A1A1A]">
-      
-      {/* Header */}
-      <section className="max-w-7xl mx-auto px-6 md:px-12 py-12 text-center flex flex-col items-center gap-4 border-b border-black/8">
-        <span className="text-[10px] uppercase font-mono text-brand-orange-warm tracking-[0.25em] font-black leading-none">
-          Engagement Models
-        </span>
-        <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-light italic text-[#1A1A1A] tracking-tight max-w-3xl leading-tight">
-          Strategic Services &amp; Retainers
-        </h1>
-        <p className="font-sans text-sm md:text-base text-neutral-600 max-w-2xl leading-relaxed">
-          Predictable, high-leverage content engines designed for B2B founders, SaaS teams, and executive leaders who need enterprise pipeline without the 20-hour weekly writing tax.
-        </p>
-
-        {/* Filter Tabs */}
-        <div className="flex items-center gap-2 mt-4 p-1.5 bg-editorial-pale border border-black/10 rounded-full">
-          <button
-            onClick={() => setActiveTab('all')}
-            className={`px-5 py-2 rounded-full text-xs font-mono font-bold tracking-wider transition-all ${
-              activeTab === 'all' ? 'bg-[#1A1A1A] text-white shadow-sm' : 'text-neutral-600 hover:text-black'
-            }`}
-          >
-            All Packages ({SERVICES.length})
-          </button>
-          <button
-            onClick={() => setActiveTab('retainers')}
-            className={`px-5 py-2 rounded-full text-xs font-mono font-bold tracking-wider transition-all ${
-              activeTab === 'retainers' ? 'bg-[#1A1A1A] text-white shadow-sm' : 'text-neutral-600 hover:text-black'
-            }`}
-          >
-            Monthly Retainers
-          </button>
-          <button
-            onClick={() => setActiveTab('sprints')}
-            className={`px-5 py-2 rounded-full text-xs font-mono font-bold tracking-wider transition-all ${
-              activeTab === 'sprints' ? 'bg-[#1A1A1A] text-white shadow-sm' : 'text-neutral-600 hover:text-black'
-            }`}
-          >
-            Fixed Sprints
-          </button>
-        </div>
-      </section>
-
-      {/* Services Grid */}
-      <section className="max-w-7xl mx-auto px-6 md:px-12 py-16">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {filteredServices.map((service) => {
-            const isFeatured = service.id === 'velocity-engine';
-            return (
-              <div
-                key={service.id}
-                className={`p-8 md:p-10 rounded-3xl flex flex-col justify-between text-left transition-all relative ${
-                  isFeatured
-                    ? 'bg-[#121212] text-white border-2 border-brand-orange-warm shadow-2xl'
-                    : 'bg-white border border-black/10 text-[#1A1A1A] hover:border-brand-orange-warm shadow-sm'
-                }`}
-              >
-                {isFeatured && (
-                  <span className="absolute -top-3.5 right-8 bg-brand-orange-warm text-white font-mono text-[10px] uppercase font-bold tracking-widest px-3.5 py-1 rounded-full shadow-md">
-                    Flagship Retainer
-                  </span>
-                )}
-
-                <div>
-                  <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 mb-4">
-                    <h2 className={`font-display text-2xl md:text-3xl font-bold italic ${isFeatured ? 'text-white' : 'text-[#1A1A1A]'}`}>
-                      {service.name}
-                    </h2>
-                    <span className={`font-display text-2xl font-black ${isFeatured ? 'text-brand-orange-warm' : 'text-[#1A1A1A]'}`}>
-                      {service.price}
-                    </span>
-                  </div>
-
-                  <p className={`text-sm font-sans leading-relaxed mb-6 ${isFeatured ? 'text-neutral-300' : 'text-neutral-600'}`}>
-                    {service.description}
-                  </p>
-
-                  <div className="p-4 rounded-xl bg-black/5 dark:bg-white/5 space-y-2 mb-8 text-xs font-mono">
-                    <div className="flex items-center justify-between">
-                      <span className="text-neutral-400">Target Fit:</span>
-                      <span className={`font-semibold ${isFeatured ? 'text-white' : 'text-neutral-900'}`}>{service.bestFor}</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-neutral-400">Momentum Timeline:</span>
-                      <span className="text-brand-orange-warm font-semibold">{service.timeline}</span>
-                    </div>
-                  </div>
-
-                  <div className="space-y-3 mb-8">
-                    <span className="text-[11px] font-mono uppercase tracking-widest text-neutral-400 font-bold block mb-3">
-                      Everything Included:
-                    </span>
-                    {service.includes.map((inc, i) => (
-                      <div key={i} className="flex items-start gap-3 text-xs leading-relaxed">
-                        <Check className="w-4 h-4 text-brand-orange-warm shrink-0 mt-0.5" />
-                        <span className={isFeatured ? 'text-neutral-200' : 'text-neutral-700'}>{inc}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="pt-6 border-t border-black/10 dark:border-white/10 flex flex-col sm:flex-row items-center gap-3">
-                  <Link
-                    to="/contact"
-                    className={`w-full py-4 rounded-full text-center text-xs uppercase font-bold tracking-widest transition-all ${
-                      isFeatured
-                        ? 'bg-brand-orange-warm hover:bg-orange-600 text-white shadow-lg shadow-orange-500/20'
-                        : 'bg-[#1A1A1A] hover:bg-brand-orange-warm text-white'
-                    }`}
-                  >
-                    Initiate {service.name} →
-                  </Link>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </section>
-
-      {/* Comparison Matrix Section */}
-      <section className="max-w-7xl mx-auto px-6 md:px-12 py-16 border-t border-black/8">
-        <div className="max-w-3xl mx-auto text-center mb-12">
-          <span className="text-[10px] uppercase font-mono text-brand-orange-warm tracking-[0.25em] font-black block mb-2">
-            Side-by-Side Clarity
-          </span>
-          <h2 className="font-display text-3xl md:text-4xl font-light italic text-[#1A1A1A] tracking-tight">
-            Compare Engagement Matrix
-          </h2>
-        </div>
-
-        <div className="overflow-x-auto bg-white rounded-2xl border border-black/10 shadow-sm p-4 md:p-6">
-          <table className="w-full text-left text-xs">
-            <thead>
-              <tr className="border-b border-black/10 text-neutral-400 font-mono uppercase tracking-wider text-[10px]">
-                <th className="py-3 px-4">Feature / Deliverable</th>
-                <th className="py-3 px-4 text-brand-orange-warm font-bold">Velocity Engine</th>
-                <th className="py-3 px-4">Authority Accelerator</th>
-                <th className="py-3 px-4">The Launch System</th>
-                <th className="py-3 px-4">Strategic Sprint</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-black/5 font-sans">
-              <tr>
-                <td className="py-4 px-4 font-semibold text-neutral-900">Investment</td>
-                <td className="py-4 px-4 font-bold text-brand-orange-warm font-mono">$3,500/mo</td>
-                <td className="py-4 px-4 font-mono">$2,500/mo</td>
-                <td className="py-4 px-4 font-mono">$5,000 once</td>
-                <td className="py-4 px-4 font-mono">$1,500 once</td>
-              </tr>
-              <tr>
-                <td className="py-4 px-4 text-neutral-700">Long-Form Cornerstone Pieces</td>
-                <td className="py-4 px-4 font-semibold text-emerald-800">4 / month (2,000+ words)</td>
-                <td className="py-4 px-4">8 thought leadership</td>
-                <td className="py-4 px-4">12 launch suite</td>
-                <td className="py-4 px-4">Audit blueprint</td>
-              </tr>
-              <tr>
-                <td className="py-4 px-4 text-neutral-700">Derivative Micro-Assets</td>
-                <td className="py-4 px-4 font-semibold text-emerald-800">40+ across 10 channels</td>
-                <td className="py-4 px-4">LinkedIn + Twitter focus</td>
-                <td className="py-4 px-4">30-day calendar</td>
-                <td className="py-4 px-4">90-day roadmap</td>
-              </tr>
-              <tr>
-                <td className="py-4 px-4 text-neutral-700">Strategy Sessions with Thomax</td>
-                <td className="py-4 px-4 font-semibold text-emerald-800">Weekly 1-on-1 calls</td>
-                <td className="py-4 px-4">Bi-weekly 1-on-1 calls</td>
-                <td className="py-4 px-4">Sprint check-ins</td>
-                <td className="py-4 px-4">Audit readout call</td>
-              </tr>
-              <tr>
-                <td className="py-4 px-4 text-neutral-700">Distribution Automation Engine</td>
-                <td className="py-4 px-4 text-emerald-700 font-bold">✓ Full 10-Platform</td>
-                <td className="py-4 px-4 text-emerald-700 font-bold">✓ Core Channels</td>
-                <td className="py-4 px-4 text-emerald-700 font-bold">✓ Launch Blitz</td>
-                <td className="py-4 px-4 text-neutral-400">—</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      {/* FAQs */}
-      <section className="max-w-4xl mx-auto px-6 md:px-12 py-16 border-t border-black/8 text-left">
-        <div className="text-center mb-12">
-          <span className="text-[10px] uppercase font-mono text-brand-orange-warm tracking-[0.25em] font-black block mb-2">
-            Frequently Asked Questions
-          </span>
-          <h2 className="font-display text-3xl md:text-4xl font-light italic text-[#1A1A1A] tracking-tight">
-            Clear Answers on Collaboration
-          </h2>
-        </div>
-
-        <div className="space-y-6">
-          {faqs.map((faq, i) => (
-            <div key={i} className="p-6 rounded-2xl bg-white border border-black/10">
-              <h3 className="font-display text-lg font-bold italic text-neutral-900 mb-2">
-                {faq.q}
-              </h3>
-              <p className="font-sans text-xs sm:text-sm text-neutral-600 leading-relaxed">
-                {faq.a}
-              </p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* CTA Footer */}
-      <section className="max-w-5xl mx-auto px-6 md:px-12 pt-10">
-        <div className="bg-[#121212] text-white p-8 md:p-12 rounded-3xl text-center space-y-4">
-          <h3 className="font-display text-2xl sm:text-3xl font-light italic text-white">
-            Unsure which engagement tier matches your current growth stage?
-          </h3>
-          <p className="text-xs sm:text-sm text-neutral-400 max-w-xl mx-auto font-sans leading-relaxed">
-            Book a 15-minute diagnostic. Thomax will review your current pipeline metrics and advise transparently on the best fit.
-          </p>
-          <div className="pt-2">
+    <>
+      <PageHero
+        eyebrow="Services & pricing"
+        title="Three disciplines. Engaged alone or together."
+        accent="alone together."
+        intro="Content that makes you visible, automation that keeps working when your team cannot, and software that fits the way you work."
+      >
+        <nav aria-label="Jump to" className="flex flex-wrap gap-2">
+          {[...SERVICE_LINES.map((s) => [s.id, s.short]), ['pricing', 'Pricing']].map(([id, label]) => (
             <Link
-              to="/contact"
-              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-brand-orange-warm hover:bg-orange-600 text-white font-sans text-xs uppercase font-bold tracking-wider transition-colors shadow-lg"
+              key={id}
+              to={`/services#${id}`}
+              className="group inline-flex items-center gap-2 min-h-[44px] px-5 rounded-full border border-paper/20 text-paper/85 hover:bg-paper hover:text-ink transition-colors"
             >
-              <span>Book 15-Minute Diagnostic Call</span>
-              <ArrowUpRight className="w-4 h-4" />
+              {label}
+              <ArrowDown className="w-3.5 h-3.5 transition-transform group-hover:translate-y-0.5" />
             </Link>
+          ))}
+        </nav>
+      </PageHero>
+
+      <LineSection line={content} tone="paper">
+        <div className="mt-16 grid lg:grid-cols-12 gap-10">
+          <div className="lg:col-span-7">
+            <h3 className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted">Our methods</h3>
+            <p className="mt-3 text-muted max-w-lg">Our content work runs on documented, repeatable methods developed in-house.</p>
+            <ul className="mt-8 border-t border-ink/15">
+              {METHODS.map((m, i) => (
+                <Reveal as="li" key={m.id} delay={i * 0.05} className="grid sm:grid-cols-12 gap-2 sm:gap-6 py-5 border-b border-ink/15">
+                  <span className="sm:col-span-5 font-display text-lg tracking-tight">{m.name}</span>
+                  <span className="sm:col-span-7 text-[15px] text-muted leading-relaxed">{m.body}</span>
+                </Reveal>
+              ))}
+            </ul>
+          </div>
+          <Reveal delay={0.1} className="lg:col-span-5">
+            <div className="on-dark h-full p-8 sm:p-10 rounded-3xl bg-ink text-paper grain">
+              <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-ember">Quality standard</span>
+              <h3 className="mt-4 font-display text-4xl font-light tracking-tight">The Coffee Shop Test</h3>
+              <p className="mt-5 text-paper/70 leading-relaxed">{COFFEE_SHOP_TEST}</p>
+            </div>
+          </Reveal>
+        </div>
+      </LineSection>
+
+      <LineSection line={automation} tone="deep">
+        <div className="mt-16">
+          <h3 className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted">Systems we have designed, built, and tested</h3>
+          <ul className="mt-8 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {AUTOMATION_SYSTEMS.map((s, i) => (
+              <Reveal
+                as="li"
+                key={s.name}
+                delay={(i % 4) * 0.06}
+                className="group p-6 rounded-2xl bg-paper border border-ink/10 hover:-translate-y-1 hover:shadow-xl hover:shadow-ink/5 transition-all duration-500"
+              >
+                <span className="font-mono text-xs text-clay">{String(i + 1).padStart(2, '0')}</span>
+                <h4 className="mt-4 font-display text-xl leading-snug tracking-tight">{s.name}</h4>
+                <p className="mt-3 text-sm text-muted leading-relaxed">{s.body}</p>
+              </Reveal>
+            ))}
+          </ul>
+          <div className="mt-10 grid lg:grid-cols-2 gap-4">
+            <Reveal className="on-dark p-8 rounded-3xl bg-ink text-paper grain flex gap-5">
+              <Hand className="w-6 h-6 text-ember shrink-0 mt-1" />
+              <div>
+                <h4 className="font-display text-2xl tracking-tight">Human in the loop, by design</h4>
+                <p className="mt-3 text-paper/70 leading-relaxed">
+                  AI agents answer and organise; decisions about pricing, contracts, payments, and publishing stay with people. Where approval
+                  matters, the system asks before it acts.
+                </p>
+              </div>
+            </Reveal>
+            <Reveal delay={0.1} className="p-8 rounded-3xl border border-ink/15">
+              <h4 className="font-display text-2xl tracking-tight">Built on established platforms</h4>
+              <p className="mt-3 text-muted leading-relaxed">
+                n8n, OpenAI language models, Google Workspace (Gmail, Calendar, Sheets), WhatsApp, Telegram, and voice transcription. We choose
+                tools you can own and maintain, and document every workflow.
+              </p>
+              <p className="mt-5 text-sm text-ink/80">
+                Deployed for clients including Fitins &amp; Cute Collections Hub, House of Matiggy, and a multi-service client.
+              </p>
+            </Reveal>
           </div>
         </div>
+      </LineSection>
+
+      <LineSection line={software} tone="paper">
+        <div className="mt-16 grid lg:grid-cols-12 gap-10">
+          <div className="lg:col-span-7">
+            <h3 className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted">Engineering stack</h3>
+            <dl className="mt-8 border-t border-ink/15">
+              {ENGINEERING_STACK.map((row, i) => (
+                <Reveal key={row.layer} delay={i * 0.05} className="grid sm:grid-cols-12 gap-1 sm:gap-6 py-5 border-b border-ink/15">
+                  <dt className="sm:col-span-5 font-display text-lg tracking-tight">{row.layer}</dt>
+                  <dd className="sm:col-span-7 text-[15px] text-muted">{row.tech}</dd>
+                </Reveal>
+              ))}
+            </dl>
+          </div>
+          <Reveal delay={0.1} className="lg:col-span-5">
+            <div className="h-full p-8 sm:p-10 rounded-3xl bg-paper-deep border border-ink/10">
+              <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-clay">Delivered work</span>
+              <p className="mt-5 text-ink/85 leading-relaxed">
+                Recent engagements include a custom software solution with system integration for Olatunde Oloyode, a professional business website
+                for Fitins &amp; Cute Collections Hub, and a business website with productivity tools for a multi-service client.
+              </p>
+              <p className="mt-4 text-muted text-sm">Portfolio walkthroughs are available on request.</p>
+              <Button to="/work" variant="ghost" className="mt-8">See client work</Button>
+            </div>
+          </Reveal>
+        </div>
+      </LineSection>
+
+      {/* Engagement models */}
+      <section className="on-dark bg-ink text-paper grain">
+        <Container className="py-24 sm:py-32">
+          <SectionHeader dark eyebrow="Engagement models" title="Flexible ways to work together." accent="Flexible" />
+          <ul className="mt-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-px bg-paper/10 rounded-3xl overflow-hidden border border-paper/10">
+            {ENGAGEMENT_MODELS.map((m, i) => (
+              <Reveal as="li" key={m.name} delay={i * 0.08} className="bg-ink p-8 hover:bg-ink-soft transition-colors">
+                <span className="font-mono text-xs text-ember">{String(i + 1).padStart(2, '0')}</span>
+                <h3 className="mt-6 font-display text-2xl tracking-tight">{m.name}</h3>
+                <p className="mt-3 text-paper/65 text-[15px] leading-relaxed">{m.body}</p>
+              </Reveal>
+            ))}
+          </ul>
+        </Container>
       </section>
 
-    </div>
+      <Pricing />
+      <ClosingCTA />
+    </>
+  );
+}
+
+function LineSection({ line, tone, children }: { line: ServiceLine; tone: 'paper' | 'deep'; children?: ReactNode }) {
+  return (
+    <section id={line.id} className={`scroll-mt-16 ${tone === 'deep' ? 'bg-paper-deep' : 'bg-paper'}`}>
+      <Container className="py-24 sm:py-32">
+        <div className="grid lg:grid-cols-12 gap-12">
+          <div className="lg:col-span-5">
+            <Reveal>
+              <span className="font-display text-[7rem] sm:text-[9rem] font-light leading-[0.8] text-ink/10">{line.number}</span>
+            </Reveal>
+            <SectionHeader eyebrow={line.short} title={line.name} className="mt-4" />
+          </div>
+          <div className="lg:col-span-7 lg:pt-16">
+            <Reveal>
+              <p className="font-display text-2xl sm:text-3xl font-light leading-snug tracking-tight text-ink">{line.promise}</p>
+              <p className="mt-6 text-lg text-muted leading-relaxed">{line.intro}</p>
+            </Reveal>
+            <h3 className="mt-12 font-mono text-[11px] uppercase tracking-[0.2em] text-muted">Scope of services</h3>
+            <ul className="mt-5 space-y-3">
+              {line.scope.map((item, i) => (
+                <Reveal as="li" key={item} delay={i * 0.05} className="flex gap-4 items-start">
+                  <span className="mt-1 w-6 h-6 rounded-full bg-ink text-paper flex items-center justify-center shrink-0">
+                    <Check className="w-3.5 h-3.5" />
+                  </span>
+                  <span className="text-[17px] text-ink/85 leading-relaxed">{item}</span>
+                </Reveal>
+              ))}
+            </ul>
+          </div>
+        </div>
+        {children}
+      </Container>
+    </section>
+  );
+}
+
+function Pricing() {
+  return (
+    <section id="pricing" className="bg-paper scroll-mt-16">
+      <Container className="py-24 sm:py-32">
+        <SectionHeader
+          eyebrow="Indicative pricing"
+          title="Clear prices, confirmed in writing."
+          accent="confirmed in writing."
+          intro="Every engagement starts with a written proposal. These figures show where most projects land."
+        />
+
+        <div className="mt-16">
+          <div className="flex items-baseline justify-between gap-4">
+            <h3 className="font-display text-3xl tracking-tight">Content strategy</h3>
+            <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-muted">USD</span>
+          </div>
+          <ul className="mt-6 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {CONTENT_PRICING.map((p, i) => (
+              <Reveal
+                as="li"
+                key={p.name}
+                delay={i * 0.07}
+                className={`relative flex flex-col p-7 rounded-3xl border transition-all duration-500 hover:-translate-y-1 ${
+                  p.featured ? 'on-dark bg-ink text-paper border-ink grain' : 'bg-paper border-ink/15 hover:border-ink/40'
+                }`}
+              >
+                <div className="flex items-center justify-between gap-2 min-h-[24px]">
+                  <span className={`font-mono text-[11px] uppercase tracking-[0.16em] ${p.featured ? 'text-paper/50' : 'text-muted'}`}>{p.format}</span>
+                  {p.featured && (
+                    <span className="px-2.5 py-1 rounded-full bg-ember text-coal text-[11px] font-medium whitespace-nowrap">Full ecosystem</span>
+                  )}
+                </div>
+                <h4 className="mt-5 font-display text-2xl leading-tight tracking-tight">{p.name}</h4>
+                <p className={`mt-2 text-[15px] ${p.featured ? 'text-paper/65' : 'text-muted'}`}>{p.what}</p>
+                <p className="mt-auto pt-10">
+                  <span className="font-display text-5xl font-light tracking-tight">{p.price}</span>
+                  <span className={`block mt-1 text-sm ${p.featured ? 'text-paper/55' : 'text-muted'}`}>{p.unit}</span>
+                </p>
+              </Reveal>
+            ))}
+          </ul>
+        </div>
+
+        <div className="mt-20">
+          <div className="flex items-baseline justify-between gap-4">
+            <h3 className="font-display text-3xl tracking-tight">AI automation &amp; software engineering</h3>
+            <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-muted shrink-0">USD</span>
+          </div>
+          <ul className="mt-6 border-t border-ink/15">
+            {AUTOMATION_PRICING.map((p, i) => (
+              <Reveal
+                as="li"
+                key={p.scope}
+                delay={i * 0.06}
+                className="group grid grid-cols-12 gap-x-4 gap-y-1 items-baseline py-7 border-b border-ink/15 "
+              >
+                <span className="col-span-12 sm:col-span-4 font-display text-xl sm:text-2xl tracking-tight">
+                  {p.scope}
+                  {p.featured && (
+                    <span className="block w-fit mt-2 px-2.5 py-0.5 rounded-full bg-clay text-paper text-[11px] font-sans tracking-normal whitespace-nowrap">
+                      Most requested
+                    </span>
+                  )}
+                </span>
+                <span className="col-span-12 sm:col-span-5 text-[15px] text-muted">{p.example}</span>
+                <span className="col-span-12 sm:col-span-3 sm:text-right font-display text-2xl tracking-tight text-clay mt-2 sm:mt-0">{p.price}</span>
+              </Reveal>
+            ))}
+          </ul>
+        </div>
+
+        <Reveal>
+          <div className="mt-12 flex flex-col md:flex-row md:items-center justify-between gap-6 p-7 rounded-3xl bg-paper-deep">
+            <p className="text-sm text-muted leading-relaxed max-w-2xl">{PRICING_NOTE}</p>
+            <Button to="/contact" variant="primary" className="shrink-0">Request a proposal</Button>
+          </div>
+        </Reveal>
+
+        <Reveal>
+          <div className="mt-6 flex items-center gap-3 text-sm text-muted">
+            <Eyebrow className="!tracking-[0.16em]">Low-risk start</Eyebrow>
+            <span>Not sure yet? Begin with a small pilot engagement.</span>
+          </div>
+        </Reveal>
+      </Container>
+    </section>
   );
 }

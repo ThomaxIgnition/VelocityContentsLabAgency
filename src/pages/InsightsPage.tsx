@@ -93,7 +93,7 @@ export default function InsightsPage() {
   };
 
   return (
-    <div className="pt-28 pb-20 bg-editorial-cream min-h-screen text-[#1A1A1A]">
+    <div className="legacy-page pt-28 pb-20 bg-editorial-cream min-h-screen text-[#1A1A1A]">
       
       {/* Editorial Header */}
       <section className="max-w-7xl mx-auto px-6 md:px-12 py-12 text-center flex flex-col items-center gap-4 border-b border-black/8">

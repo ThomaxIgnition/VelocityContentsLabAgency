@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { BlogChapter, Resource, Service, CaseStudy, ContentCalendarItem, DMKeywordStats, MediaAsset } from './types.ts';
+import { BlogChapter, Resource, ContentCalendarItem, DMKeywordStats, MediaAsset } from './types.ts';
 
 export const BRAND_COMPANY = 'VELOCITY CONTENTS LAB';
 export const BRAND_TAGLINE = 'Where Strategy Meets Soul';
-export const FOUNDER_NAME = 'Thomax (Emmanuel Sunday Thomas)';
+export const FOUNDER_NAME = 'Emmanuel Sunday Thomas (Thomax)';
 export const COFFEE_SHOP_TEST_QUOTE = "If you cannot explain this to someone over a coffee — why would a client trust you with their brand?";
 
 export const ORIGIN_STORY_TEXT = {
@@ -24,117 +24,6 @@ She looked at me and said:
 From a 7-year-old. The entire content marketing problem solved in one sentence.
 That is when Velocity Contents Lab was born.`
 };
-
-export const SERVICES: Service[] = [
-  {
-    id: 'velocity-engine',
-    name: 'The Velocity Engine',
-    price: '$3,500/month',
-    description: 'Full content ecosystem — ongoing retainer that scales your organic footprint seamlessly.',
-    includes: [
-      '4 long-form cornerstone pieces (2,000+ words each) monthly',
-      '40+ derivative assets across 10+ social platforms',
-      'Distribution across 10+ visual and text channels',
-      'Daily engagement and community-building acceleration',
-      'Weekly recurring strategy calls with Thomax',
-      'Monthly detailed performance and business pipelines report'
-    ],
-    bestFor: 'B2B companies, SaaS founders, complex professional services',
-    timeline: '60–90 days for momentum, 120+ for compounding'
-  },
-  {
-    id: 'authority-accelerator',
-    name: 'The Authority Accelerator',
-    price: '$2,500/month',
-    description: 'Executive voice building — ongoing premium retainer to turn your raw expert knowledge into pipelines.',
-    includes: [
-      '8 long-form ghostwritten thought leadership posts monthly',
-      'Surgical LinkedIn + Twitter/X narrative design and growth',
-      'PR placement strategy consulting and warm pitches',
-      'Organic client community engagement playbook',
-      'Bi-weekly direct 1-on-1 strategy coaching calls'
-    ],
-    bestFor: 'Founders, executives, high-ticket consultants and VC partners',
-    timeline: '30–60 days for visibility, 90+ for undisputed authority'
-  },
-  {
-    id: 'launch-system',
-    name: 'The Launch System',
-    price: '$5,000 one-time',
-    description: 'Product launch amplification — high-impact fixed scope for major events.',
-    includes: [
-      'Complete launch content suite (12+ hyper-tailored pieces)',
-      '30-day comprehensive multi-channel distribution calendar',
-      'Pre-launch buzz cultivation, launch day hijacking, and post-launch momentum capitalization',
-      'Strategic creator/influencer outreach and positioning guide'
-    ],
-    bestFor: 'New product rollouts, complete rebrands, major corporate announcements',
-    timeline: '4 weeks build, 4 weeks master execution'
-  },
-  {
-    id: 'strategic-sprint',
-    name: 'The Strategic Sprint',
-    price: '$1,500 one-time',
-    description: 'A deep-dive content audit and blueprint setup for teams looking for a strategic reset.',
-    includes: [
-      'Complete multi-platform content audit & deep audience research',
-      'Direct competitor positioning matrix and gap analysis',
-      'Actionable custom 90-day execution content roadmap',
-      'Customized channel distribution recommendations',
-      'Comprehensive brand search voice and messaging frameworks'
-    ],
-    bestFor: 'Teams starting marketing from scratch or needing an urgent structural reset',
-    timeline: '2 weeks turnaround'
-  }
-];
-
-export const FRAMEWORKS = [
-  {
-    id: 'distribution-engine',
-    name: 'The Velocity Distribution Engine™',
-    principle: 'Create Once, Distribute Forever.',
-    description: 'One single energetic weekly content session produces bespoke assets for 10 platforms: LinkedIn (2,500 chars), Articles (800w), Twitter threads, carousels, threads, and more.',
-    result: 'Reduced creation time from 12 hours to 2 hours per week without losing authentic voice.',
-    keyword: 'DISTRIBUTE',
-    icon: 'Share2'
-  },
-  {
-    id: 'fortune-framework',
-    name: 'The 7-Touch Fortune Framework™',
-    principle: 'Personalized multi-channel sequence.',
-    description: 'A 7-step BD outreach sequence spanning 32 days: personalization connection (Day 0), surgical value drop (Day 3), comment observation (Day 7), case study drop (Day 12), conversion ask (Day 18), last value (Day 25), and dignified goodbye (Day 32).',
-    result: '50%+ DM and email response rates (versus the 5% industry standard).',
-    keyword: 'FORTUNE',
-    icon: 'MailOpen'
-  },
-  {
-    id: 'trust-framework',
-    name: 'The Founder Trust Framework™',
-    principle: 'Becoming the obvious choice before the call.',
-    description: '5 milestones to build trust before calls: visible results, named problem ownership, proof-stack rotating, pre-pitch distribution, and absolute consistency.',
-    result: 'Zero "I need to think about it" hesitations. Clients secured in 4 countries entirely via content.',
-    keyword: 'TRUST',
-    icon: 'ShieldCheck'
-  },
-  {
-    id: 'hybrid-system',
-    name: 'The AI-Human Hybrid Content System™',
-    principle: 'Human soul layered with semantic speed.',
-    description: 'AI structure research (20m) → Human story layer (10m) → AI first draft (15m) → Human soul edit (15m) → Automation distribution (5m). Total 65 minutes.',
-    result: 'Eliminated "robot speak". Saved hours while maintaining deeply resonant emotional connection.',
-    keyword: 'HYBRID',
-    icon: 'Cpu'
-  },
-  {
-    id: 'discovery-framework',
-    name: 'The Discovery Build Framework™',
-    principle: 'Same-day booking mechanics.',
-    description: '5 high-impact questions: Q1 what challenge is being solved, Q2 negative cost in revenue/time, Q3 previous attempts, Q4 perfect 90-day projection, Q5 confidence trigger.',
-    result: 'Over 80% same-day agreement ratios on discovery calls. Highly repeatable results.',
-    keyword: 'CURIOUS',
-    icon: 'HeartHandshake'
-  }
-];
 
 export const RESOURCES: Resource[] = [
   {
@@ -328,68 +217,6 @@ Since putting this framework in place, we changed geographic skepticism into cre
     title: 'Building With Soul — The Thomax Philosophy',
     status: 'COMING',
     description: 'Why content without humanity is noise, and the deep ethical responsibilities of creators in the age of automation.'
-  }
-];
-
-export const AGENCY_METRICS = [
-  { value: '$2.3M', label: 'Client Revenue Attributed', desc: 'Direct revenue tracked back to VCL strategies.' },
-  { value: '847K+', label: 'Organic Impressions', desc: 'Surgical reach generated on organic channels.' },
-  { value: '312%', label: 'Average Traffic Increase', desc: 'Compounded growth achieved after 90 days.' },
-  { value: '89%', label: 'Client Retention Rate', desc: 'Ongoing retainers that cross multi-year milestones.' },
-  { value: '23:1', label: 'Average Content ROI', desc: 'Client pipeline generation compared to spend.' },
-  { value: '5', label: 'Continents Served', desc: 'Truly cross-continental Lagos to global execution.' }
-];
-
-export const CASE_STUDIES: CaseStudy[] = [
-  {
-    id: 'pulse-digital',
-    client: 'Pulse Digital',
-    industry: 'High-Ticket Agency',
-    metrics: { before: '2,400 LinkedIn followers', after: '18,700 followers' },
-    highlightMetric: 'Inbound inquiries up from 4 to 23/mo. +40% average deal size.',
-    challenge: 'Struggling to source qualified high-ticket pipeline beyond low-margin localized networks. Content felt highly technical but lacked human narrative style.',
-    solution: 'Implemented the 7-Touch Fortune Framework coupled with executive voice styling, turning the pipeline from cold outreach into qualified warm inbound queries.',
-    expandedDetails: ' followers expanded organically in 120 days. Deal size closed shifted upward by 40% due to authoritative pre-call framing.'
-  },
-  {
-    id: 'cloudsync',
-    client: 'CloudSync Analytics',
-    industry: 'B2B SaaS',
-    metrics: { before: '15K monthly traffic', after: '62K monthly traffic' },
-    highlightMetric: 'Demo requests up 80 to 287/mo. Closed $420K ARR in enterprise deals.',
-    challenge: 'Excellent technical product, but failed to connect with non-technical business buyers. Organic search visibility was practically non-existent.',
-    solution: 'Designed the AI-Human Hybrid Content System. Generated custom problem breakdowns targeting corporate buyers, distributing them globally over 10 platforms.',
-    expandedDetails: 'Monthly traffic expanded by 413%. Demo request velocity surged, culminating in 3 major enterprise contracts valued at $140,000 ARR each.'
-  },
-  {
-    id: 'ecothreads',
-    client: 'EcoThreads Apparel',
-    industry: 'E-commerce Brand',
-    metrics: { before: '$45K MRR', after: '$127K MRR' },
-    highlightMetric: 'Customer acquisition cost (CAC) dropped from $78 to $31.',
-    challenge: 'A high-concept premium direct-to-consumer brand spending heavily on paid ads that yielded decreasing ROIs under skyrocketing ad platforms bids.',
-    solution: 'Created full-width stories of manufacturing practices, putting the moral "Soul" of the fashion process before the product, and distributed heavily via carousels and threads.',
-    expandedDetails: 'Increased monthly recurring collections by 182% in 90 days. CAC decreased by 60%, removing reliance on unpredictable algorithmic PPC platforms.'
-  },
-  {
-    id: 'vanguard',
-    client: 'Vanguard Consulting',
-    industry: 'Enterprise Advisory',
-    metrics: { before: '15K impressions/mo', after: '480K impressions/mo' },
-    highlightMetric: 'Inbound leads up from 2 to 31/mo. Featured in Forbes, Entrepreneur.',
-    challenge: 'A group of elite advisors whose massive combined expertise lay hidden behind standard, sterile PDFs on a 15-year-old corporate site structure.',
-    solution: 'Mapped their institutional expertise into the Velocity Distribution Engine. Created authority streams and pitched ghostwritten briefs directly into publications.',
-    expandedDetails: 'Organic impressions scaled 32x. Secured recurring feature inclusions in top global business publications, cementing authority status.'
-  },
-  {
-    id: 'hyperion-ai',
-    client: 'Hyperion AI',
-    industry: 'Generative Tech / VC',
-    metrics: { before: '890 followers', after: '12,400 followers' },
-    highlightMetric: '1,247 signups in launch week. 3 inbound seed investor inquiries.',
-    challenge: 'Entering a highly saturated, noisy AI space where competitor noise drowned out their highly advanced technological breakthroughs.',
-    solution: 'Deployed The Founder Trust Framework paired with The Launch System sequence, translating complex mathematical APIs into human narrative-led growth vectors.',
-    expandedDetails: 'Seeded launch buzz 4 weeks prior. Captured over 1,200 active users in 7 days, securing prominent inbound venture capitalist dialogues.'
   }
 ];
 

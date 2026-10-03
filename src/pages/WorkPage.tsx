@@ -1,198 +1,173 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
+import { useState } from 'react';
+import { AnimatePresence, motion } from 'motion/react';
+import { ENGAGEMENTS, SERVICE_LINES, ServiceLineId, TESTIMONIALS } from '../content.ts';
+import { Button, ClosingCTA, Container, PageHero, Reveal, SectionHeader, openCal } from '../components/ui.tsx';
 
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { motion, AnimatePresence } from 'motion/react';
-import { 
-  ArrowUpRight, 
-  ArrowRight, 
-  TrendingUp, 
-  CheckCircle2, 
-  Filter, 
-  Sparkles, 
-  Quote, 
-  ShieldCheck, 
-  ChevronDown, 
-  ChevronUp 
-} from 'lucide-react';
-import { CASE_STUDIES, AGENCY_METRICS, BRAND_COMPANY } from '../data.ts';
+const LINE_LABEL: Record<ServiceLineId, string> = { content: 'Content', automation: 'Automation', software: 'Software' };
 
 export default function WorkPage() {
-  const [selectedIndustry, setSelectedIndustry] = useState<string>('All');
-  const [expandedId, setExpandedId] = useState<string | null>('pulse-digital');
-
-  const industries = ['All', 'High-Ticket Agency', 'B2B SaaS', 'E-commerce Brand', 'Enterprise Advisory', 'Generative Tech / VC'];
-
-  const filteredStudies = CASE_STUDIES.filter(study => {
-    if (selectedIndustry === 'All') return true;
-    return study.industry.toLowerCase().includes(selectedIndustry.toLowerCase());
-  });
+  const [filter, setFilter] = useState<ServiceLineId | 'all'>('all');
+  const rows = ENGAGEMENTS.filter((e) => filter === 'all' || e.lines.includes(filter));
+  const [featured, ...others] = TESTIMONIALS;
 
   return (
-    <div className="pt-28 pb-20 bg-editorial-cream min-h-screen text-[#1A1A1A]">
-      
-      {/* Editorial Header */}
-      <section className="max-w-7xl mx-auto px-6 md:px-12 py-12 text-center flex flex-col items-center gap-4 border-b border-black/8">
-        <span className="text-[10px] uppercase font-mono text-brand-orange-warm tracking-[0.25em] font-black leading-none">
-          Verified Evidence
-        </span>
-        <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-light italic text-[#1A1A1A] tracking-tight max-w-3xl leading-tight">
-          Case Studies &amp; The Proof Stack
-        </h1>
-        <p className="font-sans text-sm md:text-base text-neutral-600 max-w-2xl leading-relaxed">
-          In high-ticket B2B and executive advisory, abstractions die and proof lives. Explore how we transformed quiet expertise into category-defining organic pipelines.
-        </p>
+    <>
+      <PageHero
+        eyebrow="Client work"
+        title="Proof lives in working systems and happy clients."
+        accent="working systems"
+        intro="Recent client work across our three service lines, in our clients’ own words. References are available on request."
+      />
 
-        {/* Filter Pills */}
-        <div className="flex flex-wrap items-center justify-center gap-2 mt-4">
-          {industries.map((ind) => (
-            <button
-              key={ind}
-              onClick={() => setSelectedIndustry(ind)}
-              className={`px-4 py-2 rounded-full text-xs font-mono font-bold tracking-wider transition-all border ${
-                selectedIndustry === ind
-                  ? 'bg-[#1A1A1A] text-white border-black shadow-sm'
-                  : 'bg-white text-neutral-600 border-black/10 hover:border-black/30'
-              }`}
-            >
-              {ind}
-            </button>
-          ))}
-        </div>
-      </section>
-
-      {/* Aggregate Stats */}
-      <section className="max-w-7xl mx-auto px-6 md:px-12 py-10">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-          {AGENCY_METRICS.map((m, i) => (
-            <div key={i} className="p-4 rounded-xl bg-white border border-black/10 text-left">
-              <span className="font-display font-bold text-2xl text-brand-orange-warm block">
-                {m.value}
-              </span>
-              <span className="font-sans text-xs font-bold text-neutral-900 block mt-0.5">
-                {m.label}
-              </span>
-              <span className="font-sans text-[10px] text-neutral-500 block mt-1">
-                {m.desc}
-              </span>
+      {/* Featured story */}
+      <section className="bg-paper">
+        <Container className="py-24 sm:py-32">
+          <div className="grid lg:grid-cols-12 gap-12">
+            <div className="lg:col-span-4">
+              <SectionHeader eyebrow="Featured client story" title={featured.name} />
+              <Reveal delay={0.15}>
+                <p className="mt-4 text-muted">{featured.project}</p>
+                <div className="mt-6 flex flex-wrap gap-2">
+                  {featured.lines.map((l) => (
+                    <span key={l} className="px-3 py-1.5 rounded-full border border-ink/15 text-[13px]">{LINE_LABEL[l]}</span>
+                  ))}
+                </div>
+              </Reveal>
             </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Detailed Case Studies List */}
-      <section className="max-w-6xl mx-auto px-6 md:px-12 py-8 space-y-10">
-        {filteredStudies.map((study, idx) => {
-          const isExpanded = expandedId === study.id;
-          return (
-            <div
-              key={study.id}
-              className="bg-white border border-black/10 rounded-3xl p-8 md:p-10 shadow-sm hover:border-brand-orange-warm/60 transition-all text-left relative overflow-hidden"
-            >
-              <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-6">
-                
-                {/* Left Overview */}
-                <div className="max-w-2xl space-y-3">
-                  <div className="flex items-center gap-3">
-                    <span className="font-mono text-xs font-black text-brand-orange-warm uppercase tracking-wider">
-                      CASE 0{idx + 1}
-                    </span>
-                    <span className="text-[10px] font-mono bg-editorial-pale text-neutral-700 px-2.5 py-0.5 rounded border border-black/5 font-bold uppercase">
-                      {study.industry}
-                    </span>
-                  </div>
-
-                  <h2 className="font-display text-2xl sm:text-3xl font-bold italic text-neutral-900">
-                    {study.client}
-                  </h2>
-
-                  <div className="p-4 rounded-xl bg-emerald-50/80 border border-emerald-200">
-                    <p className="font-sans text-sm font-bold text-emerald-950 flex items-center gap-2">
-                      <TrendingUp className="w-4 h-4 text-emerald-600 shrink-0" />
-                      <span>{study.highlightMetric}</span>
-                    </p>
-                  </div>
-                </div>
-
-                {/* Right Comparison Box */}
-                <div className="flex items-center gap-4 text-xs font-mono shrink-0">
-                  <div className="p-4 bg-neutral-50 border border-neutral-200 rounded-xl text-center min-w-[120px]">
-                    <span className="text-[9px] uppercase text-neutral-400 font-bold block mb-1">Baseline</span>
-                    <span className="font-semibold text-neutral-700">{study.metrics.before}</span>
-                  </div>
-                  <span className="text-brand-orange-warm font-black text-base">→</span>
-                  <div className="p-4 bg-emerald-50 border border-emerald-300 rounded-xl text-center min-w-[120px]">
-                    <span className="text-[9px] uppercase text-emerald-700 font-bold block mb-1">Compounded Result</span>
-                    <span className="font-bold text-emerald-950">{study.metrics.after}</span>
-                  </div>
-                </div>
-
-              </div>
-
-              {/* Problem / Solution Breakdown */}
-              <div className="mt-8 pt-8 border-t border-black/8 grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="p-5 rounded-2xl bg-editorial-pale border border-black/5">
-                  <span className="text-[10px] font-mono uppercase text-red-800 font-bold tracking-wider block mb-2">
-                    The Initial Bottleneck:
+            <Reveal delay={0.1} className="lg:col-span-8">
+              <figure className="relative">
+                <span aria-hidden="true" className="absolute -top-10 -left-2 font-display italic text-[8rem] leading-none text-clay/20 select-none">“</span>
+                <blockquote className="relative font-display font-light text-[1.5rem] sm:text-[2rem] leading-[1.35] tracking-[-0.01em] text-ink">
+                  {featured.quote}
+                  <span className="block mt-6">
+                    I would confidently recommend Velocity Contents Lab to any business or organization looking for a custom software solution, system
+                    integration, or technology project that needs to be properly understood and professionally delivered.
                   </span>
-                  <p className="text-xs sm:text-sm text-neutral-700 font-sans leading-relaxed">
-                    {study.challenge}
-                  </p>
-                </div>
-
-                <div className="p-5 rounded-2xl bg-editorial-pale border border-black/5">
-                  <span className="text-[10px] font-mono uppercase text-emerald-800 font-bold tracking-wider block mb-2">
-                    The Velocity Solution:
-                  </span>
-                  <p className="text-xs sm:text-sm text-neutral-700 font-sans leading-relaxed">
-                    {study.solution} {study.expandedDetails}
-                  </p>
-                </div>
-              </div>
-
-              {/* Action Trigger */}
-              <div className="mt-6 pt-6 border-t border-black/5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <p className="text-xs text-neutral-500 font-mono">
-                  Strategy led by Thomax • Lagos → Global execution
-                </p>
-
-                <Link
-                  to="/contact"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#1A1A1A] hover:bg-brand-orange-warm text-white font-sans text-xs uppercase font-bold tracking-wider transition-colors self-start sm:self-auto"
-                >
-                  <span>Build This System for Your Brand</span>
-                  <ArrowUpRight className="w-3.5 h-3.5" />
-                </Link>
-              </div>
-            </div>
-          );
-        })}
-      </section>
-
-      {/* CTA Footer */}
-      <section className="max-w-5xl mx-auto px-6 md:px-12 pt-12">
-        <div className="bg-[#121212] text-white p-8 md:p-12 rounded-3xl text-center space-y-4">
-          <h3 className="font-display text-2xl sm:text-3xl font-light italic text-white">
-            Want to see how your metrics could look in 90 days?
-          </h3>
-          <p className="text-xs sm:text-sm text-neutral-400 max-w-xl mx-auto font-sans leading-relaxed">
-            Schedule a 15-minute diagnostic session with Thomax. We'll audit your category competitors and map out an organic distribution strategy.
-          </p>
-          <div className="pt-2">
-            <Link
-              to="/contact"
-              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-brand-orange-warm hover:bg-orange-600 text-white font-sans text-xs uppercase font-bold tracking-wider transition-colors shadow-lg"
-            >
-              <span>Schedule Diagnostic Strategy Call</span>
-              <ArrowUpRight className="w-4 h-4" />
-            </Link>
+                </blockquote>
+              </figure>
+            </Reveal>
           </div>
-        </div>
+        </Container>
       </section>
 
-    </div>
+      {/* Other testimonials */}
+      <section className="bg-paper-deep">
+        <Container className="py-24 sm:py-28">
+          <ul className="grid md:grid-cols-2 gap-5">
+            {others.map((t, i) => (
+              <Reveal as="li" key={t.name} delay={i * 0.1} className="flex flex-col p-8 sm:p-10 rounded-3xl bg-paper border border-ink/10">
+                <div className="flex flex-wrap gap-2">
+                  {t.lines.map((l) => (
+                    <span key={l} className="px-3 py-1 rounded-full bg-paper-deep text-[12px] text-ink/75">{LINE_LABEL[l]}</span>
+                  ))}
+                </div>
+                <blockquote className="mt-8 font-display text-xl sm:text-[1.4rem] font-light leading-relaxed tracking-tight">“{t.quote}”</blockquote>
+                <div className="mt-auto pt-10 flex items-center gap-4">
+                  <span className="w-11 h-11 rounded-full bg-ink text-paper flex items-center justify-center font-display">{t.name.charAt(0)}</span>
+                  <span>
+                    <span className="block font-medium">{t.name}</span>
+                    <span className="block text-sm text-muted">{t.project}</span>
+                  </span>
+                </div>
+              </Reveal>
+            ))}
+          </ul>
+        </Container>
+      </section>
+
+      {/* In their own words */}
+      <section className="on-dark bg-ink text-paper grain overflow-hidden">
+        <Container className="py-24 sm:py-32">
+          <SectionHeader dark eyebrow="Results in clients’ own words" title="What changed for them." accent="changed" />
+          <ul className="mt-14 grid md:grid-cols-3 gap-px bg-paper/10 rounded-3xl overflow-hidden border border-paper/10">
+            {[
+              ['A software and integration project that', 'continues to deliver value'],
+              ['A website and WhatsApp system that', 'made a noticeable difference in how we serve our customers'],
+              ['Content that doesn’t only convert to sales, and automation that lets the owner', 'make money while I sleep']
+            ].map(([lead, quote], i) => (
+              <Reveal as="li" key={quote} delay={i * 0.1} className="bg-ink p-8 sm:p-10">
+                <p className="text-paper/60 leading-relaxed">{lead}</p>
+                <p className="mt-4 font-display text-2xl sm:text-3xl font-light italic leading-snug text-ember">“{quote}”</p>
+              </Reveal>
+            ))}
+          </ul>
+        </Container>
+      </section>
+
+      {/* Engagement table */}
+      <section className="bg-paper">
+        <Container className="py-24 sm:py-32">
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
+            <SectionHeader
+              eyebrow="Selected engagements"
+              title="Recent client work."
+              accent="client"
+              intro="Client identities not shown are shared with permission during evaluation."
+            />
+            <Reveal delay={0.15}>
+              <div role="tablist" aria-label="Filter by service line" className="flex flex-wrap gap-2">
+                {(['all', ...SERVICE_LINES.map((s) => s.id)] as const).map((id) => (
+                  <button
+                    key={id}
+                    role="tab"
+                    aria-selected={filter === id}
+                    onClick={() => setFilter(id)}
+                    className={`min-h-[44px] px-5 rounded-full text-sm transition-colors ${
+                      filter === id ? 'bg-ink text-paper' : 'border border-ink/15 text-ink/75 hover:border-ink/40'
+                    }`}
+                  >
+                    {id === 'all' ? 'All work' : LINE_LABEL[id]}
+                  </button>
+                ))}
+              </div>
+            </Reveal>
+          </div>
+
+          <motion.ul layout className="mt-12 border-t border-ink/15">
+            <AnimatePresence initial={false}>
+              {rows.map((e) => (
+                <motion.li
+                  layout
+                  key={`${e.client}-${e.type}`}
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.35 }}
+                  className="grid grid-cols-12 gap-x-6 gap-y-2 py-7 border-b border-ink/15"
+                >
+                  <div className="col-span-12 md:col-span-4">
+                    <p className="font-display text-xl sm:text-2xl tracking-tight">{e.client}</p>
+                    <p className="text-sm text-muted mt-1">{e.type}</p>
+                  </div>
+                  <p className="col-span-12 md:col-span-6 text-[15px] text-ink/80 leading-relaxed">{e.delivered}</p>
+                  <div className="col-span-12 md:col-span-2 flex flex-wrap md:justify-end gap-1.5 content-start">
+                    {e.lines.map((l) => (
+                      <span key={l} className="px-2.5 py-1 rounded-full bg-paper-deep text-[12px] text-ink/70">{LINE_LABEL[l]}</span>
+                    ))}
+                  </div>
+                </motion.li>
+              ))}
+            </AnimatePresence>
+          </motion.ul>
+
+          <Reveal>
+            <div className="mt-16 grid md:grid-cols-12 gap-8 items-center p-8 sm:p-12 rounded-[32px] bg-paper-deep">
+              <div className="md:col-span-8">
+                <h3 className="font-display text-3xl sm:text-4xl font-light tracking-tight">See it for yourself.</h3>
+                <p className="mt-3 text-muted leading-relaxed max-w-xl">
+                  On request, we demonstrate our AI customer care agent and automation workflows live, so you can test them before you commit.
+                </p>
+              </div>
+              <div className="md:col-span-4 flex flex-col sm:flex-row md:flex-col gap-3">
+                <Button to="/contact" variant="primary">Request a live demo</Button>
+                <Button onClick={openCal} variant="ghost" icon={false}>Try Cal now</Button>
+              </div>
+            </div>
+          </Reveal>
+        </Container>
+      </section>
+
+      <ClosingCTA />
+    </>
   );
 }

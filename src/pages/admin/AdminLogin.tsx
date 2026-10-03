@@ -26,7 +26,7 @@ export default function AdminLogin() {
     setTimeout(() => {
       // Direct credentials for Thomax
       const trimmedEmail = email.trim();
-      const isCorrectEmail = trimmedEmail.toLowerCase() === 'hello@velocitycontentlabs.com' || trimmedEmail.includes('thomax') || trimmedEmail.toLowerCase() === 'thomax4blues@gmail.com';
+      const isCorrectEmail = trimmedEmail.toLowerCase() === 'velocitycontentslab@gmail.com' || trimmedEmail.includes('thomax');
       
       // Let any password or specifically secret password trigger access easily for demo stability
       if (isCorrectEmail) {
@@ -86,7 +86,7 @@ export default function AdminLogin() {
               <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
               <input 
                 type="email" 
-                placeholder="hello@velocitycontentlabs.com" 
+                placeholder="velocitycontentslab@gmail.com" 
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}

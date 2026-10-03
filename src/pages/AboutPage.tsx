@@ -1,186 +1,169 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
-
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { motion } from 'motion/react';
-import { 
-  Quote, 
-  MapPin, 
-  Globe, 
-  ArrowUpRight, 
-  ArrowRight, 
-  Check, 
-  Sparkles, 
-  ShieldCheck, 
-  HeartHandshake, 
-  Coffee,
-  Users
-} from 'lucide-react';
-import { 
-  BRAND_COMPANY, 
-  BRAND_TAGLINE, 
-  FOUNDER_NAME, 
-  ORIGIN_STORY_TEXT, 
-  COFFEE_SHOP_TEST_QUOTE 
-} from '../data.ts';
-import BrandImage from '../components/shared/BrandImage.tsx';
+import { COMPANY, FOUNDER, HISTORY, TOOLS, WHO_WE_SERVE } from '../content.ts';
+import {
+  ClosingCTA,
+  Container,
+  Eyebrow,
+  FounderPortrait,
+  PageHero,
+  Reveal,
+  ScrollText,
+  SectionHeader
+} from '../components/ui.tsx';
 import LemonadeStory from '../components/shared/LemonadeStory.tsx';
 
 export default function AboutPage() {
+  const companyFacts: [string, string][] = [
+    ['Registered name', 'VELOCITY CONTENTS LAB LTD'],
+    ['Company type', COMPANY.companyType],
+    ['Registration', `${COMPANY.registrationAuthority} · ${COMPANY.rc}`],
+    ['Incorporated', COMPANY.incorporated],
+    ['Operating since', `${COMPANY.operatingSince}, as a founder-led practice`],
+    ['Registered address', COMPANY.address],
+    ['Delivery', COMPANY.delivery],
+    ['Business hours', COMPANY.hours],
+    ['Response time', COMPANY.responseTime],
+    ['Email', COMPANY.email]
+  ];
+
   return (
-    <div className="pt-28 pb-20 bg-editorial-cream min-h-screen text-[#1A1A1A]">
-      
-      {/* Header */}
-      <section className="max-w-7xl mx-auto px-6 md:px-12 py-12 text-center flex flex-col items-center gap-4 border-b border-black/8">
-        <span className="text-[10px] uppercase font-mono text-brand-orange-warm tracking-[0.25em] font-black leading-none">
-          Origin, Identity &amp; Philosophy
-        </span>
-        <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-light italic text-[#1A1A1A] tracking-tight max-w-3xl leading-tight">
-          Where Strategy Meets Soul
-        </h1>
-        <p className="font-sans text-sm md:text-base text-neutral-600 max-w-2xl leading-relaxed">
-          The story of an African agency built in Lagos, Nigeria, powered by deep human truth, uncompromising distribution discipline, and global ambition.
-        </p>
+    <>
+      <PageHero
+        eyebrow="About Velocity Contents Lab"
+        title="Founder-led, from first call to final handover."
+        accent="first call final handover."
+        intro="We help businesses communicate clearly and operate efficiently. Every engagement is led personally by our founder, Emmanuel Sunday Thomas."
+      />
+
+      <section className="bg-paper">
+        <Container className="py-24 sm:py-36">
+          <Reveal>
+            <Eyebrow>Who we are</Eyebrow>
+          </Reveal>
+          <ScrollText
+            text="We build content strategies that make a business and its leaders visible to the right people. We build AI automation that takes repetitive work off people’s desks. And we build custom software that connects the tools a business already depends on."
+            className="mt-8 max-w-5xl font-display font-light text-[1.9rem] sm:text-5xl leading-[1.15] tracking-[-0.02em]"
+          />
+        </Container>
       </section>
 
-      {/* Origin Story: The Lemonade Stand */}
-      <section className="max-w-6xl mx-auto px-6 md:px-12 py-16" id="lemonade">
-        <LemonadeStory />
+      {/* History */}
+      <section className="bg-paper-deep">
+        <Container className="py-24 sm:py-32">
+          <SectionHeader eyebrow="Company history" title="From practice to company." accent="company." />
+          <ol className="mt-14 grid md:grid-cols-3 gap-5">
+            {HISTORY.map((h, i) => (
+              <Reveal as="li" key={h.title} delay={i * 0.12} className="relative p-8 rounded-3xl bg-paper border border-ink/10">
+                <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-clay">{h.when}</span>
+                <h3 className="mt-5 font-display text-2xl tracking-tight">{h.title}</h3>
+                <p className="mt-3 text-muted leading-relaxed">{h.body}</p>
+                {i < HISTORY.length - 1 && (
+                  <span aria-hidden="true" className="hidden md:block absolute top-1/2 -right-[14px] w-[23px] h-px bg-clay" />
+                )}
+              </Reveal>
+            ))}
+          </ol>
+        </Container>
       </section>
 
-      {/* Founder Profile & Sartorial Identity */}
-      <section className="max-w-6xl mx-auto px-6 md:px-12 py-16 border-t border-black/8" id="founder">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center text-left">
-          
-          <div className="lg:col-span-5 space-y-4">
-            <BrandImage
-              src="/photos/1000335399.png"
-              alt="Thomax - Emmanuel Sunday Thomas"
-              aspectRatio="3:4"
-              stylingType="photoA"
-              className="w-full shadow-xl rounded-2xl"
-            />
-            <div className="p-4 bg-white rounded-xl border border-black/10 text-center">
-              <h4 className="font-display text-base font-bold italic text-neutral-900">
-                {FOUNDER_NAME}
-              </h4>
-              <p className="text-xs font-mono text-brand-orange-warm mt-0.5">
-                Founder &amp; Chief Content Architect
-              </p>
-            </div>
-          </div>
+      {/* Founder */}
+      <section className="bg-paper" id="founder">
+        <Container className="py-24 sm:py-32">
+          <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+            <Reveal className="lg:col-span-5 lg:sticky lg:top-28">
+              <FounderPortrait className="aspect-[4/5]" />
+            </Reveal>
+            <div className="lg:col-span-7">
+              <SectionHeader eyebrow="Leadership" title={`${COMPANY.founder} (Thomax)`} />
+              <Reveal delay={0.1}>
+                <p className="mt-3 font-mono text-[12px] uppercase tracking-[0.16em] text-muted">{COMPANY.founderTitle}</p>
+                <p className="mt-8 text-xl leading-relaxed text-ink/85">{FOUNDER.bio}</p>
+              </Reveal>
 
-          <div className="lg:col-span-7 space-y-6">
-            <span className="text-[10px] uppercase font-mono text-brand-orange-warm tracking-[0.25em] font-black block">
-              The Founder's Journey
-            </span>
-
-            <h2 className="font-display text-3xl sm:text-4xl font-light italic text-neutral-900 leading-tight">
-              "We don't sell marketing. We build incontestable digital trust."
-            </h2>
-
-            <p className="font-sans text-xs sm:text-sm text-neutral-700 leading-relaxed">
-              Operating out of Lagos, Nigeria, Thomax has advised global software founders, high-ticket consultants, VC firms, and enterprise executives across 5 continents.
-            </p>
-
-            <p className="font-sans text-xs sm:text-sm text-neutral-700 leading-relaxed">
-              Having experienced firsthand how international deals were often lost not to superior technology, but to superior distribution, he formulated the proprietary <strong>Velocity Method</strong> to eliminate the gap between what you know and who knows you.
-            </p>
-
-            <div className="grid grid-cols-2 gap-4 pt-2">
-              <div className="p-4 rounded-xl bg-white border border-black/10">
-                <span className="text-[10px] font-mono text-brand-orange-warm uppercase font-bold block mb-1">
-                  Location
-                </span>
-                <span className="text-xs font-bold text-neutral-900 font-sans">
-                  Lagos, Nigeria (WAT / UTC+1)
-                </span>
+              <div className="mt-12 grid sm:grid-cols-2 gap-10">
+                <Reveal delay={0.1}>
+                  <h3 className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted">Education & training</h3>
+                  <ul className="mt-5 space-y-4">
+                    {FOUNDER.education.map((e) => (
+                      <li key={e} className="pl-4 border-l-2 border-clay text-[15px] leading-relaxed">{e}</li>
+                    ))}
+                  </ul>
+                </Reveal>
+                <Reveal delay={0.2}>
+                  <h3 className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted">Expertise</h3>
+                  <ul className="mt-5 flex flex-wrap gap-2">
+                    {FOUNDER.expertise.map((e) => (
+                      <li key={e} className="px-3.5 py-2 rounded-full bg-paper-deep text-[14px]">{e}</li>
+                    ))}
+                  </ul>
+                </Reveal>
               </div>
 
-              <div className="p-4 rounded-xl bg-white border border-black/10">
-                <span className="text-[10px] font-mono text-brand-orange-warm uppercase font-bold block mb-1">
-                  Global Footprint
-                </span>
-                <span className="text-xs font-bold text-neutral-900 font-sans">
-                  US, UK, Europe, Africa, Asia
-                </span>
-              </div>
+              <Reveal delay={0.1}>
+                <h3 className="mt-16 font-mono text-[11px] uppercase tracking-[0.2em] text-muted">Who we serve</h3>
+                <ul className="mt-5 border-t border-ink/15">
+                  {WHO_WE_SERVE.map((w, i) => (
+                    <li key={w} className="flex gap-5 py-5 border-b border-ink/15">
+                      <span className="font-mono text-xs text-clay pt-1">{String(i + 1).padStart(2, '0')}</span>
+                      <span className="text-[17px] leading-relaxed">{w}</span>
+                    </li>
+                  ))}
+                </ul>
+              </Reveal>
             </div>
           </div>
-
-        </div>
+        </Container>
       </section>
 
-      {/* The Core Standards: Coffee Shop Test & Accountability */}
-      <section className="max-w-6xl mx-auto px-6 md:px-12 py-16 border-t border-black/8">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
-          
-          {/* Coffee Shop Test */}
-          <div className="p-8 rounded-3xl bg-white border border-black/10 shadow-sm space-y-4">
-            <div className="w-10 h-10 rounded-xl bg-amber-50 border border-amber-200 flex items-center justify-center text-brand-orange-warm">
-              <Coffee className="w-5 h-5" />
+      <LemonadeStory />
+
+      {/* Company info + tools */}
+      <section className="bg-paper" id="company">
+        <Container className="py-24 sm:py-32">
+          <div className="grid lg:grid-cols-12 gap-14">
+            <div className="lg:col-span-6">
+              <SectionHeader eyebrow="Company information" title="Registration and corporate details." accent="corporate" />
+              <dl className="mt-10 border-t border-ink/15">
+                {companyFacts.map(([k, v]) => (
+                  <Reveal key={k} className="grid grid-cols-12 gap-4 py-4 border-b border-ink/15">
+                    <dt className="col-span-12 sm:col-span-4 text-sm text-muted">{k}</dt>
+                    <dd className="col-span-12 sm:col-span-8 text-[15px]">
+                      {k === 'Email' ? (
+                        <a href={`mailto:${v}`} className="underline decoration-ink/20 underline-offset-4 hover:decoration-clay hover:text-clay">
+                          {v}
+                        </a>
+                      ) : (
+                        v
+                      )}
+                    </dd>
+                  </Reveal>
+                ))}
+              </dl>
             </div>
-
-            <h3 className="font-display text-2xl font-bold italic text-neutral-900">
-              The Coffee Shop Test Standard
-            </h3>
-
-            <p className="font-display text-base italic text-brand-orange-warm leading-relaxed">
-              "{COFFEE_SHOP_TEST_QUOTE}"
-            </p>
-
-            <p className="font-sans text-xs text-neutral-600 leading-relaxed">
-              We apply this filter to every single article, newsletter, and social post we write. If an idea relies on corporate jargon, buzzwords, or convoluted phrasing to sound intelligent, we throw it out and rewrite it until it's crystal-clear.
-            </p>
+            <div className="lg:col-span-6">
+              <SectionHeader eyebrow="Technology & tools" title="The tools behind the work." accent="tools" />
+              <ul className="mt-10 space-y-6">
+                {TOOLS.map((t, i) => (
+                  <Reveal as="li" key={t.area} delay={i * 0.05}>
+                    <h3 className="text-sm text-muted">{t.area}</h3>
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      {t.tools.map((tool) => (
+                        <span
+                          key={tool}
+                          className="px-3.5 py-2 rounded-xl border border-ink/12 text-[14px] hover:bg-ink hover:text-paper hover:border-ink transition-colors"
+                        >
+                          {tool}
+                        </span>
+                      ))}
+                    </div>
+                  </Reveal>
+                ))}
+              </ul>
+            </div>
           </div>
-
-          {/* Lagos to Global Mission */}
-          <div className="p-8 rounded-3xl bg-[#121212] text-white border border-neutral-800 shadow-sm space-y-4">
-            <div className="w-10 h-10 rounded-xl bg-emerald-950 border border-emerald-800 flex items-center justify-center text-emerald-400">
-              <Globe className="w-5 h-5" />
-            </div>
-
-            <h3 className="font-display text-2xl font-bold italic text-white">
-              Lagos → Global Execution
-            </h3>
-
-            <p className="font-sans text-xs text-neutral-300 leading-relaxed">
-              Lagos is one of the most creatively dynamic, resilient, and fast-moving cities on earth. We channel that raw energy, intellectual rigor, and relentless hustle into building world-class content systems for international category leaders.
-            </p>
-
-            <div className="pt-2 flex items-center gap-3 text-xs font-mono text-emerald-400">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span>Cross-continental sync across US, UK &amp; European time zones</span>
-            </div>
-          </div>
-
-        </div>
+        </Container>
       </section>
 
-      {/* CTA */}
-      <section className="max-w-5xl mx-auto px-6 md:px-12 pt-10">
-        <div className="bg-[#121212] text-white p-8 md:p-12 rounded-3xl text-center space-y-4">
-          <h3 className="font-display text-2xl sm:text-3xl font-light italic text-white">
-            Let's build your category authority together.
-          </h3>
-          <p className="text-xs sm:text-sm text-neutral-400 max-w-xl mx-auto font-sans leading-relaxed">
-            Schedule a 15-minute diagnostic session with Thomax.
-          </p>
-          <div className="pt-2">
-            <Link
-              to="/contact"
-              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-brand-orange-warm hover:bg-orange-600 text-white font-sans text-xs uppercase font-bold tracking-wider transition-colors shadow-lg"
-            >
-              <span>Schedule Strategy Diagnostic</span>
-              <ArrowUpRight className="w-4 h-4" />
-            </Link>
-          </div>
-        </div>
-      </section>
-
-    </div>
+      <ClosingCTA />
+    </>
   );
 }

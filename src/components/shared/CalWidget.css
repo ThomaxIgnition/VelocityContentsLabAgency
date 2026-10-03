@@ -2,18 +2,22 @@
    CAL WIDGET — APPROVED MAGNUS CUSTOMER CARE DESIGN SYSTEM
    ========================================================================= */
 
+.menu-open .cal-widget {
+  display: none;
+}
+
 .cal-widget {
   z-index: 9999;
   position: fixed;
   bottom: clamp(18px, 3vw, 36px);
   right: clamp(18px, 3vw, 42px);
-  font-family: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: "Satoshi", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
 .cal-launcher {
   color: #f5f0e8;
-  background: #11110ff0;
-  border: 1px solid rgba(228, 185, 79, 0.46);
+  background: #15130Ff0;
+  border: 1px solid rgba(236, 138, 92, 0.46);
   border-radius: 999px;
   align-items: center;
   gap: 12px;
@@ -27,8 +31,8 @@
 }
 
 .cal-launcher:hover {
-  background: #171611;
-  border-color: #e4b94f;
+  background: #221F1A;
+  border-color: #EC8A5C;
   transform: translateY(-3px);
 }
 
@@ -63,8 +67,8 @@
 }
 
 .v-mark {
-  background: #171611;
-  border: 1px solid rgba(228, 185, 79, 0.56);
+  background: #221F1A;
+  border: 1px solid rgba(236, 138, 92, 0.56);
   flex: none;
   place-items: center;
   width: 43px;
@@ -84,16 +88,16 @@
 }
 
 .v-mark-fallback {
-  color: #e4b94f;
+  color: #EC8A5C;
   font-size: 20px;
   font-weight: 800;
   line-height: 1;
   position: absolute;
-  font-family: "Satoshi", "Manrope", sans-serif;
+  font-family: "Fraunces", Georgia, serif;
 }
 
 .v-mark--small {
-  border-color: rgba(228, 185, 79, 0.42);
+  border-color: rgba(236, 138, 92, 0.42);
   width: 24px;
   height: 24px;
 }
@@ -157,12 +161,12 @@
 }
 
 .cal-status-dot {
-  background: #e4b94f;
+  background: #EC8A5C;
   border-radius: 50%;
   width: 6px;
   height: 6px;
   display: inline-block;
-  box-shadow: 0 0 0 3px rgba(228, 185, 79, 0.1);
+  box-shadow: 0 0 0 3px rgba(236, 138, 92, 0.1);
 }
 
 .cal-header-actions {
@@ -225,8 +229,8 @@
 }
 
 .cal-message--visitor .message-body {
-  color: #171611;
-  background: #e4b94f;
+  color: #221F1A;
+  background: #EC8A5C;
   border-radius: 15px 15px 3px 15px;
   max-width: 83%;
   font-weight: 500;
@@ -242,8 +246,8 @@
 }
 
 .cal-message--system .message-body {
-  color: #e7c87c;
-  border-color: rgba(228, 185, 79, 0.28);
+  color: #F2A47F;
+  border-color: rgba(236, 138, 92, 0.28);
 }
 
 .message-mark {
@@ -294,13 +298,13 @@
 
 .prompt-chip:hover {
   color: #f5f0e8;
-  background: rgba(228, 185, 79, 0.07);
-  border-color: rgba(228, 185, 79, 0.7);
+  background: rgba(236, 138, 92, 0.07);
+  border-color: rgba(236, 138, 92, 0.7);
   transform: translateX(3px);
 }
 
 .prompt-chip svg {
-  color: #e4b94f;
+  color: #EC8A5C;
   transform: rotate(45deg);
   flex-shrink: 0;
 }
@@ -320,7 +324,7 @@
 }
 
 .typing-dots i {
-  background: #e4b94f;
+  background: #EC8A5C;
   border-radius: 50%;
   width: 4px;
   height: 4px;
@@ -354,8 +358,8 @@
 }
 
 .cal-composer:focus-within {
-  border-color: rgba(228, 185, 79, 0.7);
-  box-shadow: 0 0 0 3px rgba(228, 185, 79, 0.08);
+  border-color: rgba(236, 138, 92, 0.7);
+  box-shadow: 0 0 0 3px rgba(236, 138, 92, 0.08);
 }
 
 .cal-composer input {
@@ -374,8 +378,8 @@
 }
 
 .send-button {
-  background: #e4b94f;
-  color: #171611;
+  background: #EC8A5C;
+  color: #221F1A;
   border: none;
   border-radius: 8px;
   width: 28px;
@@ -419,13 +423,13 @@
 }
 
 .composer-footer button:hover {
-  color: #e4b94f;
+  color: #EC8A5C;
 }
 
 .minimized-bar {
   color: #f5f0e8;
-  background: #171611;
-  border: 1px solid rgba(228, 185, 79, 0.5);
+  background: #221F1A;
+  border: 1px solid rgba(236, 138, 92, 0.5);
   border-radius: 999px;
   align-items: center;
   gap: 9px;
@@ -509,6 +513,17 @@
   }
 
   .cal-intro-note {
-    font-size: 7.5px;
+    font-size: 11px;
+  }
+
+  /* Compact launcher on phones so it does not cover page content */
+  .cal-launcher {
+    padding: 6px 14px 6px 6px;
+    gap: 8px;
+  }
+
+  .cal-launcher .launcher-copy small,
+  .cal-launcher > svg {
+    display: none;
   }
 }

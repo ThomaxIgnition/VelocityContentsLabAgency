@@ -1,213 +1,265 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
-
-import { useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
-import { Menu, X, ArrowUpRight, Bot, Sparkles } from 'lucide-react';
-import { BRAND_COMPANY, BRAND_TAGLINE } from '../../data.ts';
+import { ArrowUpRight, MessageCircle, Moon, Sun } from 'lucide-react';
+import { COMPANY } from '../../content.ts';
+import { openCal } from '../ui.tsx';
+import { useTheme } from '../../lib/theme.ts';
 
-interface NavbarProps {
-  onOpenCal?: () => void;
+const NAV_LINKS = [
+  { name: 'Services', href: '/services' },
+  { name: 'Work', href: '/work' },
+  { name: 'How We Work', href: '/method' },
+  { name: 'About', href: '/about' },
+  { name: 'Insights', href: '/insights' }
+];
+
+// Pages that open on a dark hero, where the bar starts transparent with light text.
+const DARK_HERO_ROUTES = ['/', '/services', '/work', '/method', '/about', '/contact'];
+
+export function Logo({ light = false, tagline = true }: { light?: boolean; tagline?: boolean }) {
+  return (
+    <span className="flex items-center gap-3">
+      <svg viewBox="0 0 64 64" className="w-9 h-9 shrink-0" aria-hidden="true">
+        <rect width="64" height="64" rx="14" className={light ? 'fill-paper' : 'fill-ink'} />
+        <path d="M17 18h7.5L32 39.5 39.5 18H47L35.6 47h-7.2z" className={light ? 'fill-ink' : 'fill-paper'} />
+        <circle cx="47" cy="47" r="4" className="fill-ember" />
+      </svg>
+      <span className="flex flex-col leading-none whitespace-nowrap">
+        <span className={`font-display text-[19px] tracking-tight ${light ? 'text-paper' : 'text-ink'}`}>Velocity</span>
+        <span className={`font-mono text-[9px] uppercase tracking-[0.28em] mt-1 ${light ? 'text-paper/60' : 'text-muted'}`}>
+          Contents Lab
+        </span>
+        {tagline && (
+          <span className={`font-display italic text-[11px] tracking-normal mt-1 ${light ? 'text-ember' : 'text-clay'}`}>
+            “{COMPANY.tagline}”
+          </span>
+        )}
+      </span>
+    </span>
+  );
 }
 
-export default function Navbar({ onOpenCal }: NavbarProps) {
-  const [isOpen, setIsOpen] = useState(false);
-  const location = useLocation();
-  const navigate = useNavigate();
-  const currentPath = location.pathname;
+export default function Navbar() {
+  const { pathname } = useLocation();
+  const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
 
-  const isAdminRoute = currentPath.startsWith('/admin');
+  useEffect(() => {
+    let lastY = window.scrollY;
+    const onScroll = () => {
+      const y = window.scrollY;
+      setScrolled(y > 24);
+      setHidden(y > 480 && y > lastY + 4);
+      if (y < lastY - 4) setHidden(false);
+      lastY = y;
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
-  const navLinks = [
-    { name: 'Services', href: '/services' },
-    { name: 'Work & Proof', href: '/work' },
-    { name: 'The Method', href: '/method' },
-    { name: 'Insights & Ebook', href: '/insights' },
-    { name: 'About', href: '/about' },
-    { name: 'Contact', href: '/contact' }
-  ];
+  useEffect(() => setOpen(false), [pathname]);
 
-  const toggleMenu = () => setIsOpen(!isOpen);
+  useEffect(() => {
+    document.body.style.overflow = open ? 'hidden' : '';
+    document.body.classList.toggle('menu-open', open);
+    return () => {
+      document.body.style.overflow = '';
+      document.body.classList.remove('menu-open');
+    };
+  }, [open]);
 
-  if (isAdminRoute) {
-    return (
-      <header className="sticky top-0 z-50 w-full bg-[#121212] border-b border-neutral-800 px-6 py-4 flex items-center justify-between text-white">
-        <div className="flex items-center gap-3">
-          <Link to="/" className="font-display font-bold text-lg tracking-tight text-white flex items-center gap-2">
-            <span className="w-8 h-8 rounded bg-gradient-to-br from-brand-orange-warm to-amber-600 flex items-center justify-center font-black text-white text-sm">
-              V
-            </span>
-            <span>VELOCITY <span className="text-brand-orange-warm">CONTENTS LAB</span></span>
-          </Link>
-          <span className="text-[10px] font-mono px-2 py-0.5 bg-neutral-800 text-neutral-400 rounded-full border border-neutral-700">
-            PRIVATE CONTENT OPS
-          </span>
-        </div>
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(false);
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
 
-        <div className="flex items-center gap-4">
-          <Link to="/" className="text-xs text-neutral-400 hover:text-white font-mono flex items-center gap-1 transition-colors">
-            Return to Public Website <ArrowUpRight className="w-3.5 h-3.5" />
-          </Link>
-        </div>
-      </header>
-    );
-  }
+  if (pathname.startsWith('/admin')) return null;
+
+  const overDark = DARK_HERO_ROUTES.includes(pathname) && !scrolled;
+  const light = overDark || open;
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-40 w-full bg-editorial-cream/95 backdrop-blur-md border-b border-[#1A1A1A]/8 px-4 md:px-8 py-4 transition-all duration-200">
-      <div className="max-w-7xl mx-auto flex items-center justify-between h-11">
-        
-        {/* BRAND LOGO */}
-        <Link 
-          to="/" 
-          className="group flex items-center gap-3"
-          id="brand-logo"
-          title="Velocity Contents Lab - Where Strategy Meets Soul"
-        >
-          <div className="w-9 h-9 border border-editorial-dark flex items-center justify-center text-editorial-dark font-display font-medium italic text-base group-hover:bg-editorial-dark group-hover:text-editorial-cream transition-all duration-200 shadow-sm">
-            V
-          </div>
-          <div className="flex flex-col text-left">
-            <span className="font-display font-semibold italic text-xl text-editorial-dark tracking-tight leading-none group-hover:text-brand-orange-warm transition-colors">
-              Velocity
-            </span>
-            <span className="font-sans text-[8px] uppercase font-bold tracking-[0.25em] text-brand-orange-warm mt-0.5">
-              Contents Lab
-            </span>
-          </div>
-        </Link>
+    <>
+      <motion.header
+        animate={{ y: hidden && !open ? '-110%' : '0%' }}
+        transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+        className={`fixed inset-x-0 top-0 z-50 transition-[background-color,box-shadow,padding] duration-300 ${light ? 'on-dark' : ''} ${
+          open
+            ? 'bg-transparent py-4'
+            : scrolled
+              ? 'bg-paper/85 backdrop-blur-xl shadow-[0_1px_0_rgba(21,19,15,0.08)] py-3'
+              : overDark
+                ? 'bg-transparent py-5'
+                : 'bg-paper py-5'
+        }`}
+      >
+        <div className="mx-auto max-w-[1240px] px-5 sm:px-8 flex items-center justify-between gap-6">
+          <Link to="/" aria-label={`${COMPANY.name} home`} className="relative z-10">
+            <Logo light={light} />
+          </Link>
 
-        {/* Desktop Nav Items */}
-        <nav className="hidden lg:flex items-center gap-7">
-          {navLinks.map((item) => {
-            const isActive = currentPath === item.href || (item.href === '/insights' && currentPath.startsWith('/insights'));
-            return (
-              <Link
+          <nav aria-label="Main" className="hidden lg:flex items-center gap-1">
+            {NAV_LINKS.map((item) => (
+              <NavLink
                 key={item.href}
                 to={item.href}
-                className={`text-[11px] tracking-[0.18em] uppercase font-bold transition-colors py-1 relative ${
-                  isActive
-                    ? 'text-brand-orange-warm'
-                    : 'text-[#1A1A1A]/75 hover:text-brand-orange-warm'
-                }`}
+                className={({ isActive }) =>
+                  `relative px-4 py-2 rounded-full text-[15px] transition-colors ${
+                    light
+                      ? isActive ? 'text-paper' : 'text-paper/65 hover:text-paper'
+                      : isActive ? 'text-ink' : 'text-ink/60 hover:text-ink'
+                  }`
+                }
               >
-                {item.name}
-                {isActive && (
-                  <motion.span
-                    layoutId="activeNavIndicator"
-                    className="absolute bottom-0 left-0 right-0 h-[2px] bg-brand-orange-warm rounded-full"
-                  />
-                )}
-              </Link>
-            );
-          })}
-        </nav>
-
-        {/* Right Actions */}
-        <div className="hidden lg:flex items-center gap-3">
-          {/* Cal AI quick trigger */}
-          <button
-            onClick={() => {
-              if (onOpenCal) onOpenCal();
-              window.dispatchEvent(new CustomEvent('velocity-open-cal'));
-              const launcher = document.querySelector('.cal-launcher') as HTMLButtonElement | null;
-              if (launcher) launcher.click();
-            }}
-            className="flex items-center gap-1.5 px-3 py-2 rounded-full bg-editorial-pale hover:bg-editorial-beige text-[#1A1A1A] font-mono text-[10px] font-semibold tracking-wider transition-colors border border-black/10"
-            title="Chat with Cal, our AI representative"
-          >
-            <Bot className="w-3.5 h-3.5 text-brand-orange-warm" />
-            <span>Ask Cal AI</span>
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-          </button>
-
-          {/* Book Call Button */}
-          <Link
-            to="/contact"
-            className="px-5 py-2.5 rounded-full bg-[#1A1A1A] hover:bg-brand-orange-warm text-editorial-cream font-sans text-[11px] uppercase font-bold tracking-wider transition-all duration-200 flex items-center gap-1.5 shadow-sm"
-            id="nav-book-call"
-          >
-            <span>Book Diagnostic</span>
-            <ArrowUpRight className="w-3.5 h-3.5" />
-          </Link>
-        </div>
-
-        {/* Mobile Menu Button */}
-        <button
-          onClick={toggleMenu}
-          className="lg:hidden p-2 text-editorial-dark hover:text-brand-orange-warm focus:outline-none transition-colors"
-          aria-label="Toggle navigation menu"
-        >
-          {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-        </button>
-      </div>
-
-      {/* Mobile Drawer */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.25 }}
-            className="lg:hidden w-full bg-editorial-cream border-b border-black/10 mt-3 overflow-hidden"
-          >
-            <div className="flex flex-col gap-3 py-4 px-2">
-              {navLinks.map((item) => {
-                const isActive = currentPath === item.href;
-                return (
-                  <Link
-                    key={item.href}
-                    to={item.href}
-                    onClick={() => setIsOpen(false)}
-                    className={`text-xs tracking-[0.15em] uppercase font-bold py-2 px-3 rounded transition-colors ${
-                      isActive 
-                        ? 'bg-editorial-pale text-brand-orange-warm font-black' 
-                        : 'text-editorial-dark hover:text-brand-orange-warm'
-                    }`}
-                  >
+                {({ isActive }) => (
+                  <>
                     {item.name}
-                  </Link>
-                );
-              })}
-              
-              <div className="pt-3 border-t border-black/5 flex flex-col gap-2.5">
+                    {isActive && (
+                      <motion.span
+                        layoutId="nav-dot"
+                        className="absolute left-1/2 -bottom-0.5 w-1 h-1 -ml-0.5 rounded-full bg-ember"
+                        transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                      />
+                    )}
+                  </>
+                )}
+              </NavLink>
+            ))}
+          </nav>
+
+          <div className="flex items-center gap-1 sm:gap-2 relative z-10">
+            <ThemeToggle light={light} />
+            <button
+              onClick={openCal}
+              className={`hidden sm:inline-flex items-center gap-2 min-h-[44px] px-4 rounded-full text-sm transition-colors ${
+                light ? 'text-paper/80 hover:text-paper' : 'text-ink/70 hover:text-ink'
+              }`}
+            >
+              <span className="relative flex w-2 h-2">
+                <span className="absolute inset-0 rounded-full bg-sage animate-ping opacity-60" />
+                <span className="relative w-2 h-2 rounded-full bg-sage" />
+              </span>
+              Ask Cal
+            </button>
+            <Link
+              to="/contact"
+              className={`hidden md:inline-flex items-center gap-2 min-h-[44px] px-5 rounded-full text-sm font-medium transition-colors ${
+                light ? 'bg-paper text-ink hover:bg-ember' : 'bg-ink text-paper hover:bg-clay'
+              }`}
+            >
+              Book a call
+              <ArrowUpRight className="w-4 h-4" />
+            </Link>
+
+            <button
+              onClick={() => setOpen((v) => !v)}
+              aria-expanded={open}
+              aria-controls="mobile-menu"
+              aria-label={open ? 'Close menu' : 'Open menu'}
+              className={`lg:hidden w-12 h-12 -mr-2 flex flex-col items-center justify-center gap-[6px] rounded-full ${
+                light ? 'text-paper' : 'text-ink'
+              }`}
+            >
+              <motion.span animate={open ? { rotate: 45, y: 4 } : { rotate: 0, y: 0 }} className="block w-6 h-[1.5px] bg-current" />
+              <motion.span animate={open ? { rotate: -45, y: -3.5 } : { rotate: 0, y: 0 }} className="block w-6 h-[1.5px] bg-current" />
+            </button>
+          </div>
+        </div>
+      </motion.header>
+
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            id="mobile-menu"
+            initial={{ clipPath: 'circle(0% at calc(100% - 44px) 40px)' }}
+            animate={{ clipPath: 'circle(150% at calc(100% - 44px) 40px)' }}
+            exit={{ clipPath: 'circle(0% at calc(100% - 44px) 40px)' }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="on-dark fixed inset-0 z-40 bg-ink text-paper grain lg:hidden overflow-y-auto"
+          >
+            <div className="min-h-full flex flex-col px-5 sm:px-8 pt-28 pb-10">
+              <nav aria-label="Mobile" className="flex flex-col">
+                {[{ name: 'Home', href: '/' }, ...NAV_LINKS, { name: 'Contact', href: '/contact' }].map((item, i) => (
+                  <motion.div
+                    key={item.href}
+                    initial={{ opacity: 0, y: 24 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.15 + i * 0.05, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                  >
+                    <NavLink
+                      to={item.href}
+                      end={item.href === '/'}
+                      className={({ isActive }) =>
+                        `flex items-baseline gap-4 py-3 border-b border-paper/10 font-display text-[2.1rem] leading-tight tracking-tight ${
+                          isActive ? 'text-ember italic' : 'text-paper'
+                        }`
+                      }
+                    >
+                      <span className="font-mono text-[11px] text-paper/40 w-6">0{i + 1}</span>
+                      {item.name}
+                    </NavLink>
+                  </motion.div>
+                ))}
+              </nav>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.5 }}
+                className="mt-auto pt-10 grid gap-3"
+              >
+                <Link to="/contact" className="flex items-center justify-center gap-2 min-h-[52px] rounded-full bg-ember text-coal font-medium">
+                  Book a free discovery call <ArrowUpRight className="w-4 h-4" />
+                </Link>
                 <button
                   onClick={() => {
-                    setIsOpen(false);
-                    window.dispatchEvent(new CustomEvent('velocity-open-cal'));
-                    const launcher = document.querySelector('.cal-launcher') as HTMLButtonElement | null;
-                    if (launcher) launcher.click();
+                    setOpen(false);
+                    openCal();
                   }}
-                  className="w-full py-2.5 rounded-full bg-editorial-pale text-editorial-dark font-mono text-xs font-bold flex items-center justify-center gap-2 border border-black/10"
+                  className="flex items-center justify-center gap-2 min-h-[52px] rounded-full border border-paper/25 text-paper"
                 >
-                  <Bot className="w-4 h-4 text-brand-orange-warm" />
-                  <span>Talk with Cal AI Customer Care</span>
+                  <MessageCircle className="w-4 h-4" /> Ask Cal, our AI assistant
                 </button>
-
-                <Link
-                  to="/contact"
-                  onClick={() => setIsOpen(false)}
-                  className="w-full py-3 rounded-full bg-[#1A1A1A] hover:bg-brand-orange-warm text-white text-center text-xs uppercase font-bold tracking-wider block transition-colors"
-                >
-                  Book 15-Min Content Diagnostic
-                </Link>
-
-                <Link
-                  to="/admin/login"
-                  onClick={() => setIsOpen(false)}
-                  className="w-full py-2 rounded-full text-slate-500 font-mono text-[10px] text-center block bg-slate-100 hover:bg-slate-200 border border-slate-200 transition-colors"
-                >
-                  Private Content Ops Portal (Admin)
-                </Link>
-              </div>
+                <a href={`mailto:${COMPANY.email}`} className="text-center text-sm text-paper/60 pt-3">
+                  {COMPANY.email}
+                </a>
+              </motion.div>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
-    </header>
+    </>
+  );
+}
+
+export function ThemeToggle({ light = false, className = '' }: { light?: boolean; className?: string }) {
+  const { theme, toggle } = useTheme();
+  const isDark = theme === 'dark';
+  return (
+    <button
+      type="button"
+      onClick={toggle}
+      aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+      title={isDark ? 'Light mode' : 'Dark mode'}
+      className={`relative w-11 h-11 rounded-full flex items-center justify-center overflow-hidden transition-colors ${
+        light ? 'text-paper/80 hover:text-paper hover:bg-paper/10' : 'text-ink/70 hover:text-ink hover:bg-ink/5'
+      } ${className}`}
+    >
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.span
+          key={theme}
+          initial={{ y: 18, rotate: -90, opacity: 0 }}
+          animate={{ y: 0, rotate: 0, opacity: 1 }}
+          exit={{ y: -18, rotate: 90, opacity: 0 }}
+          transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+          className="flex"
+        >
+          {isDark ? <Sun className="w-[18px] h-[18px]" /> : <Moon className="w-[18px] h-[18px]" />}
+        </motion.span>
+      </AnimatePresence>
+    </button>
   );
 }

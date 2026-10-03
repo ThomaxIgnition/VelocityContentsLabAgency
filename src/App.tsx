@@ -1,81 +1,112 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
-
-import { useEffect } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import { HashRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { MotionConfig, motion } from 'motion/react';
 import Navbar from './components/shared/Navbar.tsx';
 import Footer from './components/shared/Footer.tsx';
-import StickyCTA from './components/shared/StickyCTA.tsx';
 import CalAssistant from './components/shared/CalAssistant.tsx';
-
-// Flagship Architecture Pages
 import HomePage from './pages/HomePage.tsx';
-import ServicesPage from './pages/ServicesPage.tsx';
-import WorkPage from './pages/WorkPage.tsx';
-import MethodPage from './pages/MethodPage.tsx';
-import InsightsPage from './pages/InsightsPage.tsx';
-import AboutPage from './pages/AboutPage.tsx';
-import ContactPage from './pages/ContactPage.tsx';
-import ChapterPage from './pages/ChapterPage.tsx';
-import AdminLogin from './pages/admin/AdminLogin.tsx';
-import AdminDashboard from './pages/admin/AdminDashboard.tsx';
 
-// Scroll coordinator helper to guarantee clean editorial resets on route transitions
-function ScrollToTop() {
-  const { pathname } = useLocation();
+const ServicesPage = lazy(() => import('./pages/ServicesPage.tsx'));
+const WorkPage = lazy(() => import('./pages/WorkPage.tsx'));
+const MethodPage = lazy(() => import('./pages/MethodPage.tsx'));
+const InsightsPage = lazy(() => import('./pages/InsightsPage.tsx'));
+const AboutPage = lazy(() => import('./pages/AboutPage.tsx'));
+const ContactPage = lazy(() => import('./pages/ContactPage.tsx'));
+const ChapterPage = lazy(() => import('./pages/ChapterPage.tsx'));
+const AdminLogin = lazy(() => import('./pages/admin/AdminLogin.tsx'));
+const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard.tsx'));
+
+const TITLES: Record<string, string> = {
+  '/': 'Velocity Contents Lab | Content Strategy, AI Automation & Software',
+  '/services': 'Services & Pricing | Velocity Contents Lab',
+  '/work': 'Client Work | Velocity Contents Lab',
+  '/method': 'How We Work | Velocity Contents Lab',
+  '/about': 'About | Velocity Contents Lab',
+  '/insights': 'Insights | Velocity Contents Lab',
+  '/contact': 'Book a Discovery Call | Velocity Contents Lab'
+};
+
+// Scrolls to the top on page change, or to a section when the link carries one (e.g. /services#pricing).
+function ScrollManager() {
+  const { pathname, hash } = useLocation();
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
+    document.title = TITLES[pathname] ?? TITLES['/'];
+    if (hash) {
+      const id = hash.slice(1);
+      let tries = 0;
+      const find = () => {
+        const el = document.getElementById(id);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        else if (tries++ < 20) setTimeout(find, 60);
+      };
+      setTimeout(find, 80);
+    } else {
+      window.scrollTo(0, 0);
+    }
+  }, [pathname, hash]);
 
   return null;
 }
 
-// Global layout wrapper to conditionally omit default headers on admin control boards
+function PageFallback() {
+  return <div className="min-h-screen bg-ink" />;
+}
+
 function MainLayout() {
   const location = useLocation();
-  const path = location.pathname;
-  
-  const isAdminPath = path.startsWith('/admin');
+  const isAdminPath = location.pathname.startsWith('/admin');
 
   return (
-    <div className="flex flex-col min-h-screen bg-editorial-cream text-[#1A1A1A]">
+    <div className="flex flex-col min-h-screen bg-paper text-ink">
+      <a
+        href="#main"
+        onClick={(e) => {
+          e.preventDefault();
+          document.getElementById('main')?.focus();
+        }}
+        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[60] focus:px-4 focus:py-2 focus:rounded-full focus:bg-ink focus:text-paper"
+      >
+        Skip to content
+      </a>
       <Navbar />
-      
-      <main className="flex-grow">
-        <Routes>
-          {/* Primary Flagship Routes */}
-          <Route path="/" element={<HomePage />} />
-          <Route path="/home" element={<Navigate to="/" replace />} />
-          <Route path="/services" element={<ServicesPage />} />
-          <Route path="/work" element={<WorkPage />} />
-          <Route path="/method" element={<MethodPage />} />
-          <Route path="/insights" element={<InsightsPage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/contact" element={<ContactPage />} />
 
-          {/* Ebook Chapter Deep-Dives */}
-          <Route path="/blog/:slug" element={<ChapterPage />} />
+        <motion.main
+          id="main"
+          tabIndex={-1}
+          key={location.pathname}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.35 }}
+          className="flex-grow outline-none"
+        >
+          <Suspense fallback={<PageFallback />}>
+            <Routes location={location}>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/home" element={<Navigate to="/" replace />} />
+              <Route path="/services" element={<ServicesPage />} />
+              <Route path="/work" element={<WorkPage />} />
+              <Route path="/method" element={<MethodPage />} />
+              <Route path="/insights" element={<InsightsPage />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/contact" element={<ContactPage />} />
+              <Route path="/blog/:slug" element={<ChapterPage />} />
 
-          {/* Backward compatibility aliases */}
-          <Route path="/blog" element={<Navigate to="/insights" replace />} />
-          <Route path="/resources" element={<Navigate to="/insights" replace />} />
-          <Route path="/origin-story" element={<Navigate to="/about" replace />} />
+              {/* Older links kept working */}
+              <Route path="/blog" element={<Navigate to="/insights" replace />} />
+              <Route path="/resources" element={<Navigate to="/insights" replace />} />
+              <Route path="/origin-story" element={<Navigate to="/about" replace />} />
 
-          {/* Secure Admin Routes */}
-          <Route path="/admin" element={<Navigate to="/admin/login" replace />} />
-          <Route path="/admin/login" element={<AdminLogin />} />
-          <Route path="/admin/dashboard" element={<AdminDashboard />} />
+              <Route path="/admin" element={<Navigate to="/admin/login" replace />} />
+              <Route path="/admin/login" element={<AdminLogin />} />
+              <Route path="/admin/dashboard" element={<AdminDashboard />} />
 
-          {/* Catch-all */}
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </main>
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </Suspense>
+        </motion.main>
 
       {!isAdminPath && <Footer />}
-      {!isAdminPath && <StickyCTA />}
       {!isAdminPath && <CalAssistant />}
     </div>
   );
@@ -83,9 +114,11 @@ function MainLayout() {
 
 export default function App() {
   return (
-    <Router>
-      <ScrollToTop />
-      <MainLayout />
-    </Router>
+    <MotionConfig reducedMotion="user">
+      <Router>
+        <ScrollManager />
+        <MainLayout />
+      </Router>
+    </MotionConfig>
   );
 }

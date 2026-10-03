@@ -3,15 +3,37 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Velocity Contents Lab | Where Strategy Meets Soul</title>
+    <title>Velocity Contents Lab | Content Strategy, AI Automation &amp; Software</title>
+    <meta name="description" content="Velocity Contents Lab Ltd is a Lagos-based agency that builds content strategy, AI automation, and custom software together, under one accountable team. Where Strategy Meets Soul." />
+    <meta name="theme-color" content="#15130F" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script>
+      // Apply the saved theme (or the device setting) before first paint to avoid a flash.
+      (function () {
+        var theme = 'light';
+        try {
+          var saved = localStorage.getItem('vcl-theme');
+          if (saved === 'light' || saved === 'dark') theme = saved;
+          else if (window.matchMedia('(prefers-color-scheme: dark)').matches) theme = 'dark';
+        } catch (e) {}
+        document.documentElement.dataset.theme = theme;
+      })();
+    </script>
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Velocity Contents Lab" />
+    <meta property="og:title" content="Velocity Contents Lab | The message and the engine, built together" />
+    <meta property="og:description" content="Content strategy, AI automation, and custom software from one founder-led team in Lagos, Nigeria." />
+    <meta property="og:url" content="https://velocitycontentlabs.com" />
+    <meta name="twitter:card" content="summary" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,400,300&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+    <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
-

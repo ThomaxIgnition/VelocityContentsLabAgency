@@ -1,174 +1,109 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
-
 import { Link } from 'react-router-dom';
-import { Mail, Clock, MapPin, ArrowUpRight, Bot, Sparkles } from 'lucide-react';
-import { BRAND_COMPANY, BRAND_TAGLINE } from '../../data.ts';
+import { ArrowUp, ArrowUpRight } from 'lucide-react';
+import { COMPANY, SERVICE_LINES } from '../../content.ts';
+import { openCal } from '../ui.tsx';
+import { Logo } from './Navbar.tsx';
 
 export default function Footer() {
-  const currentYear = 2026;
-
-  const triggerCal = () => {
-    window.dispatchEvent(new CustomEvent('velocity-open-cal'));
-    const launcher = document.querySelector('.cal-launcher') as HTMLButtonElement | null;
-    if (launcher) launcher.click();
-  };
+  const year = new Date().getFullYear();
 
   return (
-    <footer className="w-full bg-[#121212] text-slate-300 border-t border-neutral-800 pt-16 pb-12 px-6 md:px-12 relative overflow-hidden">
-      {/* Subtle ambient lighting */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-brand-orange-warm/5 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none" />
-
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-12 relative z-10">
-        
-        {/* Brand Column */}
-        <div className="md:col-span-4 flex flex-col gap-5 text-left">
-          <div>
-            <span className="font-display font-black text-xl text-white tracking-tight flex items-center gap-2">
-              <span className="w-8 h-8 rounded bg-gradient-to-br from-brand-orange-warm to-amber-600 flex items-center justify-center text-white font-black text-xs shadow-md">
-                V
-              </span>
-              {BRAND_COMPANY}
-            </span>
-            <p className="text-xs text-brand-orange-warm font-mono tracking-widest uppercase mt-2 font-bold">
-              {BRAND_TAGLINE}
+    <footer className="on-dark bg-ink text-paper border-t border-paper/10 grain overflow-hidden">
+      <div className="mx-auto max-w-[1240px] px-5 sm:px-8 pt-20 pb-10">
+        <div className="grid gap-12 lg:grid-cols-12">
+          <div className="lg:col-span-5">
+            <Logo light />
+            <p className="mt-8 font-display text-3xl sm:text-4xl font-light leading-tight tracking-tight max-w-md">
+              Clear messages. Reliable systems. <span className="italic text-ember">Built together.</span>
             </p>
-          </div>
-          
-          <p className="text-sm text-slate-400 font-sans leading-relaxed tracking-tight">
-            Founder-led content strategy and multi-channel automation engineered in Lagos, Nigeria and serving high-growth brands globally across 5 continents.
-          </p>
-          
-          <div className="flex flex-col gap-2.5 pt-2">
-            <div className="flex items-center gap-3 text-xs text-slate-300">
-              <MapPin className="w-4 h-4 text-brand-orange-warm shrink-0" />
-              <span>Lagos, Nigeria • Global Operations</span>
-            </div>
-            <div className="flex items-center gap-3 text-xs text-slate-300">
-              <Mail className="w-4 h-4 text-brand-orange-warm shrink-0" />
-              <a href="mailto:hello@velocitycontentlabs.com" className="hover:text-brand-orange-warm transition-colors font-mono">
-                hello@velocitycontentlabs.com
-              </a>
-            </div>
-            <div className="flex items-center gap-3 text-xs text-slate-300">
-              <Clock className="w-4 h-4 text-brand-orange-warm shrink-0" />
-              <span>Monday–Friday 9:00 AM – 5:00 PM WAT (UTC+1)</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Navigation Column 1: Core Architecture */}
-        <div className="md:col-span-3 flex flex-col gap-4 text-left">
-          <h4 className="font-display text-white text-xs font-bold tracking-wider uppercase border-l-2 border-brand-orange-warm pl-2">
-            Architecture
-          </h4>
-          <ul className="flex flex-col gap-2.5 text-xs text-slate-400">
-            <li>
-              <Link to="/services" className="hover:text-white transition-colors flex items-center gap-1 group">
-                Strategic Services <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
-              </Link>
-            </li>
-            <li>
-              <Link to="/work" className="hover:text-white transition-colors flex items-center gap-1 group">
-                Case Studies &amp; Proof <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
-              </Link>
-            </li>
-            <li>
-              <Link to="/method" className="hover:text-white transition-colors flex items-center gap-1 group">
-                The Velocity Method <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
-              </Link>
-            </li>
-            <li>
-              <Link to="/insights" className="hover:text-white transition-colors flex items-center gap-1 group">
-                10-Chapter Ebook &amp; Insights <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
-              </Link>
-            </li>
-            <li>
-              <Link to="/about" className="hover:text-white transition-colors flex items-center gap-1 group">
-                Origin Story &amp; Founder <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
-              </Link>
-            </li>
-            <li>
-              <Link to="/contact" className="hover:text-white transition-colors flex items-center gap-1 group text-brand-orange-warm font-semibold">
-                Book 15-Min Diagnostic <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
-              </Link>
-            </li>
-          </ul>
-        </div>
-
-        {/* Column 2: Cal AI & Frameworks */}
-        <div className="md:col-span-2 flex flex-col gap-4 text-left">
-          <h4 className="font-display text-white text-xs font-bold tracking-wider uppercase border-l-2 border-brand-orange-warm pl-2">
-            AI &amp; Frameworks
-          </h4>
-          <ul className="flex flex-col gap-2.5 text-xs text-slate-400">
-            <li>
-              <button 
-                onClick={triggerCal} 
-                className="hover:text-brand-orange-warm transition-colors flex items-center gap-1.5 text-left text-xs text-emerald-400 font-mono"
-              >
-                <Bot className="w-3.5 h-3.5" />
-                <span>Cal AI Care Specialist</span>
-              </button>
-            </li>
-            <li>
-              <Link to="/method#fortune" className="hover:text-white transition-colors">
-                7-Touch Fortune Framework
-              </Link>
-            </li>
-            <li>
-              <Link to="/method#trust" className="hover:text-white transition-colors">
-                Founder Trust Framework
-              </Link>
-            </li>
-            <li>
-              <Link to="/method#hybrid" className="hover:text-white transition-colors">
-                65-Min Hybrid Engine
-              </Link>
-            </li>
-            <li>
-              <Link to="/about#lemonade" className="hover:text-white transition-colors">
-                The Lemonade Stand Story
-              </Link>
-            </li>
-          </ul>
-        </div>
-
-        {/* Column 3: Private Ops / Legal */}
-        <div className="md:col-span-3 flex flex-col gap-4 text-left">
-          <h4 className="font-display text-white text-xs font-bold tracking-wider uppercase border-l-2 border-brand-orange-warm pl-2">
-            Operations &amp; Security
-          </h4>
-          <p className="text-xs text-slate-400 leading-relaxed">
-            Content operations and pipeline data are protected under strict enterprise confidentiality standards.
-          </p>
-          <div className="pt-2">
-            <span className="text-[10px] uppercase font-mono tracking-widest font-bold text-brand-orange-warm duration-150 block mb-1.5">
-              Private Ops Portal
-            </span>
-            <Link 
-              to="/admin/login" 
-              className="inline-flex items-center gap-2 px-3.5 py-2 rounded bg-neutral-800 border border-neutral-700 font-mono text-[11px] text-slate-300 hover:bg-neutral-700 hover:text-white transition-colors"
-              id="footer-admin-login"
+            <a
+              href={`mailto:${COMPANY.email}`}
+              className="group mt-8 inline-flex items-center gap-2 text-lg text-paper border-b border-paper/25 hover:border-ember hover:text-ember transition-colors pb-1"
             >
-              <span>Operator Login</span>
-              <ArrowUpRight className="w-3.5 h-3.5" />
-            </Link>
+              {COMPANY.email}
+              <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </a>
+          </div>
+
+          <div className="lg:col-span-7 grid grid-cols-2 sm:grid-cols-3 gap-10">
+            <div>
+              <h2 className="font-mono text-[11px] uppercase tracking-[0.2em] text-paper/45">Services</h2>
+              <ul className="mt-5 space-y-3 text-[15px]">
+                {SERVICE_LINES.map((s) => (
+                  <li key={s.id}>
+                    <Link to={`/services#${s.id}`} className="text-paper/75 hover:text-paper transition-colors">
+                      {s.short}
+                    </Link>
+                  </li>
+                ))}
+                <li>
+                  <Link to="/services#pricing" className="text-paper/75 hover:text-paper transition-colors">
+                    Pricing
+                  </Link>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h2 className="font-mono text-[11px] uppercase tracking-[0.2em] text-paper/45">Company</h2>
+              <ul className="mt-5 space-y-3 text-[15px]">
+                {[
+                  ['Work', '/work'],
+                  ['How We Work', '/method'],
+                  ['About', '/about'],
+                  ['Insights', '/insights'],
+                  ['Contact', '/contact']
+                ].map(([label, href]) => (
+                  <li key={href}>
+                    <Link to={href} className="text-paper/75 hover:text-paper transition-colors">
+                      {label}
+                    </Link>
+                  </li>
+                ))}
+                <li>
+                  <button onClick={openCal} className="text-paper/75 hover:text-paper transition-colors">
+                    Ask Cal
+                  </button>
+                </li>
+              </ul>
+            </div>
+            <div className="col-span-2 sm:col-span-1">
+              <h2 className="font-mono text-[11px] uppercase tracking-[0.2em] text-paper/45">Visit</h2>
+              <address className="mt-5 not-italic text-[15px] text-paper/75 leading-relaxed">
+                {COMPANY.address}
+              </address>
+              <p className="mt-4 text-[15px] text-paper/75 leading-relaxed">{COMPANY.hours}</p>
+              <p className="mt-4 text-sm text-paper/50">Replies {COMPANY.responseTime.toLowerCase()}</p>
+            </div>
           </div>
         </div>
 
-      </div>
+        <div className="mt-20 flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 lg:gap-10">
+          <div
+            aria-hidden="true"
+            className="font-display font-light tracking-[-0.05em] leading-[0.8] text-paper/[0.07] text-[22vw] lg:text-[13rem] whitespace-nowrap select-none"
+          >
+            Velocity
+          </div>
+          <p className="font-display italic font-light text-ember text-2xl sm:text-3xl lg:text-4xl tracking-tight lg:pb-4 lg:text-right">
+            “{COMPANY.tagline}”
+          </p>
+        </div>
 
-      <div className="max-w-7xl mx-auto mt-14 pt-8 border-t border-neutral-800/80 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-500 z-10 relative">
-        <p className="font-mono text-center md:text-left">
-          &copy; {currentYear} {BRAND_COMPANY}. All rights reserved. Engineered in Lagos, Nigeria for global impact.
-        </p>
-        <p className="font-display text-[10px] uppercase tracking-wider text-slate-400 font-bold">
-          Where Strategy Meets Soul™
-        </p>
+        <div className="mt-6 pt-8 border-t border-paper/10 flex flex-col md:flex-row gap-4 md:items-center justify-between text-sm text-paper/50">
+          <p>
+            © {year} {COMPANY.legalName} · {COMPANY.rc} · Lagos, Nigeria
+          </p>
+          <p className="md:text-center">Personal data handled in line with the Nigeria Data Protection Act 2023.</p>
+          <button
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="group inline-flex items-center gap-2 self-start md:self-auto min-h-[44px] text-paper/70 hover:text-paper"
+          >
+            Back to top
+            <span className="w-9 h-9 rounded-full border border-paper/20 flex items-center justify-center group-hover:bg-paper group-hover:text-ink transition-colors">
+              <ArrowUp className="w-4 h-4" />
+            </span>
+          </button>
+        </div>
       </div>
     </footer>
   );

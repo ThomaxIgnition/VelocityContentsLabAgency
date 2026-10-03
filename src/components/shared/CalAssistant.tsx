@@ -6,16 +6,16 @@ const N8N_ENDPOINT = 'https://markdan.app.n8n.cloud/webhook/4928ed2a-47d2-4a2a-9
 
 const INITIAL_MESSAGE = `I'm Cal — the customer-care representative at Velocity Contents Lab.
 
-I'm here to help with questions about our services, content strategy, automation, or to connect you with Thomax if you need a deeper conversation.
+I'm here to help with questions about our three service lines (content strategy, AI automation, and software engineering), our pricing and process, or to connect you with Thomax for a deeper conversation.
 
 What can I help you with today?`;
 
 const SUGGESTED_PROMPTS = [
-  "What is the Velocity Method™?",
-  "How does the 65-minute workflow work?",
   "What services do you offer?",
-  "How does your AI automation work?",
-  "How can I work with Velocity Contents Lab?",
+  "How much does an AI customer care agent cost?",
+  "Can you automate WhatsApp replies for my business?",
+  "Can I start with a small pilot project?",
+  "How does your process work?",
   "Can I speak with Thomax?"
 ];
 
@@ -63,7 +63,7 @@ export function VMark({ small = false }: { small?: boolean }) {
   return (
     <span className={`v-mark ${small ? 'v-mark--small' : ''}`} aria-hidden="true">
       <img
-        src="/cal-v-mark.png"
+        src="/favicon.svg"
         alt=""
         onError={(e) => {
           (e.currentTarget as HTMLElement).style.display = 'none';

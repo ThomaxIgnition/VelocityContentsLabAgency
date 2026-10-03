@@ -16,7 +16,7 @@ export default function ChapterPage() {
 
   if (!chapter || chapter.status === 'COMING') {
     return (
-      <div className="pt-28 pb-20 min-h-screen bg-editorial-cream flex items-center justify-center px-6">
+      <div className="legacy-page pt-28 pb-20 min-h-screen bg-editorial-cream flex items-center justify-center px-6">
         <div className="bg-editorial-pale border border-[#1A1A1A]/10 p-8 max-w-sm w-full text-center flex flex-col items-center gap-4">
           <AlertTriangle className="w-12 h-12 text-brand-orange-warm animate-pulse" />
           <h2 className="font-display italic text-lg font-semibold text-editorial-dark">Chapter Not Published</h2>
@@ -106,7 +106,7 @@ export default function ChapterPage() {
   };
 
   return (
-    <div className="pt-28 pb-20 bg-editorial-cream min-h-screen text-editorial-dark" id="chapter-reader-canvas">
+    <div className="legacy-page pt-28 pb-20 bg-editorial-cream min-h-screen text-editorial-dark" id="chapter-reader-canvas">
       
       <div className="max-w-3xl mx-auto px-6">
         

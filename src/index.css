@@ -1,52 +1,188 @@
 @import url('https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,400,300&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Satoshi", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-display: "Playfair Display", "Lora", serif;
-  --font-mono: "JetBrains Mono", monospace;
+  --font-sans: "Satoshi", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-display: "Fraunces", Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
 
-  --color-brand-navy-dark: #121212;
-  --color-brand-blue-deep: #1A1A1A;
-  --color-brand-orange-warm: #A85B3D;
-  --color-brand-green-emerald: #5F7A68;
-  --color-brand-charcoal: #2D2C2A;
-  --color-brand-near-white: #F4F2EE;
-  
-  --color-editorial-cream: #FDFCFB;
-  --color-editorial-dark: #1A1A1A;
-  --color-editorial-border: rgba(26, 26, 26, 0.08);
-  --color-editorial-beige: #EAE8E4;
-  --color-editorial-pale: #F9F8F6;
+  /* Core palette: warm ink, paper, terracotta (on light) and ember (on dark) */
+  --color-ink: #15130F;
+  --color-ink-soft: #221F1A;
+  --color-ink-line: rgba(246, 242, 236, 0.12);
+  --color-paper: #F6F2EC;
+  --color-paper-deep: #EDE6DC;
+  --color-ember: #EC8A5C;
+  --color-clay: #A84B24;
+  --color-sage: #4F6B58;
+  --color-muted: #6B645A;
+  /* Fixed dark text for ember backgrounds; does not change with the theme */
+  --color-coal: #15130F;
+
+  /* Legacy token names, mapped onto the new palette so older pages inherit it */
+  --color-brand-navy-dark: #15130F;
+  --color-brand-blue-deep: #15130F;
+  --color-brand-orange-warm: #A84B24;
+  --color-brand-green-emerald: #4F6B58;
+  --color-brand-charcoal: #2D2A25;
+  --color-brand-near-white: #F6F2EC;
+  --color-editorial-cream: #F6F2EC;
+  --color-editorial-dark: #15130F;
+  --color-editorial-border: rgba(21, 19, 15, 0.1);
+  --color-editorial-beige: #E4DCD1;
+  --color-editorial-pale: #EFE9E1;
+
+  --animate-marquee: marquee 40s linear infinite;
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
 }
 
-/* Custom Scrollbar for premium feel */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+:root {
+  color-scheme: light;
 }
-::-webkit-scrollbar-track {
-  background: #F9F8F6;
+
+/* ---------------------------------------------------------------------------
+   Dark mode. Tokens are swapped so light sections turn dark. Sections marked
+   .on-dark are dark in both modes: they keep their original tokens and sit
+   slightly raised above the dark page.
+   --------------------------------------------------------------------------- */
+[data-theme="dark"] {
+  color-scheme: dark;
+  --color-ink: #F1ECE4;
+  --color-paper: #1E1B17;
+  --color-paper-deep: #26231E;
+  --color-muted: #A69E92;
+  --color-clay: #EC8A5C;
+  --color-sage: #7FA58C;
+
+  --color-brand-orange-warm: #EC8A5C;
+  --color-brand-near-white: #1E1B17;
+  --color-editorial-cream: #1E1B17;
+  --color-editorial-dark: #F1ECE4;
+  --color-editorial-border: rgba(241, 236, 228, 0.12);
+  --color-editorial-beige: #302C26;
+  --color-editorial-pale: #26231E;
 }
-::-webkit-scrollbar-thumb {
-  background: #EAE8E4;
-  border-radius: 4px;
+
+[data-theme="dark"] .on-dark {
+  --color-ink: #15130F;
+  --color-ink-soft: #221F1A;
+  --color-paper: #F6F2EC;
+  --color-paper-deep: #EDE6DC;
+  --color-muted: #6B645A;
+  --color-clay: #A84B24;
+  --color-sage: #4F6B58;
 }
-::-webkit-scrollbar-thumb:hover {
-  background: #D6D3CF;
+
+/* Older pages (Insights, chapters) use fixed colour classes; adapt them in dark mode */
+[data-theme="dark"] .legacy-page :is(.bg-white, .bg-neutral-50, .bg-neutral-100, .bg-neutral-200, .bg-\[\#FDFCFB\]) {
+  background-color: var(--color-paper-deep);
+}
+[data-theme="dark"] .legacy-page :is(.text-\[\#1A1A1A\], .text-\[\#3E3632\], .text-black, .text-neutral-900, .text-neutral-800, .text-neutral-700) {
+  color: var(--color-ink);
+}
+[data-theme="dark"] .legacy-page :is(.text-neutral-600, .text-neutral-500, .text-neutral-400, .text-slate-500, .text-slate-400) {
+  color: var(--color-muted);
+}
+[data-theme="dark"] .legacy-page :is(.border-black\/5, .border-black\/8, .border-black\/10, .border-black\/15, .border-\[\#1A1A1A\]\/10, .border-neutral-200, .border-neutral-300) {
+  border-color: rgba(241, 236, 228, 0.12);
+}
+[data-theme="dark"] .legacy-page .bg-\[\#1A1A1A\],
+[data-theme="dark"] .legacy-page .bg-\[\#1A1A1A\] .text-white,
+[data-theme="dark"] .legacy-page .bg-\[\#1A1A1A\].text-white {
+  background-color: var(--color-ink);
+  color: var(--color-paper);
+}
+[data-theme="dark"] .legacy-page .bg-\[\#1A1A1A\] .text-white {
+  background-color: transparent;
+}
+[data-theme="dark"] .legacy-page .bg-\[\#1A1A1A\]\/5 {
+  background-color: rgba(241, 236, 228, 0.05);
 }
 
 html {
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  background-color: #FDFCFB;
-  color: #1A1A1A;
-  font-family: "Satoshi", "Inter", sans-serif;
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
+::selection {
+  background: #EC8A5C;
+  color: #15130F;
+}
 
+:focus-visible {
+  outline: 2px solid var(--color-clay);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.on-dark :focus-visible {
+  outline-color: #EC8A5C;
+}
+
+/* Fine film grain on dark sections, for depth without gradients */
+.grain {
+  position: relative;
+  isolation: isolate;
+}
+.grain::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Hairline grid used behind hero sections */
+.grid-lines {
+  background-image:
+    linear-gradient(to right, rgba(246, 242, 236, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(246, 242, 236, 0.05) 1px, transparent 1px);
+  background-size: 72px 72px;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-paper-deep);
+}
+::-webkit-scrollbar-thumb {
+  background: color-mix(in oklab, var(--color-ink) 25%, transparent);
+  border-radius: 6px;
+  border: 2px solid var(--color-paper-deep);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-clay);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .animate-marquee {
+    animation: none;
+  }
+}
+
+[data-theme="dark"] .legacy-page .bg-brand-orange-warm.text-white,
+[data-theme="dark"] .legacy-page .bg-brand-orange-warm .text-white {
+  color: var(--color-coal);
+}
