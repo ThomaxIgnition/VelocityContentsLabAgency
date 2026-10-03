@@ -1,0 +1,10 @@
+// Cloudflare deployment for the public website.
+// Build: npm run build    Deploy: npx wrangler deploy
+{
+  "name": "velocitycontentslabagency",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "single-page-application"
+  }
+}

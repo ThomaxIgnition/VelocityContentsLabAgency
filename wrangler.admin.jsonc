@@ -1,0 +1,10 @@
+// Cloudflare deployment for the private admin dashboard (protect it with Cloudflare Access).
+// Build: npm run build:admin    Deploy: npx wrangler deploy --config wrangler.admin.jsonc
+{
+  "name": "vcl-admin",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./dist-admin",
+    "not_found_handling": "single-page-application"
+  }
+}
