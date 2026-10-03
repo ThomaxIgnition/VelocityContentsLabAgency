@@ -10,6 +10,7 @@ export interface BlogChapter {
   status: 'PUBLISHED' | 'COMING';
   content?: string;
   description: string;
+  publishedAt?: string;
 }
 
 export interface Resource {

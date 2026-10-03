@@ -35,14 +35,14 @@ To show the founder's photo, add it as `public/photos/founder.jpg` (portrait, ab
 
 ## Private admin dashboard
 
-The admin dashboard (content calendar, media library, keyword tracker) is a separate site in [`admin/`](admin/). It is never included in the public website.
+The admin dashboard (the book editor and content calendar) is a separate site in [`admin/`](admin/). It is never included in the public website. Chapters and calendar posts are stored in Supabase; published chapters appear on the website automatically.
 
 ```bash
 npm run dev:admin    # runs at http://localhost:3001
 npm run build:admin  # output in dist-admin/
 ```
 
-Host it as its own Cloudflare Pages project (build command `npm run build:admin`, output folder `dist-admin`) and protect it with Cloudflare Access so only approved email addresses can open it. The dashboard has no login of its own; Cloudflare handles sign-in.
+Deploy it with `npx wrangler deploy --config wrangler.admin.jsonc`. Sign-in uses Supabase accounts; only emails listed in the `admins` table can read or change data (enforced by row-level security).
 
 ## Build for production
 

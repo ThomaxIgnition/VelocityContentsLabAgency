@@ -1,12 +1,12 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import AdminDashboard from './AdminDashboard.tsx';
+import AdminApp from './AdminApp.tsx';
 import '../src/index.css';
 
-// The private admin site. It is built and hosted separately from the public
-// website, behind Cloudflare Access, so none of this code ships to visitors.
+// The private admin site: built and hosted separately from the public website.
+// Sign-in and data access are enforced by Supabase (row-level security).
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <AdminDashboard />
+    <AdminApp />
   </StrictMode>
 );

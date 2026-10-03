@@ -20,10 +20,12 @@ import {
   Lock,
   Unlock
 } from 'lucide-react';
-import { CHAPTERS, RESOURCES, BRAND_COMPANY } from '../data.ts';
+import { RESOURCES, BRAND_COMPANY } from '../data.ts';
+import { useChapters } from '../lib/chapters.ts';
 
 export default function InsightsPage() {
   const [activeTab, setActiveTab] = useState<'ebook' | 'toolkits'>('ebook');
+  const { chapters } = useChapters();
   
   // Toolkit download modal
   const [downloadModal, setDownloadModal] = useState<string | null>(null);
@@ -146,7 +148,7 @@ export default function InsightsPage() {
           </div>
 
           <div className="relative border-l-2 border-black/10 pl-6 md:pl-10 space-y-10 text-left">
-            {CHAPTERS.map((chapter) => {
+            {chapters.map((chapter) => {
               const isPublished = chapter.status === 'PUBLISHED';
               return (
                 <div key={chapter.slug} className="relative group">
