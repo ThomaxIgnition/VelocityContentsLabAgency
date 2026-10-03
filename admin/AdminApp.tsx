@@ -1,6 +1,6 @@
 import { FormEvent, ReactNode, useEffect, useState } from 'react';
 import type { Session } from '@supabase/supabase-js';
-import { BookOpen, CalendarDays, ExternalLink, LayoutDashboard, LogOut } from 'lucide-react';
+import { BookOpen, CalendarDays, ExternalLink, Eye, EyeOff, LayoutDashboard, LogOut } from 'lucide-react';
 import { supabase } from '../src/lib/supabase.ts';
 import { COMPANY } from '../src/content.ts';
 import Overview from './Overview.tsx';
@@ -121,6 +121,7 @@ function SignIn() {
   const [mode, setMode] = useState<'signin' | 'setup'>('signin');
   const [email, setEmail] = useState(COMPANY.email);
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState<{ kind: 'error' | 'info'; text: string } | null>(null);
 
@@ -176,17 +177,31 @@ function SignIn() {
             className="mt-1.5 w-full h-12 px-4 rounded-xl bg-paper-deep border border-ink/12 focus:outline-none focus:border-ink"
           />
         </label>
-        <label className="block">
-          <span className="text-sm text-muted">Password</span>
-          <input
-            type="password"
-            required
-            autoComplete={mode === 'signin' ? 'current-password' : 'new-password'}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="mt-1.5 w-full h-12 px-4 rounded-xl bg-paper-deep border border-ink/12 focus:outline-none focus:border-ink"
-          />
-        </label>
+        <div>
+          <label htmlFor="admin-password" className="text-sm text-muted">
+            Password
+          </label>
+          <div className="relative mt-1.5">
+            <input
+              id="admin-password"
+              type={showPassword ? 'text' : 'password'}
+              required
+              autoComplete={mode === 'signin' ? 'current-password' : 'new-password'}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full h-12 pl-4 pr-12 rounded-xl bg-paper-deep border border-ink/12 focus:outline-none focus:border-ink"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword((v) => !v)}
+              aria-label={showPassword ? 'Hide password' : 'Show password'}
+              aria-pressed={showPassword}
+              className="absolute right-1 top-1/2 -translate-y-1/2 w-10 h-10 rounded-lg flex items-center justify-center text-muted hover:text-ink"
+            >
+              {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+            </button>
+          </div>
+        </div>
         {message && (
           <p role="alert" className={`text-sm p-3 rounded-xl ${message.kind === 'error' ? 'bg-clay/10 text-clay' : 'bg-sage/10 text-sage'}`}>
             {message.text}
