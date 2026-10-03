@@ -77,8 +77,6 @@ export default function Navbar() {
     return () => window.removeEventListener('keydown', onKey);
   }, []);
 
-  if (pathname.startsWith('/admin')) return null;
-
   const overDark = DARK_HERO_ROUTES.includes(pathname) && !scrolled;
   const light = overDark || open;
 

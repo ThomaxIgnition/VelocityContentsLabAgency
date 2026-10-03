@@ -33,6 +33,17 @@ Company facts, services, pricing, and testimonials all live in [`src/content.ts`
 
 To show the founder's photo, add it as `public/photos/founder.jpg` (portrait, about 1200×1500).
 
+## Private admin dashboard
+
+The admin dashboard (content calendar, media library, keyword tracker) is a separate site in [`admin/`](admin/). It is never included in the public website.
+
+```bash
+npm run dev:admin    # runs at http://localhost:3001
+npm run build:admin  # output in dist-admin/
+```
+
+Host it as its own Cloudflare Pages project (build command `npm run build:admin`, output folder `dist-admin`) and protect it with Cloudflare Access so only approved email addresses can open it. The dashboard has no login of its own; Cloudflare handles sign-in.
+
 ## Build for production
 
 ```bash

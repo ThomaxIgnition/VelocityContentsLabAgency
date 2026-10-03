@@ -4,7 +4,6 @@
  */
 
 import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { 
   Calendar as CalendarIcon, 
   FileText, 
@@ -29,26 +28,19 @@ import {
   FileSpreadsheet,
   Cpu
 } from 'lucide-react';
-import { INITIAL_CALENDAR, INITIAL_MEDIA, INITIAL_KEYWORDS } from '../../data.ts';
-import { ContentCalendarItem, MediaAsset, DMKeywordStats, LeadCapture } from '../../types.ts';
+import { INITIAL_CALENDAR, INITIAL_MEDIA, INITIAL_KEYWORDS } from './seed.ts';
+import { ContentCalendarItem, MediaAsset, DMKeywordStats, LeadCapture } from '../src/types.ts';
 
 type DashboardTab = 'calendar' | 'creation' | 'media' | 'keywords' | 'analytics';
 
 export default function AdminDashboard() {
-  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<DashboardTab>('calendar');
 
-  // Verify authentication
-  useEffect(() => {
-    const isAuthed = localStorage.getItem('vcl_auth') === 'true';
-    if (!isAuthed) {
-      navigate('/admin/login');
-    }
-  }, [navigate]);
-
+  // Sign-in is handled by Cloudflare Access in front of the admin site, so the
+  // dashboard itself has no login. Signing out ends the Cloudflare session.
   const handleLogout = () => {
-    localStorage.removeItem('vcl_auth');
-    navigate('/admin/login');
+    const isLocal = ['localhost', '127.0.0.1'].includes(window.location.hostname);
+    window.location.href = isLocal ? '/' : '/cdn-cgi/access/logout';
   };
 
   // 1. DATA STORES (Local Storage Syncing for operational feel)

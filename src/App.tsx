@@ -13,8 +13,6 @@ const InsightsPage = lazy(() => import('./pages/InsightsPage.tsx'));
 const AboutPage = lazy(() => import('./pages/AboutPage.tsx'));
 const ContactPage = lazy(() => import('./pages/ContactPage.tsx'));
 const ChapterPage = lazy(() => import('./pages/ChapterPage.tsx'));
-const AdminLogin = lazy(() => import('./pages/admin/AdminLogin.tsx'));
-const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard.tsx'));
 
 const TITLES: Record<string, string> = {
   '/': 'Velocity Contents Lab | Content Strategy, AI Automation & Software',
@@ -55,7 +53,6 @@ function PageFallback() {
 
 function MainLayout() {
   const location = useLocation();
-  const isAdminPath = location.pathname.startsWith('/admin');
 
   return (
     <div className="flex flex-col min-h-screen bg-paper text-ink">
@@ -97,17 +94,14 @@ function MainLayout() {
               <Route path="/resources" element={<Navigate to="/insights" replace />} />
               <Route path="/origin-story" element={<Navigate to="/about" replace />} />
 
-              <Route path="/admin" element={<Navigate to="/admin/login" replace />} />
-              <Route path="/admin/login" element={<AdminLogin />} />
-              <Route path="/admin/dashboard" element={<AdminDashboard />} />
 
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </Suspense>
         </motion.main>
 
-      {!isAdminPath && <Footer />}
-      {!isAdminPath && <CalAssistant />}
+      <Footer />
+      <CalAssistant />
     </div>
   );
 }
