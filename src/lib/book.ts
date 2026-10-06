@@ -35,7 +35,7 @@ export const BOOK = {
   edition: bookData.book.edition,
   intro: bookData.book.intro as string[],
   pdf: '/book/Where_Strategy_Meets_Soul_Ch1-6_Web_Edition.pdf',
-  portrait: '/book/author-portrait.png'
+  portrait: '/book/author-portrait.jpg'
 };
 
 /** The chapters bundled with the site, used if the database cannot be reached. */
