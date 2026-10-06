@@ -19,6 +19,11 @@
   --color-muted: #6B645A;
   /* Fixed dark text for ember backgrounds; does not change with the theme */
   --color-coal: #15130F;
+  /* Book accents (from the book's design brief) */
+  --color-violet: #6D5BD0;
+  --color-teal: #0D9488;
+  --color-violet-text: #5243B0;
+  --color-teal-text: #0B6B62;
 
   /* Legacy token names, mapped onto the new palette so older pages inherit it */
   --color-brand-navy-dark: #15130F;
@@ -52,6 +57,8 @@
    --------------------------------------------------------------------------- */
 [data-theme="dark"] {
   color-scheme: dark;
+  --color-violet-text: #B3A8F2;
+  --color-teal-text: #34D3BF;
   --color-ink: #F1ECE4;
   --color-paper: #1E1B17;
   --color-paper-deep: #26231E;

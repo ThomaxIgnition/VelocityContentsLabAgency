@@ -1,0 +1,1107 @@
+{
+  "book": {
+    "title": "Where Strategy Meets Soul",
+    "subtitle": "The Velocity Method for Turning Content Into Customers",
+    "author": "THOMAX",
+    "publisher": "Velocity Contents Lab Ltd",
+    "edition": "Web Edition 2026",
+    "intro": [
+      "This book grew one week at a time. Every chapter started as a story and a framework I shared publicly, then tested in real work: content for founders, automation for small businesses, and software for clients who needed something built properly.",
+      "It's written for founders, business owners, and professionals who are tired of content that gets likes but no clients, and who want systems that keep working when they can't.",
+      "Each chapter follows the same shape. A real moment. The idea behind it. A named framework you can use. Then the takeaways, a short exercise, and a bridge to what comes next.",
+      "A note on honesty. Where I describe client work, names are withheld unless the client agreed to be named. And you won't find inflated numbers here. When I don't have a measured result, I'd rather say so than invent one. That rule is a big part of what this book is about."
+    ]
+  },
+  "chapters": [
+    {
+      "number": 1,
+      "slug": "the-fortune-is-in-the-follow-up",
+      "title": "The Fortune Is in the Follow-Up",
+      "subtitle": "The 7-Touch Fortune Framework™",
+      "dmKeyword": "FORTUNE",
+      "week": 17,
+      "readingTimeMinutes": 4,
+      "status": "published",
+      "epigraph": "Silence is not a no. Silence is usually timing.",
+      "summary": "Why silence is rarely a no, and a seven-touch system for following up without pressure.",
+      "lead": "Every relationship in business starts with a first message. This chapter is about everything that happens after it.",
+      "body": [
+        {
+          "type": "paragraph",
+          "text": "For a long time, my follow-up strategy was simple."
+        },
+        {
+          "type": "paragraph",
+          "text": "I sent one message. I waited. I heard nothing. I moved on."
+        },
+        {
+          "type": "paragraph",
+          "text": "I told myself I was being respectful. I didn't want to be the person who fills someone's inbox with \"just checking in.\""
+        },
+        {
+          "type": "paragraph",
+          "text": "That was the wrong diagnosis."
+        },
+        {
+          "type": "paragraph",
+          "text": "The problem was never following up. The problem was that I had no system for following up without sounding like I needed something."
+        },
+        {
+          "type": "heading",
+          "text": "Silence is not a no"
+        },
+        {
+          "type": "paragraph",
+          "text": "Think about your own inbox. How many messages have you meant to answer and never did? Not because the sender was unwelcome. Because you were busy, travelling, closing a deal, or simply having a long week."
+        },
+        {
+          "type": "paragraph",
+          "text": "Most silence works like that. It isn't rejection. It's timing."
+        },
+        {
+          "type": "paragraph",
+          "text": "When we stop after one message, we make a decision on the other person's behalf. We decide their silence means no. Most of the time, we're wrong."
+        },
+        {
+          "type": "heading",
+          "text": "A system instead of a feeling"
+        },
+        {
+          "type": "paragraph",
+          "text": "So I built a sequence that removes the guesswork. Seven touches over thirty-two days, each with a clear purpose, each giving something before asking for anything."
+        },
+        {
+          "type": "steps",
+          "items": [
+            {
+              "title": "Touch 1, Day 0: The connection",
+              "text": "A personal note that proves you looked at their work. No pitch."
+            },
+            {
+              "title": "Touch 2, Day 3: The value drop",
+              "text": "Something genuinely useful for their situation, not yours."
+            },
+            {
+              "title": "Touch 3, Day 7: The observation",
+              "text": "Engage thoughtfully with something they've shared. Be the one person actually paying attention."
+            },
+            {
+              "title": "Touch 4, Day 12: Relevant work",
+              "text": "Show something you've done that's close to their world, honestly described."
+            },
+            {
+              "title": "Touch 5, Day 18: The direct ask",
+              "text": "One question: \"Would 15 minutes be worth it?\""
+            },
+            {
+              "title": "Touch 6, Day 25: The last value drop",
+              "text": "One more useful thing, with nothing asked in return."
+            },
+            {
+              "title": "Touch 7, Day 32: The dignified goodbye",
+              "text": "Thank them, respect their timing, and tell them you'll stop reaching out. Then mean it."
+            }
+          ]
+        },
+        {
+          "type": "heading",
+          "text": "What it looks like in real life"
+        },
+        {
+          "type": "paragraph",
+          "text": "Recently I ran this sequence with a founder in the UK who builds technology for restaurants. His profile headline told his whole story in one line: he grew up in a takeaway, and now he builds the tech that runs them."
+        },
+        {
+          "type": "paragraph",
+          "text": "My first note quoted that line back to him. He accepted. I sent him a free guide that matched his stage of business. A few days later, I left a thoughtful comment on a post he'd shared about his product, picking out the line that showed why he built it. Over the following weeks, I shared relevant work, asked for fifteen minutes, and offered content ideas built around his story, with nothing asked in return."
+        },
+        {
+          "type": "paragraph",
+          "text": "Here's what the sequence gave me, whatever any single prospect decides: I never had to wonder what to send next. I never sent a message I'd be embarrassed by. And every touch made the relationship warmer, not more awkward."
+        },
+        {
+          "type": "paragraph",
+          "text": "That's the real value of a system. It protects you from the two mistakes that quietly kill most pipelines: quitting too early, and pushing too hard."
+        },
+        {
+          "type": "heading",
+          "text": "Why the goodbye matters"
+        },
+        {
+          "type": "paragraph",
+          "text": "The seventh touch surprises people. Why announce that you're stopping?"
+        },
+        {
+          "type": "paragraph",
+          "text": "Because it's honest, and honesty is rare in an inbox. A respectful goodbye tells the other person exactly who you are. Some people reply simply because the door is closing. Others remember you months later, when the timing finally fits. Either way, you leave with your reputation intact."
+        },
+        {
+          "type": "heading",
+          "text": "Three mistakes to avoid"
+        },
+        {
+          "type": "steps",
+          "items": [
+            {
+              "title": "Sending the same message every time",
+              "text": "\"Just checking in\" adds nothing. Every touch should carry something new: an idea, a resource, a genuine observation."
+            },
+            {
+              "title": "Pitching in the first message",
+              "text": "A pitch before any trust exists feels like a stranger asking for a favour. Earn the right to ask first."
+            },
+            {
+              "title": "Letting the sequence fade out",
+              "text": "Without a clear goodbye, the relationship is left half-open and awkward. Close it with grace, and the door stays open for later."
+            }
+          ]
+        },
+        {
+          "type": "heading",
+          "text": "Make it yours"
+        },
+        {
+          "type": "paragraph",
+          "text": "Your seven touches won't look exactly like mine. A lawyer, a software founder, and a restaurant owner need very different value drops. Keep the structure and change the content. Give before you ask. Space your touches so you stay present without crowding anyone. And always end with dignity."
+        }
+      ],
+      "takeaways": [
+        "Silence is not a no. Most of the time, it's timing.",
+        "Stopping after one message is a decision you make for the other person.",
+        "Seven touches over 32 days, each with a purpose, removes the guesswork.",
+        "Give value before you ask for anything.",
+        "End with a dignified goodbye, and mean it."
+      ],
+      "exercise": {
+        "title": "Your First Sequence (20 minutes)",
+        "steps": [
+          "Choose one prospect you stopped following up with.",
+          "Write Touch 1 and Touch 2 for them today.",
+          "Put the remaining five touches in your calendar with their dates.",
+          "Decide now what your Touch 7 goodbye will say."
+        ]
+      },
+      "nextChapter": {
+        "title": "Chapter 2: Trust Is Built Before the Call",
+        "text": "Follow-up opens the door. In Chapter 2, we look at what makes someone want to walk through it: the trust you build long before the first conversation."
+      },
+      "file": "chapters/ch-01-the-fortune-is-in-the-follow-up.md"
+    },
+    {
+      "number": 2,
+      "slug": "trust-is-built-before-the-call",
+      "title": "Trust Is Built Before the Call",
+      "subtitle": "The Founder Trust Framework™",
+      "dmKeyword": "TRUST",
+      "week": 18,
+      "readingTimeMinutes": 4,
+      "status": "published",
+      "epigraph": "Trust is what people say about you when you're not in the room.",
+      "summary": "Why buyers decide before the first conversation, and five steps to becoming the obvious choice.",
+      "lead": "In Chapter 1, we built a way to stay present. This chapter is about what people find when they finally look closely at you.",
+      "body": [
+        {
+          "type": "paragraph",
+          "text": "One of the most meaningful clients I've worked with didn't come from a pitch."
+        },
+        {
+          "type": "paragraph",
+          "text": "He came from his sister."
+        },
+        {
+          "type": "paragraph",
+          "text": "She had trusted me with almost everything: her social media profiles, editing and marketing projects, small tools to make her work faster, automation for her business, and a website. Over time, the work spoke for itself. So when her brother needed help, she didn't send him a brochure. She sent him to me."
+        },
+        {
+          "type": "paragraph",
+          "text": "I didn't need a sales deck. Her experience had already done the selling."
+        },
+        {
+          "type": "paragraph",
+          "text": "That's when trust stopped being an abstract idea for me. Trust is what people say about you when you're not in the room."
+        },
+        {
+          "type": "heading",
+          "text": "The call is not where trust is built"
+        },
+        {
+          "type": "paragraph",
+          "text": "Most founders treat the first call as the moment to earn trust. They prepare slides, polish the pitch, and hope to impress."
+        },
+        {
+          "type": "paragraph",
+          "text": "By then, much of it is already decided. Buyers look you up. They read your posts, check your profile, and ask someone they know. The call mostly confirms, or contradicts, what they've already concluded."
+        },
+        {
+          "type": "paragraph",
+          "text": "So the real question isn't \"How do I win the call?\" It's \"What will they find before it?\""
+        },
+        {
+          "type": "heading",
+          "text": "The Founder Trust Framework"
+        },
+        {
+          "type": "paragraph",
+          "text": "Five steps, each one making you a little more obviously the right choice."
+        },
+        {
+          "type": "steps",
+          "items": [
+            {
+              "title": "Make your results visible",
+              "text": "Good work hidden in private chats does nothing for the next client. Share what you've delivered, with permission, where people can see it."
+            },
+            {
+              "title": "Own a specific problem",
+              "text": "\"We do marketing\" is forgettable. \"We help small businesses answer every customer enquiry, even at 2 AM\" is remembered. Pick the problem you solve best and become known for it."
+            },
+            {
+              "title": "Build the proof stack",
+              "text": "Testimonials, live work, real results, and references. Chapter 6 covers this in depth, because it deserves its own chapter."
+            },
+            {
+              "title": "Distribute before you pitch",
+              "text": "Let your thinking reach people before your offer does. When someone has read three of your posts, the first conversation starts warm."
+            },
+            {
+              "title": "Send the follow-through signal",
+              "text": "Show up consistently for ninety days. Consistency tells people you'll still be there after they pay you."
+            }
+          ]
+        },
+        {
+          "type": "heading",
+          "text": "Why this works"
+        },
+        {
+          "type": "paragraph",
+          "text": "Each step answers a quiet question a buyer is asking. Can they do it? Do they understand my problem? Has it worked for anyone else? Do they know what they're talking about? Will they still be around next month?"
+        },
+        {
+          "type": "paragraph",
+          "text": "Answer those before the call, and the call becomes a conversation instead of an audition."
+        },
+        {
+          "type": "heading",
+          "text": "Three mistakes to avoid"
+        },
+        {
+          "type": "steps",
+          "items": [
+            {
+              "title": "Trying to look bigger than you are",
+              "text": "Buyers check. A small, honest track record beats an impressive one nobody can verify."
+            },
+            {
+              "title": "Talking about everything you do",
+              "text": "A list of ten services is hard to remember. One clearly owned problem is easy to recommend."
+            },
+            {
+              "title": "Disappearing after a good month",
+              "text": "Consistency is the signal. Long silences undo the trust your best weeks built."
+            }
+          ]
+        },
+        {
+          "type": "heading",
+          "text": "Small, honest, and visible"
+        },
+        {
+          "type": "paragraph",
+          "text": "You don't need a famous client list to start. You need a few real results, described honestly, and the patience to show up every week."
+        },
+        {
+          "type": "paragraph",
+          "text": "That referral wasn't impressive because of its size. It was powerful because it was true, and because someone else told it for me."
+        },
+        {
+          "type": "paragraph",
+          "text": "That's the kind of trust no pitch can manufacture."
+        }
+      ],
+      "takeaways": [
+        "Trust is what people say about you when you're not in the room.",
+        "The call mostly confirms what buyers concluded before it.",
+        "Make results visible, own a problem, build proof, distribute before you pitch, and stay consistent.",
+        "Each step answers a question a buyer is quietly asking.",
+        "Small, honest, visible proof beats big claims."
+      ],
+      "exercise": {
+        "title": "Your Trust Audit (25 minutes)",
+        "steps": [
+          "Search your own name and business the way a stranger would. Note what they'd find.",
+          "Write one sentence naming the specific problem you solve best.",
+          "List three results you could share publicly, then ask permission for one.",
+          "Commit to one useful post a week for the next 90 days."
+        ]
+      },
+      "nextChapter": {
+        "title": "Chapter 3: She Asked Why 17 Times",
+        "text": "Trust gets you into the conversation. In Chapter 3, we learn how to use it: asking the questions that reveal what a client actually needs."
+      },
+      "file": "chapters/ch-02-trust-is-built-before-the-call.md"
+    },
+    {
+      "number": 3,
+      "slug": "she-asked-why-17-times",
+      "title": "She Asked Why 17 Times",
+      "subtitle": "The Discovery Build Framework™",
+      "dmKeyword": "CURIOUS",
+      "week": 19,
+      "readingTimeMinutes": 4,
+      "status": "published",
+      "epigraph": "The first answer is rarely the real answer.",
+      "summary": "How curious questions uncover the real problem, and five questions that turn conversations into clear proposals.",
+      "lead": "Chapter 2 got you invited into the conversation. This chapter is about what to do once you're there.",
+      "body": [
+        {
+          "type": "paragraph",
+          "text": "My daughter once asked me \"why\" seventeen times in a row."
+        },
+        {
+          "type": "paragraph",
+          "text": "It started with a cartoon. Why is he running? Why is the dog chasing him? Why doesn't he just stop?"
+        },
+        {
+          "type": "paragraph",
+          "text": "Somewhere past the tenth \"why,\" the questions stopped being about the cartoon. They were about something much bigger, and much more interesting."
+        },
+        {
+          "type": "paragraph",
+          "text": "She didn't know she was doing discovery. But she was better at it than most people I've watched on sales calls."
+        },
+        {
+          "type": "heading",
+          "text": "Most discovery stops at the first answer"
+        },
+        {
+          "type": "paragraph",
+          "text": "A prospect says, \"We need more content.\" Most people nod, write it down, and start pitching a content package."
+        },
+        {
+          "type": "paragraph",
+          "text": "But \"more content\" is only the surface. Underneath it might be: our sales team has nothing to share with leads. Or: a competitor keeps getting invited to speak at events we're not. Or: the founder is exhausted from writing everything alone at midnight."
+        },
+        {
+          "type": "paragraph",
+          "text": "Each of those needs a different solution. You only find the real one if you keep asking."
+        },
+        {
+          "type": "heading",
+          "text": "The Discovery Build Framework"
+        },
+        {
+          "type": "paragraph",
+          "text": "Five questions, asked in order, each one going a level deeper."
+        },
+        {
+          "type": "steps",
+          "items": [
+            {
+              "title": "The surface problem",
+              "text": "\"What challenge are you trying to solve right now?\""
+            },
+            {
+              "title": "The business impact",
+              "text": "\"How is it affecting you, in revenue, time, or clients?\""
+            },
+            {
+              "title": "Previous attempts",
+              "text": "\"What have you already tried? What worked, and what didn't?\""
+            },
+            {
+              "title": "The success picture",
+              "text": "\"If this were solved perfectly ninety days from now, what would be different?\""
+            },
+            {
+              "title": "The decision driver",
+              "text": "\"What would make you confident enough to move forward?\""
+            }
+          ]
+        },
+        {
+          "type": "heading",
+          "text": "Listen more than you talk"
+        },
+        {
+          "type": "paragraph",
+          "text": "The questions are simple. The skill is in what happens between them. Don't rush to solve. When an answer feels incomplete, ask one more \"why\" the way a curious child would: without an agenda, just wanting to understand."
+        },
+        {
+          "type": "paragraph",
+          "text": "The fifth question matters most. The answer tells you exactly what your proposal needs to address. If they say, \"I need to know this won't take up all my time,\" your proposal should lead with how little of their time it needs. You're not guessing what to offer. They've told you."
+        },
+        {
+          "type": "heading",
+          "text": "A short example"
+        },
+        {
+          "type": "paragraph",
+          "text": "Here's how one of these conversations might unfold. \"We need more content.\" Why more? \"Our sales team has nothing to send prospects.\" What happens without it? \"Deals stall after the first meeting.\" What have you tried? \"We wrote a few blog posts, but nobody shares them.\" Four questions in, the real problem isn't content volume at all. It's giving a sales team something worth sending."
+        },
+        {
+          "type": "heading",
+          "text": "Three mistakes to avoid"
+        },
+        {
+          "type": "steps",
+          "items": [
+            {
+              "title": "Asking questions while waiting to pitch",
+              "text": "If you're only asking so you can start selling, people feel it. Ask because you genuinely want to know."
+            },
+            {
+              "title": "Solving too early",
+              "text": "The moment you propose a fix, the other person stops telling you things. Hold your solution until the fifth question."
+            },
+            {
+              "title": "Skipping the impact question",
+              "text": "Without knowing what the problem costs, you can't prioritise it, and neither can they."
+            }
+          ]
+        },
+        {
+          "type": "heading",
+          "text": "Why curiosity works"
+        },
+        {
+          "type": "paragraph",
+          "text": "People rarely feel truly understood. When you ask good questions and listen properly, the conversation changes. The prospect stops evaluating you and starts thinking with you."
+        },
+        {
+          "type": "paragraph",
+          "text": "By the time you describe your solution, it doesn't feel like a pitch. It feels like the obvious next step, because it was built from their own words."
+        },
+        {
+          "type": "paragraph",
+          "text": "My daughter wasn't trying to close anything. She just wanted to understand. That's the whole secret."
+        }
+      ],
+      "takeaways": [
+        "The first answer is rarely the real answer.",
+        "Surface problems hide business problems. Keep asking.",
+        "Five questions: the problem, the impact, past attempts, the success picture, and the decision driver.",
+        "The decision driver tells you what your proposal must address.",
+        "Curiosity without an agenda makes people feel understood."
+      ],
+      "exercise": {
+        "title": "The Five Questions (15 minutes)",
+        "steps": [
+          "Write the five questions in your own words, the way you'd naturally say them.",
+          "Use them in your next client conversation.",
+          "Afterwards, write down the answer to question five, word for word.",
+          "Build your next proposal around that answer."
+        ]
+      },
+      "nextChapter": {
+        "title": "Chapter 4: You Sound Like a Robot",
+        "text": "Understanding your client is half the job. In Chapter 4, we tackle the other half: communicating in a voice people trust, especially when AI is helping you write."
+      },
+      "file": "chapters/ch-03-she-asked-why-17-times.md"
+    },
+    {
+      "number": 4,
+      "slug": "you-sound-like-a-robot",
+      "title": "You Sound Like a Robot",
+      "subtitle": "The AI-Human Hybrid Content System™",
+      "dmKeyword": "HYBRID",
+      "week": 20,
+      "readingTimeMinutes": 3,
+      "status": "published",
+      "epigraph": "AI can help you write faster. Only you can make it sound like you.",
+      "summary": "How to use AI for speed without losing your voice: a five-stage workflow where the machine drafts and you add the soul.",
+      "lead": "Chapter 3 was about listening. This chapter is about being heard, in your own voice.",
+      "body": [
+        {
+          "type": "paragraph",
+          "text": "My wife doesn't work in tech. That's exactly why her opinion matters so much to me."
+        },
+        {
+          "type": "paragraph",
+          "text": "One evening she read through a batch of content I'd produced with heavy help from AI. Clean sentences. Good structure. Every box ticked."
+        },
+        {
+          "type": "paragraph",
+          "text": "She put the phone down and said, \"You sound like a robot.\""
+        },
+        {
+          "type": "paragraph",
+          "text": "Then she said the line that became a rule in my business: if you can't explain this to someone over a coffee, why would a client trust you with their brand?"
+        },
+        {
+          "type": "heading",
+          "text": "The problem isn't AI"
+        },
+        {
+          "type": "paragraph",
+          "text": "It would be easy to conclude that AI is the enemy. It isn't. AI is excellent at research, structure, first drafts, and adapting one idea into many formats. Refusing to use it just means working slower."
+        },
+        {
+          "type": "paragraph",
+          "text": "The problem is letting AI do the parts only a human can do: deciding what's worth saying, telling the real story, and sounding like a specific person instead of an average of everyone."
+        },
+        {
+          "type": "heading",
+          "text": "The AI-Human Hybrid Content System"
+        },
+        {
+          "type": "paragraph",
+          "text": "Five stages. The machine handles speed. You handle soul."
+        },
+        {
+          "type": "steps",
+          "items": [
+            {
+              "title": "Stage 1, AI: Research and structure",
+              "text": "Gather the facts, outline the piece, and organise the thinking."
+            },
+            {
+              "title": "Stage 2, Human: The story layer",
+              "text": "Add the real moment only you lived. The conversation, the mistake, the specific detail."
+            },
+            {
+              "title": "Stage 3, AI: The first draft",
+              "text": "Turn your outline and story into a complete draft."
+            },
+            {
+              "title": "Stage 4, Human: The soul edit",
+              "text": "Read it aloud. Cut anything you'd never say. Vary the rhythm. Replace vague claims with specifics."
+            },
+            {
+              "title": "Stage 5, AI: Distribution",
+              "text": "Adapt the finished piece into posts, threads, emails, and scripts for each platform."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Designed this way, a full week of content can come out of one focused session of about an hour. The machine takes the repetitive work, and you spend your time where it actually matters."
+        },
+        {
+          "type": "heading",
+          "text": "The Coffee Shop Test"
+        },
+        {
+          "type": "paragraph",
+          "text": "The soul edit has one non-negotiable check. Read each paragraph and ask: could I say this to a friend over coffee without it sounding strange? If not, rewrite it."
+        },
+        {
+          "type": "paragraph",
+          "text": "It catches the phrases AI loves and people never use. It catches sentences that need reading twice. And it catches the moment you start sounding like a brochure instead of a person."
+        },
+        {
+          "type": "heading",
+          "text": "Three mistakes to avoid"
+        },
+        {
+          "type": "steps",
+          "items": [
+            {
+              "title": "Publishing the first draft",
+              "text": "AI's first draft is a starting point, never the finish line."
+            },
+            {
+              "title": "Outsourcing the story",
+              "text": "AI can't live your experience, and it shouldn't pretend to. The story layer is yours alone."
+            },
+            {
+              "title": "Editing silently",
+              "text": "Read your work out loud. Your ear catches what your eyes skip."
+            }
+          ]
+        },
+        {
+          "type": "heading",
+          "text": "Your voice is the product"
+        },
+        {
+          "type": "paragraph",
+          "text": "Anyone can now generate a thousand polished words in seconds, so polish is no longer impressive. What's rare is a recognisable voice, real stories, and specific thinking. That's what people follow, and that's what they trust."
+        },
+        {
+          "type": "paragraph",
+          "text": "My wife's comment stung for about a day. Then it became the most useful feedback I've ever received."
+        }
+      ],
+      "takeaways": [
+        "AI is a tool for speed. It isn't a substitute for your voice.",
+        "Let AI research, structure, draft, and distribute.",
+        "Keep the story and the final edit human.",
+        "Run every paragraph through the Coffee Shop Test.",
+        "When polished text is everywhere, a real voice is the advantage."
+      ],
+      "exercise": {
+        "title": "One Hybrid Piece (60 minutes)",
+        "steps": [
+          "Let AI research and outline one topic you know well.",
+          "Add one real story only you could tell.",
+          "Let AI draft it, then do the soul edit out loud.",
+          "Ask someone outside your industry whether it sounds like you."
+        ]
+      },
+      "nextChapter": {
+        "title": "Chapter 5: Stop Creating. Start Distributing.",
+        "text": "Once your content sounds like you, the next question is who actually sees it. In Chapter 5, we build the engine that carries one idea to every place your audience lives."
+      },
+      "file": "chapters/ch-04-you-sound-like-a-robot.md"
+    },
+    {
+      "number": 5,
+      "slug": "stop-creating-start-distributing",
+      "title": "Stop Creating. Start Distributing.",
+      "subtitle": "The Velocity Distribution Engine™",
+      "dmKeyword": "DISTRIBUTE",
+      "week": 21,
+      "readingTimeMinutes": 4,
+      "status": "published",
+      "epigraph": "It doesn't matter how good it is if nobody knows where to find it.",
+      "summary": "Why most content problems are distribution problems, and how one idea becomes a full set of platform-ready pieces.",
+      "lead": "Chapter 4 gave your content a voice. This chapter makes sure people actually hear it.",
+      "body": [
+        {
+          "type": "paragraph",
+          "text": "My daughter once set up a lemonade stand. She made great lemonade, and for an hour, nobody came."
+        },
+        {
+          "type": "paragraph",
+          "text": "She decided the lemonade must be the problem."
+        },
+        {
+          "type": "paragraph",
+          "text": "It wasn't. The lemonade was good. Nobody knew it existed."
+        },
+        {
+          "type": "paragraph",
+          "text": "So we fixed the distribution. We told neighbours in the community WhatsApp group. We put signs where people actually walked. She invited her friends' parents personally. And then the customers came."
+        },
+        {
+          "type": "paragraph",
+          "text": "She summed it up better than any marketing book I've read: \"Daddy, it doesn't matter how good it is if nobody knows where to find it.\""
+        },
+        {
+          "type": "paragraph",
+          "text": "That sentence became the founding idea of Velocity Contents Lab."
+        },
+        {
+          "type": "heading",
+          "text": "A distribution problem, not a content problem"
+        },
+        {
+          "type": "paragraph",
+          "text": "Founders spend hours creating a single post, publish it once on one platform, and start from zero again. When it doesn't perform, they assume the content wasn't good enough and work even harder on the next one."
+        },
+        {
+          "type": "paragraph",
+          "text": "Like the lemonade, the content is often fine. It just isn't reaching enough of the right people."
+        },
+        {
+          "type": "heading",
+          "text": "The Velocity Distribution Engine"
+        },
+        {
+          "type": "paragraph",
+          "text": "Create once. Distribute everywhere your audience already is."
+        },
+        {
+          "type": "paragraph",
+          "text": "One core idea, developed properly in a single session, becomes a full set of platform-ready pieces: a LinkedIn post and a longer article, a thread for X, posts for Facebook and Instagram, an email to your list, a short video script, a blog article for your website, and a downloadable resource that captures leads."
+        },
+        {
+          "type": "paragraph",
+          "text": "Each piece is adapted, not copied. A LinkedIn post and an Instagram carousel serve different readers in different moments. The idea stays the same; the shape changes to fit the place."
+        },
+        {
+          "type": "heading",
+          "text": "The engine in practice"
+        },
+        {
+          "type": "paragraph",
+          "text": "This book is a product of the engine. Every chapter began as one weekly idea. That idea became a full package: posts for each platform, an email, a video script, a resource people could download, a flyer, and finally the chapter you're reading now. One idea, many doors."
+        },
+        {
+          "type": "heading",
+          "text": "Three rules that keep it working"
+        },
+        {
+          "type": "steps",
+          "items": [
+            {
+              "title": "Start with the strongest version",
+              "text": "Write the long-form piece first, then cut it down. It's far easier to shorten a complete idea than to stretch a thin one."
+            },
+            {
+              "title": "Respect each platform",
+              "text": "Adapt to length limits, formats, and how people actually use each space."
+            },
+            {
+              "title": "Schedule it as a system",
+              "text": "Put distribution on your calendar like any other commitment, so it happens whether or not you feel inspired that week."
+            }
+          ]
+        },
+        {
+          "type": "heading",
+          "text": "Three mistakes to avoid"
+        },
+        {
+          "type": "steps",
+          "items": [
+            {
+              "title": "Copying the same text everywhere",
+              "text": "Each platform has its own culture and length. Copy-paste content feels out of place everywhere."
+            },
+            {
+              "title": "Distributing thin ideas",
+              "text": "If the core idea isn't strong, more distribution just spreads a weak message further. Strengthen the idea first."
+            },
+            {
+              "title": "Forgetting the channels you own",
+              "text": "Social platforms change their rules. An email list stays yours, so send people there."
+            }
+          ]
+        },
+        {
+          "type": "heading",
+          "text": "More reach, less exhaustion"
+        },
+        {
+          "type": "paragraph",
+          "text": "The engine doesn't ask you to create more. It asks you to get more from what you've already created. That's the difference between burning out on content and building a body of work that keeps finding new people."
+        },
+        {
+          "type": "paragraph",
+          "text": "My daughter didn't make better lemonade the second time. She just made sure people could find it."
+        }
+      ],
+      "takeaways": [
+        "Most content problems are distribution problems.",
+        "One strong idea can become a full set of platform-ready pieces.",
+        "Adapt each piece to its platform. Never just copy and paste.",
+        "Write the long version first, then cut it down.",
+        "Treat distribution as a scheduled system, not an afterthought."
+      ],
+      "exercise": {
+        "title": "One Idea, Five Doors (45 minutes)",
+        "steps": [
+          "Pick your best-performing post from the last six months.",
+          "Rewrite it as an email, a short thread, a carousel outline, and a short video script.",
+          "Schedule all four across the next two weeks.",
+          "Note which version reaches the most people."
+        ]
+      },
+      "nextChapter": {
+        "title": "Chapter 6: Build the Proof Stack",
+        "text": "Distribution gets your ideas seen. In Chapter 6, we make sure that when people look closer, they find evidence they can trust."
+      },
+      "file": "chapters/ch-05-stop-creating-start-distributing.md"
+    },
+    {
+      "number": 6,
+      "slug": "build-the-proof-stack",
+      "title": "Build the Proof Stack",
+      "subtitle": "From Results to Revenue",
+      "dmKeyword": "PROOF",
+      "week": 22,
+      "readingTimeMinutes": 8,
+      "status": "published",
+      "epigraph": "Proof isn't created. It's collected.",
+      "summary": "Why proof is collected rather than created, and the four layers of evidence that let buyers trust you before the call.",
+      "lead": "In Chapter 5, we built the engine that distributes your ideas. But distribution has a weakness: it carries whatever you give it. Give it claims, and it spreads claims. Give it proof, and it spreads trust. This chapter is about the second one.",
+      "body": [
+        {
+          "type": "paragraph",
+          "text": "In September 2026, Velocity Contents Lab became Velocity Contents Lab Ltd."
+        },
+        {
+          "type": "paragraph",
+          "text": "A certificate, a registration number, and a new kind of responsibility. Registered companies get asked for things freelancers rarely see. Tender documents. Vendor forms. Company profiles that procurement teams read with a pen in hand."
+        },
+        {
+          "type": "paragraph",
+          "text": "So I sat down to build ours."
+        },
+        {
+          "type": "paragraph",
+          "text": "The legal details took ten minutes. The service descriptions took an afternoon. I knew exactly what we do: content strategy, AI automation, and custom software, built together so the message and the system come from one place."
+        },
+        {
+          "type": "paragraph",
+          "text": "Then I reached the section every buyer reads first."
+        },
+        {
+          "type": "paragraph",
+          "text": "Client evidence."
+        },
+        {
+          "type": "heading",
+          "text": "The page I couldn't fill"
+        },
+        {
+          "type": "paragraph",
+          "text": "Here's the uncomfortable truth. The work was real. I had built a business website and a WhatsApp automation system for a growing business. I had delivered a software integration project. I had helped a sole proprietor put content and automation in place so the business keeps moving when the owner can't."
+        },
+        {
+          "type": "paragraph",
+          "text": "But the proof of all that work? Scattered. A thank-you in a WhatsApp chat from months ago. A voice note I never saved. A screenshot somewhere on an old phone."
+        },
+        {
+          "type": "paragraph",
+          "text": "Good work you can't show is invisible work."
+        },
+        {
+          "type": "paragraph",
+          "text": "And when you're new, invisible work creates a dangerous kind of pressure. You look at your empty page, then at the polished profiles of agencies ten times your size, and a quiet voice suggests you could make things look a little bigger. Round a number up. Describe a project generously."
+        },
+        {
+          "type": "paragraph",
+          "text": "That voice is wrong. Every time."
+        },
+        {
+          "type": "paragraph",
+          "text": "Serious buyers check. Procurement teams call references. One invented claim, once discovered, costs you more than every honest gap combined."
+        },
+        {
+          "type": "heading",
+          "text": "The message I sent instead"
+        },
+        {
+          "type": "paragraph",
+          "text": "So I did the slow, honest thing. I wrote to past clients and asked for three things."
+        },
+        {
+          "type": "paragraph",
+          "text": "Permission to mention the work we did together.\nTwo or three sentences, in their own words, about what it was like.\nOne result they noticed, if they could recall one."
+        },
+        {
+          "type": "paragraph",
+          "text": "That's it. No form. No survey. A message a busy person could answer in five minutes."
+        },
+        {
+          "type": "paragraph",
+          "text": "Then I waited."
+        },
+        {
+          "type": "paragraph",
+          "text": "For a while, one person replied. A client whose software project we delivered wrote that the system \"continues to deliver value for us.\" Wonderful. But one testimonial doesn't fill a page, and I'll admit I stared at that section longer than I'd like."
+        },
+        {
+          "type": "paragraph",
+          "text": "Then the second reply came. The business owner we built a website and WhatsApp system for said both solutions \"made a noticeable difference in how we serve our customers.\""
+        },
+        {
+          "type": "paragraph",
+          "text": "Then the third. A sole proprietor wrote something I could never have scripted:"
+        },
+        {
+          "type": "paragraph",
+          "text": "\"The automation service is the best. Now I make money while I sleep.\""
+        },
+        {
+          "type": "paragraph",
+          "text": "Read that one more time."
+        },
+        {
+          "type": "paragraph",
+          "text": "No headline I write will ever land like that. It's specific. It's human. And it comes from someone with nothing to gain by saying it."
+        },
+        {
+          "type": "heading",
+          "text": "Why their words beat yours"
+        },
+        {
+          "type": "paragraph",
+          "text": "A restaurant can tell you the food is great. A full room on a quiet Tuesday night proves it."
+        },
+        {
+          "type": "paragraph",
+          "text": "That's the difference between a claim and proof."
+        },
+        {
+          "type": "paragraph",
+          "text": "When you describe your own work, the reader discounts it automatically. You're supposed to say you're good. When a client says it, the reader listens differently, because the client had a choice and chose to speak up."
+        },
+        {
+          "type": "paragraph",
+          "text": "Trust doesn't come from what you claim. It comes from what other people confirm. There's a reason the reviews sit right beside the \"buy\" button on almost every online store."
+        },
+        {
+          "type": "heading",
+          "text": "The Proof Stack"
+        },
+        {
+          "type": "paragraph",
+          "text": "That week changed how I handle proof at Velocity Contents Lab. I stopped treating testimonials as a nice extra and started treating proof as a system. I call it the Proof Stack, and it has four layers."
+        },
+        {
+          "type": "paragraph",
+          "text": "The first layer is words. What clients say about working with you, in their own voice. Not your summary of what they said. Their sentences."
+        },
+        {
+          "type": "paragraph",
+          "text": "The second layer is the work itself. A live website a buyer can visit. A working automation they can watch respond. A before and after screenshot. Work is proof that doesn't need anyone's permission to be believed."
+        },
+        {
+          "type": "paragraph",
+          "text": "The third layer is numbers. Real results, dated, and never rounded up. \"Faster replies\" is a feeling. \"Replies in under two minutes\" is a number someone can check. If you don't have a number yet, leave the space empty. An honest gap beats a fake figure."
+        },
+        {
+          "type": "paragraph",
+          "text": "The fourth layer is access. A reference who will take a five-minute call, or a live demo the buyer can test themselves. Access says: don't take my word for it. Check."
+        },
+        {
+          "type": "paragraph",
+          "text": "Each layer answers a different doubt. Words answer \"What was it like?\" Work answers \"Can they actually do it?\" Numbers answer \"Did it matter?\" Access answers \"Can I verify this?\""
+        },
+        {
+          "type": "paragraph",
+          "text": "A buyer who sees all four has far fewer reasons to hesitate."
+        },
+        {
+          "type": "heading",
+          "text": "The one rule that changes everything"
+        },
+        {
+          "type": "paragraph",
+          "text": "If you take one idea from this, take this one: ask at the moment of delivery."
+        },
+        {
+          "type": "paragraph",
+          "text": "Not three months later, when the client is busy and the excitement has faded. Ask the day the website goes live. The day the automation books its first meeting. The day the content brings its first enquiry. That's when the result is fresh and the gratitude is real."
+        },
+        {
+          "type": "paragraph",
+          "text": "From now on, that's how I close every project: handover, walkthrough, and one simple question. Would you share a few sentences about what this changed for you?"
+        },
+        {
+          "type": "paragraph",
+          "text": "Make it easy to say yes. Keep the message short, three questions at most, and send it the same day you hand over. If writing feels like a chore, offer to take a two-minute voice note instead, then transcribe it and send it back for approval. If someone doesn't reply, one gentle follow-up a week later is fine. After that, let it go. Proof given under pressure isn't worth much."
+        },
+        {
+          "type": "heading",
+          "text": "What makes a testimonial worth using"
+        },
+        {
+          "type": "paragraph",
+          "text": "Not every kind word is proof. \"Great to work with!\" is pleasant, but it tells a buyer nothing. The testimonials that persuade have three things in common."
+        },
+        {
+          "type": "paragraph",
+          "text": "They name what was delivered. \"Our website and WhatsApp system\" tells a buyer exactly what you can do."
+        },
+        {
+          "type": "paragraph",
+          "text": "They describe what changed. \"A noticeable difference in how we serve our customers\" is a before and after in a single sentence."
+        },
+        {
+          "type": "paragraph",
+          "text": "They sound like a real person. The best line I received had a small grammar slip in the original. It was also the most convincing sentence on the page, because nobody would write marketing copy that way."
+        },
+        {
+          "type": "paragraph",
+          "text": "That's why the three-part message works. Asking for one result nudges clients past compliments and toward outcomes. And a quick note on editing: if you tidy a client's words, even lightly, send them the cleaned version and get a yes before you publish it. Their words, their approval."
+        },
+        {
+          "type": "heading",
+          "text": "What to do while the page is still empty"
+        },
+        {
+          "type": "paragraph",
+          "text": "Maybe you're reading this with an empty page of your own. New business, few past clients, nothing to quote yet. You still have more proof than you think."
+        },
+        {
+          "type": "paragraph",
+          "text": "Lean on the layers that don't need anyone else's words. Show the work: a live demo, a sample, a project you built for your own business. Offer access: invite a prospect to test the system before they buy. Structure a small first engagement, a pilot with a fixed scope, so a buyer can judge you with very little risk."
+        },
+        {
+          "type": "paragraph",
+          "text": "And say the honest thing plainly. \"We're new, here's what we've built, test it yourself\" is a stronger position than a page of claims nobody can verify."
+        },
+        {
+          "type": "heading",
+          "text": "Keep a proof file"
+        },
+        {
+          "type": "paragraph",
+          "text": "One last habit. Create a single folder for every testimonial, screenshot, result, and reference contact, with the date beside each. When a proposal is due next week, you won't be searching through old chats. You'll be choosing your best evidence from a stack."
+        },
+        {
+          "type": "heading",
+          "text": "Where proof belongs"
+        },
+        {
+          "type": "paragraph",
+          "text": "Collected proof sitting in your inbox is still invisible. Put it where decisions happen."
+        },
+        {
+          "type": "paragraph",
+          "text": "In your company profile and proposals, where buyers compare you against others.\nOn your website, close to your services and your pricing.\nIn your direct messages, when a prospect is weighing you up.\nIn your content, because a client's sentence is often the best post you'll publish all month."
+        },
+        {
+          "type": "heading",
+          "text": "Your next step"
+        },
+        {
+          "type": "paragraph",
+          "text": "Start small. Pick three past clients whose results you're proud of. Send them the three-part message today. Then drop every reply into your proof file, dated, the moment it arrives."
+        },
+        {
+          "type": "paragraph",
+          "text": "You'll be surprised what people say when you finally ask."
+        },
+        {
+          "type": "paragraph",
+          "text": "The companion resource for this chapter, The Proof Stack Playbook, includes the exact message I sent my clients, a follow-up script, and a 7-day checklist. You'll find it in the Resource Vault."
+        }
+      ],
+      "takeaways": [
+        "Proof isn't created. It's collected, and the best moment to collect it is the day you deliver.",
+        "Your words are claims. Your clients' words are proof.",
+        "The Proof Stack has four layers: Words, Work, Numbers, and Access. Each answers a different doubt.",
+        "Never round up. An honest gap can be filled; a broken reputation is much harder to rebuild.",
+        "Collected proof stays invisible until you place it where decisions happen."
+      ],
+      "exercise": {
+        "title": "The Three-Client Ask (30 minutes)",
+        "steps": [
+          "Create one proof file for testimonials, screenshots, results, and reference contacts.",
+          "Choose three past clients whose results you're proud of.",
+          "Send each of them the three-part message.",
+          "Save one piece of delivered work in your proof file, with today's date."
+        ]
+      },
+      "nextChapter": {
+        "title": "Chapter 7: The Content-to-Revenue System",
+        "text": "Proof earns trust. But trust alone doesn't pay the bills. In Chapter 7, we connect the pieces: how content, proof, and a clear next step turn attention into revenue, week after week."
+      },
+      "file": "chapters/ch-06-build-the-proof-stack.md"
+    },
+    {
+      "number": 7,
+      "slug": "the-content-to-revenue-system",
+      "title": "The Content-to-Revenue System",
+      "week": 23,
+      "status": "coming_soon"
+    },
+    {
+      "number": 8,
+      "slug": "the-90-day-visibility-sprint",
+      "title": "The 90-Day Visibility Sprint",
+      "week": 24,
+      "status": "coming_soon"
+    },
+    {
+      "number": 9,
+      "slug": "lagos-to-global",
+      "title": "Lagos to Global: Building World-Class from Africa",
+      "week": 25,
+      "status": "coming_soon"
+    },
+    {
+      "number": 10,
+      "slug": "building-with-soul",
+      "title": "Building With Soul: The Thomax Philosophy",
+      "week": 26,
+      "status": "coming_soon"
+    }
+  ]
+}

@@ -38,7 +38,7 @@ type Editing = Partial<CalendarItem> | null;
 
 export default function CalendarTab() {
   const { rows: items, loading, error, reload } = useLiveTable<CalendarItem>('calendar_items', 'scheduled_at');
-  const { rows: chapters } = useLiveTable<Chapter>('chapters', 'chapter_number');
+  const { rows: chapters } = useLiveTable<Chapter>('book_chapters', 'number');
   const [view, setView] = useState<'month' | 'list'>(() => (window.innerWidth < 768 ? 'list' : 'month'));
   const [month, setMonth] = useState(() => startOfMonth(new Date()));
   const [platformFilter, setPlatformFilter] = useState<Platform | 'all'>('all');
@@ -362,7 +362,7 @@ function ItemEditor({
           <select value={form.chapter_id} onChange={(e) => set('chapter_id')(e.target.value)} className={inputCls}>
             <option value="">None</option>
             {chapters.map((c) => (
-              <option key={c.id} value={c.id}>Chapter {c.chapter_number}: {c.title}</option>
+              <option key={c.id} value={c.id}>Chapter {c.number}: {c.title}</option>
             ))}
           </select>
         </Field>

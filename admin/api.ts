@@ -1,17 +1,28 @@
 import { useCallback, useEffect, useState } from 'react';
 import { supabase } from '../src/lib/supabase.ts';
+import type { Block } from '../src/lib/book.ts';
 
-export type ChapterStatus = 'draft' | 'coming' | 'scheduled' | 'published';
+export type ChapterStatus = 'draft' | 'coming_soon' | 'scheduled' | 'published';
 
+/** A row of the book_chapters table. */
 export interface Chapter {
   id: string;
+  number: number;
   slug: string;
-  chapter_number: number;
   title: string;
-  description: string;
-  content: string;
+  subtitle: string | null;
+  dm_keyword: string | null;
+  week: number | null;
+  epigraph: string | null;
+  summary: string | null;
+  lead: string | null;
+  body: Block[];
+  takeaways: string[];
+  exercise: { title: string; steps: string[] } | null;
+  next_chapter: { title: string; text: string } | null;
+  reading_time_minutes: number | null;
   status: ChapterStatus;
-  publish_at: string | null;
+  published_at: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -36,15 +47,15 @@ export interface CalendarItem {
 }
 
 /** Whether a chapter is visible to readers right now. */
-export function isLive(c: Pick<Chapter, 'status' | 'publish_at'>) {
-  return c.status === 'published' || (c.status === 'scheduled' && !!c.publish_at && new Date(c.publish_at) <= new Date());
+export function isLive(c: Pick<Chapter, 'status' | 'published_at'>) {
+  return c.status === 'published' || (c.status === 'scheduled' && !!c.published_at && new Date(c.published_at) <= new Date());
 }
 
 /**
  * Loads a table and keeps it in sync: changes made on any device (or in another
  * tab) arrive instantly through Supabase Realtime.
  */
-export function useLiveTable<T extends { id: string }>(table: 'chapters' | 'calendar_items' | 'enquiries', orderBy: string) {
+export function useLiveTable<T extends { id: string }>(table: 'book_chapters' | 'calendar_items' | 'enquiries', orderBy: string) {
   const [rows, setRows] = useState<T[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -80,15 +91,15 @@ export function useLiveTable<T extends { id: string }>(table: 'chapters' | 'cale
 export async function saveChapter(chapter: Partial<Chapter> & { id?: string }) {
   const { id, created_at, updated_at, ...fields } = chapter;
   const query = id
-    ? supabase.from('chapters').update(fields).eq('id', id).select().single()
-    : supabase.from('chapters').insert(fields).select().single();
+    ? supabase.from('book_chapters').update(fields).eq('id', id).select().single()
+    : supabase.from('book_chapters').insert(fields).select().single();
   const { data, error } = await query;
   if (error) throw new Error(friendly(error.message));
   return data as Chapter;
 }
 
 export async function deleteChapter(id: string) {
-  const { error } = await supabase.from('chapters').delete().eq('id', id);
+  const { error } = await supabase.from('book_chapters').delete().eq('id', id);
   if (error) throw new Error(friendly(error.message));
 }
 
@@ -108,7 +119,8 @@ export async function deleteCalendarItem(id: string) {
 }
 
 function friendly(message: string) {
-  if (message.includes('chapters_slug_key')) return 'Another chapter already uses this web address. Change the slug.';
+  if (message.includes('book_chapters_slug_key')) return 'Another chapter already uses this web address. Change the slug.';
+  if (message.includes('book_chapters_number_key')) return 'Another chapter already has this number.';
   if (message.includes('row-level security')) return 'Your account is not allowed to make this change.';
   return message;
 }

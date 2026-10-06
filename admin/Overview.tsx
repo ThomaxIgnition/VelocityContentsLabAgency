@@ -3,7 +3,7 @@ import { CalendarItem, Chapter, Enquiry, formatDateTime, isLive, useLiveTable } 
 import type { Tab } from './AdminApp.tsx';
 
 export default function Overview({ goTo }: { goTo: (t: Tab) => void }) {
-  const { rows: chapters, loading: lc } = useLiveTable<Chapter>('chapters', 'chapter_number');
+  const { rows: chapters, loading: lc } = useLiveTable<Chapter>('book_chapters', 'number');
   const { rows: posts, loading: lp } = useLiveTable<CalendarItem>('calendar_items', 'scheduled_at');
   const { rows: enquiries } = useLiveTable<Enquiry>('enquiries', 'created_at');
   const newEnquiries = enquiries.filter((e) => e.status === 'new');
@@ -12,8 +12,8 @@ export default function Overview({ goTo }: { goTo: (t: Tab) => void }) {
   const weekAhead = new Date(now.getTime() + 7 * 864e5);
   const live = chapters.filter(isLive);
   const nextChapter = chapters
-    .filter((c) => c.status === 'scheduled' && c.publish_at && new Date(c.publish_at) > now)
-    .sort((a, b) => +new Date(a.publish_at!) - +new Date(b.publish_at!))[0];
+    .filter((c) => c.status === 'scheduled' && c.published_at && new Date(c.published_at) > now)
+    .sort((a, b) => +new Date(a.published_at!) - +new Date(b.published_at!))[0];
   const inProgress = chapters.filter((c) => !isLive(c));
   const upcoming = posts
     .filter((p) => p.scheduled_at && new Date(p.scheduled_at) >= now && p.status !== 'published')
@@ -75,8 +75,8 @@ export default function Overview({ goTo }: { goTo: (t: Tab) => void }) {
           </div>
           {nextChapter ? (
             <p className="mt-4 text-[15px]">
-              Next release: <strong>Chapter {nextChapter.chapter_number}, {nextChapter.title}</strong>
-              <span className="block text-muted text-sm mt-1">Goes live {formatDateTime(nextChapter.publish_at)}</span>
+              Next release: <strong>Chapter {nextChapter.number}, {nextChapter.title}</strong>
+              <span className="block text-muted text-sm mt-1">Goes live {formatDateTime(nextChapter.published_at)}</span>
             </p>
           ) : (
             <p className="mt-4 text-[15px] text-muted">No chapter is scheduled yet. Open the Book to write or schedule the next one.</p>
@@ -84,7 +84,7 @@ export default function Overview({ goTo }: { goTo: (t: Tab) => void }) {
           <ul className="mt-5 space-y-2">
             {chapters.slice(0, 10).map((c) => (
               <li key={c.id} className="flex items-center gap-3 text-sm">
-                <span className="w-6 text-muted font-mono text-xs">{String(c.chapter_number).padStart(2, '0')}</span>
+                <span className="w-6 text-muted font-mono text-xs">{String(c.number).padStart(2, '0')}</span>
                 <span className="flex-1 truncate">{c.title}</span>
                 <StatusDot live={isLive(c)} status={c.status} />
               </li>
@@ -123,8 +123,8 @@ export default function Overview({ goTo }: { goTo: (t: Tab) => void }) {
 }
 
 function StatusDot({ live, status }: { live: boolean; status: Chapter['status'] }) {
-  const label = live ? 'Live' : status === 'scheduled' ? 'Scheduled' : status === 'coming' ? 'Coming soon' : 'Draft';
-  const color = live ? 'bg-sage' : status === 'scheduled' ? 'bg-ember' : status === 'coming' ? 'bg-ink/30' : 'bg-ink/15';
+  const label = live ? 'Live' : status === 'scheduled' ? 'Scheduled' : status === 'coming_soon' ? 'Coming soon' : 'Draft';
+  const color = live ? 'bg-sage' : status === 'scheduled' ? 'bg-ember' : status === 'coming_soon' ? 'bg-ink/30' : 'bg-ink/15';
   return (
     <span className="flex items-center gap-1.5 text-xs text-muted shrink-0">
       <span className={`w-2 h-2 rounded-full ${color}`} /> {label}

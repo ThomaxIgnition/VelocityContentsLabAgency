@@ -4,7 +4,7 @@
  */
 
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   BookOpen, 
@@ -21,11 +21,12 @@ import {
   Unlock
 } from 'lucide-react';
 import { RESOURCES, BRAND_COMPANY } from '../data.ts';
-import { useChapters } from '../lib/chapters.ts';
+import { pad2, useBook } from '../lib/book.ts';
 
 export default function InsightsPage() {
-  const [activeTab, setActiveTab] = useState<'ebook' | 'toolkits'>('ebook');
-  const { chapters } = useChapters();
+  const { hash } = useLocation();
+  const [activeTab, setActiveTab] = useState<'ebook' | 'toolkits'>(hash === '#toolkits' ? 'toolkits' : 'ebook');
+  const { chapters } = useBook();
   
   // Toolkit download modal
   const [downloadModal, setDownloadModal] = useState<string | null>(null);
@@ -149,7 +150,7 @@ export default function InsightsPage() {
 
           <div className="relative border-l-2 border-black/10 pl-6 md:pl-10 space-y-10 text-left">
             {chapters.map((chapter) => {
-              const isPublished = chapter.status === 'PUBLISHED';
+              const isPublished = chapter.status === 'published';
               return (
                 <div key={chapter.slug} className="relative group">
                   {/* Timeline bullet */}
@@ -165,7 +166,7 @@ export default function InsightsPage() {
                     <div className="max-w-xl space-y-2">
                       <div className="flex items-center gap-3">
                         <span className="font-mono text-xs font-black text-brand-orange-warm uppercase tracking-wider">
-                          CHAPTER 0{chapter.chapterNumber}
+                          CHAPTER {pad2(chapter.number)}
                         </span>
                         <span
                           className={`text-[9px] font-mono uppercase font-bold px-2 py-0.5 rounded ${
@@ -174,7 +175,7 @@ export default function InsightsPage() {
                               : 'bg-neutral-100 text-neutral-500 border border-neutral-200'
                           }`}
                         >
-                          {chapter.status}
+                          {isPublished ? 'PUBLISHED' : 'COMING SOON'}
                         </span>
                       </div>
 
@@ -183,14 +184,14 @@ export default function InsightsPage() {
                       </h3>
 
                       <p className="text-xs sm:text-sm text-neutral-600 font-sans leading-relaxed">
-                        {chapter.description}
+                        {chapter.summary ?? chapter.subtitle}
                       </p>
                     </div>
 
                     <div className="shrink-0">
                       {isPublished ? (
                         <Link
-                          to={`/blog/${chapter.slug}`}
+                          to={`/book/${chapter.slug}`}
                           className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#1A1A1A] hover:bg-brand-orange-warm text-white font-sans text-xs uppercase font-bold tracking-wider transition-colors shadow-sm"
                         >
                           <span>Read Chapter</span>
@@ -199,7 +200,7 @@ export default function InsightsPage() {
                       ) : (
                         <button
                           onClick={() => {
-                            setAlertModalChapter(chapter.chapterNumber);
+                            setAlertModalChapter(chapter.number);
                             setAlertSuccess(false);
                             setAlertEmail('');
                           }}

@@ -1,10 +1,11 @@
 import { lazy, Suspense, useEffect } from 'react';
-import { HashRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, Navigate, useLocation, useParams } from 'react-router-dom';
 import { MotionConfig, motion } from 'motion/react';
 import Navbar from './components/shared/Navbar.tsx';
 import Footer from './components/shared/Footer.tsx';
 import CalAssistant from './components/shared/CalAssistant.tsx';
 import HomePage from './pages/HomePage.tsx';
+import { BOOK_REDIRECTS } from './lib/bookRedirects.ts';
 
 const ServicesPage = lazy(() => import('./pages/ServicesPage.tsx'));
 const WorkPage = lazy(() => import('./pages/WorkPage.tsx'));
@@ -12,7 +13,8 @@ const MethodPage = lazy(() => import('./pages/MethodPage.tsx'));
 const InsightsPage = lazy(() => import('./pages/InsightsPage.tsx'));
 const AboutPage = lazy(() => import('./pages/AboutPage.tsx'));
 const ContactPage = lazy(() => import('./pages/ContactPage.tsx'));
-const ChapterPage = lazy(() => import('./pages/ChapterPage.tsx'));
+const BookPage = lazy(() => import('./pages/BookPage.tsx'));
+const BookChapterPage = lazy(() => import('./pages/BookChapterPage.tsx'));
 
 const TITLES: Record<string, string> = {
   '/': 'Velocity Contents Lab | Content Strategy, AI Automation & Software',
@@ -21,6 +23,7 @@ const TITLES: Record<string, string> = {
   '/method': 'How We Work | Velocity Contents Lab',
   '/about': 'About | Velocity Contents Lab',
   '/insights': 'Insights | Velocity Contents Lab',
+  '/book': 'Where Strategy Meets Soul | The Velocity Method | Velocity Contents Lab',
   '/contact': 'Book a Discovery Call | Velocity Contents Lab'
 };
 
@@ -29,7 +32,8 @@ function ScrollManager() {
   const { pathname, hash } = useLocation();
 
   useEffect(() => {
-    document.title = TITLES[pathname] ?? TITLES['/'];
+    // Book pages set their own title and meta tags.
+    if (!pathname.startsWith('/book')) document.title = TITLES[pathname] ?? TITLES['/'];
     if (hash) {
       const id = hash.slice(1);
       let tries = 0;
@@ -45,6 +49,12 @@ function ScrollManager() {
   }, [pathname, hash]);
 
   return null;
+}
+
+/** Sends links from the previous book section to the matching new chapter. */
+function OldChapterRedirect() {
+  const { slug = '' } = useParams();
+  return <Navigate to={BOOK_REDIRECTS[slug] ?? '/book'} replace />;
 }
 
 function PageFallback() {
@@ -87,10 +97,12 @@ function MainLayout() {
               <Route path="/insights" element={<InsightsPage />} />
               <Route path="/about" element={<AboutPage />} />
               <Route path="/contact" element={<ContactPage />} />
-              <Route path="/blog/:slug" element={<ChapterPage />} />
+              <Route path="/book" element={<BookPage />} />
+              <Route path="/book/:slug" element={<BookChapterPage />} />
+              <Route path="/blog/:slug" element={<OldChapterRedirect />} />
 
               {/* Older links kept working */}
-              <Route path="/blog" element={<Navigate to="/insights" replace />} />
+              <Route path="/blog" element={<Navigate to="/book" replace />} />
               <Route path="/resources" element={<Navigate to="/insights" replace />} />
               <Route path="/origin-story" element={<Navigate to="/about" replace />} />
 

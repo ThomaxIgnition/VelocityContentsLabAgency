@@ -11,11 +11,12 @@ const NAV_LINKS = [
   { name: 'Work', href: '/work' },
   { name: 'How We Work', href: '/method' },
   { name: 'About', href: '/about' },
+  { name: 'The Book', href: '/book' },
   { name: 'Insights', href: '/insights' }
 ];
 
 // Pages that open on a dark hero, where the bar starts transparent with light text.
-const DARK_HERO_ROUTES = ['/', '/services', '/work', '/method', '/about', '/contact'];
+const DARK_HERO_ROUTES = ['/', '/services', '/work', '/method', '/about', '/contact', '/book'];
 
 /**
  * The brand mark. With `homeCue` (inner pages), it pulses softly every few
@@ -127,7 +128,7 @@ export default function Navbar() {
     return () => window.removeEventListener('keydown', onKey);
   }, []);
 
-  const overDark = DARK_HERO_ROUTES.includes(pathname) && !scrolled;
+  const overDark = (DARK_HERO_ROUTES.includes(pathname) || pathname.startsWith('/book/')) && !scrolled;
   const light = overDark || open;
 
   return (
@@ -156,7 +157,7 @@ export default function Navbar() {
                 key={item.href}
                 to={item.href}
                 className={({ isActive }) =>
-                  `relative px-4 py-2 rounded-full text-[15px] transition-colors ${
+                  `relative px-2.5 xl:px-4 py-2 rounded-full text-[15px] whitespace-nowrap transition-colors ${
                     light
                       ? isActive ? 'text-paper' : 'text-paper/65 hover:text-paper'
                       : isActive ? 'text-ink' : 'text-ink/60 hover:text-ink'
@@ -183,7 +184,7 @@ export default function Navbar() {
             <ThemeToggle light={light} />
             <button
               onClick={openCal}
-              className={`hidden sm:inline-flex items-center gap-2 min-h-[44px] px-4 rounded-full text-sm transition-colors ${
+              className={`hidden sm:inline-flex lg:hidden xl:inline-flex items-center gap-2 min-h-[44px] px-4 rounded-full text-sm whitespace-nowrap transition-colors ${
                 light ? 'text-paper/80 hover:text-paper' : 'text-ink/70 hover:text-ink'
               }`}
             >

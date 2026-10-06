@@ -50,6 +50,7 @@ export default function Footer() {
                   ['Work', '/work'],
                   ['How We Work', '/method'],
                   ['About', '/about'],
+                  ['The Book', '/book'],
                   ['Insights', '/insights'],
                   ['Contact', '/contact']
                 ].map(([label, href]) => (
