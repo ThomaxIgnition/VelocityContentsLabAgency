@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
-import { ArrowUpRight, MessageCircle, Moon, Pointer, Sun } from 'lucide-react';
+import { ArrowUpRight, MessageCircle, Moon, Sun } from 'lucide-react';
 import { COMPANY } from '../../content.ts';
 import { openCal } from '../ui.tsx';
 import { useTheme } from '../../lib/theme.ts';
@@ -17,14 +17,64 @@ const NAV_LINKS = [
 // Pages that open on a dark hero, where the bar starts transparent with light text.
 const DARK_HERO_ROUTES = ['/', '/services', '/work', '/method', '/about', '/contact'];
 
-export function Logo({ light = false, tagline = true }: { light?: boolean; tagline?: boolean }) {
+/**
+ * The brand mark. With `homeCue` (inner pages), it pulses softly every few
+ * seconds like a notification, and inside a hovered link it lifts like a button,
+ * turns ember and shows a "Home" label, so visitors learn it leads home.
+ */
+export function Logo({ light = false, tagline = true, homeCue = false }: { light?: boolean; tagline?: boolean; homeCue?: boolean }) {
   return (
     <span className="flex items-center gap-2.5 sm:gap-3">
-      <svg viewBox="0 0 64 64" className="w-9 h-9 shrink-0" aria-hidden="true">
-        <rect width="64" height="64" rx="14" className={light ? 'fill-paper' : 'fill-ink'} />
-        <path d="M17 18h7.5L32 39.5 39.5 18H47L35.6 47h-7.2z" className={light ? 'fill-ink' : 'fill-paper'} />
-        <circle cx="47" cy="47" r="4" className="fill-ember" />
-      </svg>
+      <span className="relative shrink-0">
+        {homeCue && (
+          <motion.span
+            aria-hidden="true"
+            className="absolute inset-0 rounded-[9px] border-2 border-ember pointer-events-none"
+            initial={{ opacity: 0, scale: 1 }}
+            animate={{ opacity: [0, 0.9, 0], scale: [1, 1.35, 1.6] }}
+            transition={{ duration: 1.6, ease: 'easeOut', repeat: Infinity, repeatDelay: 6, delay: 1.2 }}
+          />
+        )}
+        <svg
+          viewBox="0 0 64 64"
+          aria-hidden="true"
+          className={`relative w-9 h-9 transition-all duration-300 ease-out ${
+            homeCue ? 'group-hover:-translate-y-0.5 group-hover:scale-110 group-hover:drop-shadow-[0_6px_14px_rgba(236,138,92,0.55)]' : ''
+          }`}
+        >
+          <rect
+            width="64"
+            height="64"
+            rx="14"
+            className={`transition-colors duration-300 ${light ? 'fill-paper' : 'fill-ink'} ${homeCue ? 'group-hover:fill-ember' : ''}`}
+          />
+          <path
+            d="M17 18h7.5L32 39.5 39.5 18H47L35.6 47h-7.2z"
+            className={`transition-colors duration-300 ${light ? 'fill-ink' : 'fill-paper'} ${homeCue ? 'group-hover:fill-coal' : ''}`}
+          />
+          {homeCue ? (
+            <motion.circle
+              cx="47"
+              cy="47"
+              r="4"
+              className="fill-ember group-hover:fill-coal"
+              style={{ transformOrigin: '47px 47px' }}
+              animate={{ scale: [1, 1.7, 1] }}
+              transition={{ duration: 1.6, ease: 'easeInOut', repeat: Infinity, repeatDelay: 6, delay: 1.2 }}
+            />
+          ) : (
+            <circle cx="47" cy="47" r="4" className="fill-ember" />
+          )}
+        </svg>
+        {homeCue && (
+          <span
+            aria-hidden="true"
+            className="absolute left-1/2 top-full mt-2 -translate-x-1/2 translate-y-1 px-2 py-0.5 rounded-md bg-ember text-coal text-[11px] font-medium whitespace-nowrap opacity-0 pointer-events-none transition-all duration-200 group-hover:opacity-100 group-hover:translate-y-0 group-focus-visible:opacity-100"
+          >
+            Home
+          </span>
+        )}
+      </span>
       <span className="flex flex-col leading-none whitespace-nowrap">
         <span className={`font-display text-[19px] tracking-tight ${light ? 'text-paper' : 'text-ink'}`}>Velocity</span>
         <span className={`font-mono text-[9px] uppercase tracking-[0.28em] mt-1 ${light ? 'text-paper/60' : 'text-muted'}`}>
@@ -96,9 +146,8 @@ export default function Navbar() {
         }`}
       >
         <div className="mx-auto max-w-[1240px] px-5 sm:px-8 flex items-center justify-between gap-2 sm:gap-6">
-          <Link to="/" aria-label={`${COMPANY.name}: back to home`} className="group relative z-10 flex items-center gap-1.5 sm:gap-3">
-            <Logo light={light} />
-            {pathname !== '/' && <HomeHint key={pathname} light={light} />}
+          <Link to="/" aria-label={`${COMPANY.name}: back to home`} className="group relative z-10 flex items-center">
+            <Logo light={light} homeCue={pathname !== '/'} />
           </Link>
 
           <nav aria-label="Main" className="hidden lg:flex items-center gap-1">
@@ -263,35 +312,3 @@ export function ThemeToggle({ light = false, className = '' }: { light?: boolean
   );
 }
 
-/**
- * A small "Home" cue beside the logo on inner pages: a finger nudges toward the
- * logo a few times when the page opens, then rests. Hidden on the homepage.
- */
-function HomeHint({ light }: { light: boolean }) {
-  return (
-    <span
-      aria-hidden="true"
-      className={`relative inline-flex items-center gap-1 h-7 pl-1.5 pr-1.5 sm:pr-2.5 rounded-full border text-[11px] font-medium tracking-wide transition-colors duration-300 ${
-        light
-          ? 'border-paper/20 text-paper/75 group-hover:bg-ember group-hover:border-ember group-hover:text-coal'
-          : 'border-ink/15 text-ink/65 group-hover:bg-ember group-hover:border-ember group-hover:text-coal'
-      }`}
-    >
-      <motion.span
-        className="flex"
-        initial={{ x: 0 }}
-        animate={{ x: [0, -4, 0, -4, 0, -4, 0] }}
-        transition={{ duration: 2.2, delay: 0.9, ease: 'easeInOut' }}
-      >
-        <Pointer className="w-3.5 h-3.5 -rotate-90" />
-      </motion.span>
-      <span className="hidden sm:inline">Home</span>
-      <motion.span
-        className="absolute inset-0 rounded-full border border-ember pointer-events-none"
-        initial={{ opacity: 0, scale: 1 }}
-        animate={{ opacity: [0, 0.8, 0], scale: [1, 1.25, 1.4] }}
-        transition={{ duration: 1.4, delay: 0.9, repeat: 1, repeatDelay: 0.4 }}
-      />
-    </span>
-  );
-}
