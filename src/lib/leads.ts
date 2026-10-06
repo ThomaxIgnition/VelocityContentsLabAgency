@@ -1,4 +1,5 @@
 import { COMPANY } from '../content.ts';
+import { supabase } from './supabase.ts';
 
 export interface LeadInput {
   name: string;
@@ -11,10 +12,10 @@ export interface LeadInput {
 }
 
 /**
- * Where enquiries are delivered. Set VITE_LEAD_WEBHOOK_URL (for example an n8n
- * webhook that emails you and logs the lead to Google Sheets) in your hosting
- * provider's environment variables. Without it, the visitor's email app opens
- * with the enquiry pre-filled and addressed to the company inbox.
+ * Enquiries are saved to the database and listed in the admin dashboard's
+ * Enquiries tab. Optionally, VITE_LEAD_WEBHOOK_URL (for example an n8n workflow
+ * that sends email notifications) receives a copy too. Only if the database
+ * cannot be reached does the form fall back to the visitor's email app.
  */
 const WEBHOOK_URL = import.meta.env.VITE_LEAD_WEBHOOK_URL as string | undefined;
 
@@ -22,16 +23,30 @@ export type LeadResult = 'sent' | 'mailto';
 
 export async function submitLead(lead: LeadInput): Promise<LeadResult> {
   const submittedAt = new Date().toISOString();
+  const clean = (v?: string) => (v && v.trim() ? v.trim() : null);
+
+  const { error } = await supabase.from('enquiries').insert({
+    name: lead.name.trim(),
+    email: lead.email.trim(),
+    company: clean(lead.company),
+    service: clean(lead.service),
+    engagement: clean(lead.engagement),
+    message: clean(lead.message),
+    source: lead.source,
+    page: window.location.href.slice(0, 500)
+  });
 
   if (WEBHOOK_URL) {
-    const res = await fetch(WEBHOOK_URL, {
+    // Notifications are a bonus: a failure here must not lose the enquiry.
+    fetch(WEBHOOK_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ ...lead, submittedAt, page: window.location.href })
-    });
-    if (!res.ok) throw new Error(`Lead webhook responded with ${res.status}`);
-    return 'sent';
+    }).catch((err) => console.warn('Lead webhook failed', err));
   }
+
+  if (!error) return 'sent';
+  console.error('Saving enquiry failed', error);
 
   const subject = `Discovery call request from ${lead.name}${lead.company ? ` (${lead.company})` : ''}`;
   const body = [

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
-import { ArrowUpRight, MessageCircle, Moon, Sun } from 'lucide-react';
+import { ArrowUpRight, MessageCircle, Moon, Pointer, Sun } from 'lucide-react';
 import { COMPANY } from '../../content.ts';
 import { openCal } from '../ui.tsx';
 import { useTheme } from '../../lib/theme.ts';
@@ -19,7 +19,7 @@ const DARK_HERO_ROUTES = ['/', '/services', '/work', '/method', '/about', '/cont
 
 export function Logo({ light = false, tagline = true }: { light?: boolean; tagline?: boolean }) {
   return (
-    <span className="flex items-center gap-3">
+    <span className="flex items-center gap-2.5 sm:gap-3">
       <svg viewBox="0 0 64 64" className="w-9 h-9 shrink-0" aria-hidden="true">
         <rect width="64" height="64" rx="14" className={light ? 'fill-paper' : 'fill-ink'} />
         <path d="M17 18h7.5L32 39.5 39.5 18H47L35.6 47h-7.2z" className={light ? 'fill-ink' : 'fill-paper'} />
@@ -95,9 +95,10 @@ export default function Navbar() {
                 : 'bg-paper py-5'
         }`}
       >
-        <div className="mx-auto max-w-[1240px] px-5 sm:px-8 flex items-center justify-between gap-6">
-          <Link to="/" aria-label={`${COMPANY.name} home`} className="relative z-10">
+        <div className="mx-auto max-w-[1240px] px-5 sm:px-8 flex items-center justify-between gap-2 sm:gap-6">
+          <Link to="/" aria-label={`${COMPANY.name}: back to home`} className="group relative z-10 flex items-center gap-1.5 sm:gap-3">
             <Logo light={light} />
+            {pathname !== '/' && <HomeHint key={pathname} light={light} />}
           </Link>
 
           <nav aria-label="Main" className="hidden lg:flex items-center gap-1">
@@ -259,5 +260,38 @@ export function ThemeToggle({ light = false, className = '' }: { light?: boolean
         </motion.span>
       </AnimatePresence>
     </button>
+  );
+}
+
+/**
+ * A small "Home" cue beside the logo on inner pages: a finger nudges toward the
+ * logo a few times when the page opens, then rests. Hidden on the homepage.
+ */
+function HomeHint({ light }: { light: boolean }) {
+  return (
+    <span
+      aria-hidden="true"
+      className={`relative inline-flex items-center gap-1 h-7 pl-1.5 pr-1.5 sm:pr-2.5 rounded-full border text-[11px] font-medium tracking-wide transition-colors duration-300 ${
+        light
+          ? 'border-paper/20 text-paper/75 group-hover:bg-ember group-hover:border-ember group-hover:text-coal'
+          : 'border-ink/15 text-ink/65 group-hover:bg-ember group-hover:border-ember group-hover:text-coal'
+      }`}
+    >
+      <motion.span
+        className="flex"
+        initial={{ x: 0 }}
+        animate={{ x: [0, -4, 0, -4, 0, -4, 0] }}
+        transition={{ duration: 2.2, delay: 0.9, ease: 'easeInOut' }}
+      >
+        <Pointer className="w-3.5 h-3.5 -rotate-90" />
+      </motion.span>
+      <span className="hidden sm:inline">Home</span>
+      <motion.span
+        className="absolute inset-0 rounded-full border border-ember pointer-events-none"
+        initial={{ opacity: 0, scale: 1 }}
+        animate={{ opacity: [0, 0.8, 0], scale: [1, 1.25, 1.4] }}
+        transition={{ duration: 1.4, delay: 0.9, repeat: 1, repeatDelay: 0.4 }}
+      />
+    </span>
   );
 }

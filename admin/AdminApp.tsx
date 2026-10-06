@@ -1,13 +1,15 @@
 import { FormEvent, ReactNode, useEffect, useState } from 'react';
 import type { Session } from '@supabase/supabase-js';
-import { BookOpen, CalendarDays, ExternalLink, Eye, EyeOff, LayoutDashboard, LogOut } from 'lucide-react';
+import { BookOpen, CalendarDays, ExternalLink, Eye, EyeOff, Inbox, LayoutDashboard, LogOut } from 'lucide-react';
 import { supabase } from '../src/lib/supabase.ts';
 import { COMPANY } from '../src/content.ts';
 import Overview from './Overview.tsx';
 import BookTab from './BookTab.tsx';
 import CalendarTab from './CalendarTab.tsx';
+import EnquiriesTab from './EnquiriesTab.tsx';
+import { Enquiry, useLiveTable } from './api.ts';
 
-export type Tab = 'overview' | 'book' | 'calendar';
+export type Tab = 'overview' | 'enquiries' | 'book' | 'calendar';
 
 const PUBLIC_SITE = (import.meta.env.VITE_PUBLIC_SITE_URL as string | undefined) ?? 'https://velocitycontentslabagency.velocitycontentslab.workers.dev';
 
@@ -54,9 +56,12 @@ export default function AdminApp() {
 function Dashboard({ email }: { email: string }) {
   const [tab, setTab] = useState<Tab>(() => (localStorage.getItem('vcl-admin-tab') as Tab) || 'overview');
   useEffect(() => localStorage.setItem('vcl-admin-tab', tab), [tab]);
+  const { rows: enquiries } = useLiveTable<Enquiry>('enquiries', 'created_at');
+  const newCount = enquiries.filter((e) => e.status === 'new').length;
 
   const tabs: { id: Tab; label: string; icon: typeof BookOpen }[] = [
     { id: 'overview', label: 'Overview', icon: LayoutDashboard },
+    { id: 'enquiries', label: 'Enquiries', icon: Inbox },
     { id: 'book', label: 'Book', icon: BookOpen },
     { id: 'calendar', label: 'Calendar', icon: CalendarDays }
   ];
@@ -102,6 +107,11 @@ function Dashboard({ email }: { email: string }) {
               }`}
             >
               <Icon className="w-4 h-4" /> {label}
+              {id === 'enquiries' && newCount > 0 && (
+                <span className="min-w-[20px] h-5 px-1.5 rounded-full bg-ember text-coal text-[11px] font-semibold flex items-center justify-center">
+                  {newCount}
+                </span>
+              )}
               {tab === id && <span className="absolute left-3 right-3 bottom-0 h-[3px] rounded-t bg-ember" />}
             </button>
           ))}
@@ -110,6 +120,7 @@ function Dashboard({ email }: { email: string }) {
 
       <main className="mx-auto max-w-[1240px] px-4 sm:px-8 py-8 sm:py-10">
         {tab === 'overview' && <Overview goTo={setTab} />}
+        {tab === 'enquiries' && <EnquiriesTab />}
         {tab === 'book' && <BookTab />}
         {tab === 'calendar' && <CalendarTab />}
       </main>

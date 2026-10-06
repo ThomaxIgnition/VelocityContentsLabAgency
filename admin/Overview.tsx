@@ -1,10 +1,12 @@
-import { ArrowRight, BookOpen, CalendarDays } from 'lucide-react';
-import { CalendarItem, Chapter, formatDateTime, isLive, useLiveTable } from './api.ts';
+import { ArrowRight, BookOpen, CalendarDays, Inbox } from 'lucide-react';
+import { CalendarItem, Chapter, Enquiry, formatDateTime, isLive, useLiveTable } from './api.ts';
 import type { Tab } from './AdminApp.tsx';
 
 export default function Overview({ goTo }: { goTo: (t: Tab) => void }) {
   const { rows: chapters, loading: lc } = useLiveTable<Chapter>('chapters', 'chapter_number');
   const { rows: posts, loading: lp } = useLiveTable<CalendarItem>('calendar_items', 'scheduled_at');
+  const { rows: enquiries } = useLiveTable<Enquiry>('enquiries', 'created_at');
+  const newEnquiries = enquiries.filter((e) => e.status === 'new');
 
   const now = new Date();
   const weekAhead = new Date(now.getTime() + 7 * 864e5);
@@ -32,6 +34,22 @@ export default function Overview({ goTo }: { goTo: (t: Tab) => void }) {
         {greeting()}, Thomax.
       </h1>
       <p className="mt-2 text-muted">Here is where the book and your content stand today.</p>
+
+      {newEnquiries.length > 0 && (
+        <button
+          onClick={() => goTo('enquiries')}
+          className="mt-6 w-full text-left flex items-center gap-4 p-5 rounded-2xl bg-ember/15 border border-ember/40 hover:bg-ember/25 transition-colors"
+        >
+          <Inbox className="w-6 h-6 text-clay shrink-0" />
+          <span className="flex-1">
+            <span className="block font-medium">
+              {newEnquiries.length} new {newEnquiries.length === 1 ? 'enquiry' : 'enquiries'} waiting for a reply
+            </span>
+            <span className="block text-sm text-muted">Latest from {newEnquiries.sort((a, b) => +new Date(b.created_at) - +new Date(a.created_at))[0].name}</span>
+          </span>
+          <ArrowRight className="w-5 h-5 text-clay" />
+        </button>
+      )}
 
       <dl className="mt-8 grid grid-cols-2 lg:grid-cols-4 gap-px bg-ink/10 rounded-2xl overflow-hidden border border-ink/10">
         {stats.map((s) => (

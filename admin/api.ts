@@ -44,7 +44,7 @@ export function isLive(c: Pick<Chapter, 'status' | 'publish_at'>) {
  * Loads a table and keeps it in sync: changes made on any device (or in another
  * tab) arrive instantly through Supabase Realtime.
  */
-export function useLiveTable<T extends { id: string }>(table: 'chapters' | 'calendar_items', orderBy: string) {
+export function useLiveTable<T extends { id: string }>(table: 'chapters' | 'calendar_items' | 'enquiries', orderBy: string) {
   const [rows, setRows] = useState<T[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -62,7 +62,7 @@ export function useLiveTable<T extends { id: string }>(table: 'chapters' | 'cale
   useEffect(() => {
     reload();
     const channel = supabase
-      .channel(`live-${table}`)
+      .channel(`live-${table}-${Math.random().toString(36).slice(2)}`)
       .on('postgres_changes', { event: '*', schema: 'public', table }, () => reload())
       .subscribe();
     // Refresh when returning to the tab, in case the connection slept.
@@ -136,4 +136,32 @@ export function fromLocalInput(value: string) {
 export function formatDateTime(iso: string | null) {
   if (!iso) return 'No date';
   return new Date(iso).toLocaleString('en-GB', { weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
+}
+
+export type EnquiryStatus = 'new' | 'contacted' | 'won' | 'closed';
+
+export interface Enquiry {
+  id: string;
+  name: string;
+  email: string;
+  company: string | null;
+  service: string | null;
+  engagement: string | null;
+  message: string | null;
+  source: string;
+  page: string | null;
+  status: EnquiryStatus;
+  notes: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export async function updateEnquiry(id: string, fields: Partial<Pick<Enquiry, 'status' | 'notes'>>) {
+  const { error } = await supabase.from('enquiries').update(fields).eq('id', id);
+  if (error) throw new Error(friendly(error.message));
+}
+
+export async function deleteEnquiry(id: string) {
+  const { error } = await supabase.from('enquiries').delete().eq('id', id);
+  if (error) throw new Error(friendly(error.message));
 }
