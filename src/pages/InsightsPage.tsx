@@ -21,7 +21,7 @@ import {
   Unlock
 } from 'lucide-react';
 import { RESOURCES, BRAND_COMPANY } from '../data.ts';
-import { pad2, useBook } from '../lib/book.ts';
+import { BOOK, pad2, useBook } from '../lib/book.ts';
 
 export default function InsightsPage() {
   const { hash } = useLocation();
@@ -146,6 +146,30 @@ export default function InsightsPage() {
             <p className="text-xs sm:text-sm text-neutral-500 font-sans mt-1">
               Subtitled: <span className="italic font-semibold text-neutral-800">The Velocity Method for Turning Content Into Customers</span>.
             </p>
+          </div>
+
+          {/* Meet the author */}
+          <div className="mb-12 grid grid-cols-[96px_1fr] sm:grid-cols-[150px_1fr] gap-5 sm:gap-8 items-center p-5 sm:p-7 rounded-3xl bg-paper-deep text-left">
+            <div className="relative">
+              <span aria-hidden="true" className="absolute inset-0 translate-x-2 translate-y-2 rounded-2xl border-2 border-ember" />
+              <img
+                src={BOOK.portrait}
+                alt={`${BOOK.author}, author of ${BOOK.title}`}
+                loading="lazy"
+                className="relative w-full aspect-[4/5] object-cover object-[50%_22%] rounded-2xl"
+              />
+            </div>
+            <div>
+              <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-clay">Written by</p>
+              <p className="mt-2 font-display text-2xl sm:text-3xl text-ink">{BOOK.author}</p>
+              <p className="mt-2 text-[15px] leading-relaxed text-muted max-w-xl">
+                Founder of Velocity Contents Lab. Every chapter began as a weekly idea, tested in real client work, then written here to be read
+                free, chapter by chapter.
+              </p>
+              <Link to="/book" className="mt-4 inline-flex items-center gap-2 min-h-[44px] font-medium text-ink hover:text-clay">
+                Open the book <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
           </div>
 
           <div className="relative border-l-2 border-black/10 pl-6 md:pl-10 space-y-10 text-left">

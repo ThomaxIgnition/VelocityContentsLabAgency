@@ -244,7 +244,7 @@ export function FounderPortrait({ className = '' }: { className?: string }) {
         <img
           src="/photos/founder.jpg"
           alt="Emmanuel Sunday Thomas (Thomax), Founder and CEO of Velocity Contents Lab"
-          className="absolute inset-0 w-full h-full object-cover"
+          className="absolute inset-0 w-full h-full object-cover object-[50%_22%]"
           onError={() => setFailed(true)}
           loading="lazy"
         />

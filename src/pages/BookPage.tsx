@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Clock, Download } from 'lucide-react';
+import { ArrowRight, Clock } from 'lucide-react';
 import { BOOK, pad2, readingMinutes, useBook } from '../lib/book.ts';
 import { usePageMeta } from '../lib/seo.ts';
 import { Container, Eyebrow, Reveal, SectionHeader } from '../components/ui.tsx';
@@ -43,23 +43,16 @@ export default function BookPage() {
               <p className="mt-6 max-w-xl text-xl text-paper/75 leading-relaxed">{BOOK.subtitle}</p>
               <p className="mt-6 font-mono text-[12px] uppercase tracking-[0.22em] text-paper/60">By {BOOK.author}</p>
               <div className="mt-10 flex flex-col sm:flex-row gap-3">
-                <a
-                  href={BOOK.pdf}
-                  download
-                  className="inline-flex items-center justify-center gap-2.5 min-h-[50px] px-7 rounded-full bg-ember text-coal font-medium hover:bg-paper transition-colors"
-                >
-                  <Download className="w-4 h-4" /> Download the PDF edition
-                </a>
                 {publishedCount > 0 && (
                   <Link
                     to={`/book/${sorted.find((c) => c.status === 'published')!.slug}`}
-                    className="inline-flex items-center justify-center gap-2.5 min-h-[50px] px-7 rounded-full border border-paper/25 text-paper hover:bg-paper hover:text-ink transition-colors"
+                    className="inline-flex items-center justify-center gap-2.5 min-h-[50px] px-7 rounded-full bg-ember text-coal font-medium hover:bg-paper transition-colors"
                   >
                     Start reading <ArrowRight className="w-4 h-4" />
                   </Link>
                 )}
               </div>
-              <p className="mt-4 text-sm text-paper/50">Chapters 1 to {publishedCount} · {BOOK.edition}</p>
+              <p className="mt-4 text-sm text-paper/60">Chapters 1 to {publishedCount}, free to read here · New chapters added as they are written</p>
             </div>
             <div className="lg:col-span-5">
               <AuthorPortrait />

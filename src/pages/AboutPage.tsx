@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
 import { COMPANY, FOUNDER, HISTORY, TOOLS, WHO_WE_SERVE } from '../content.ts';
 import {
   ClosingCTA,
@@ -70,13 +72,34 @@ export default function AboutPage() {
         <Container className="py-24 sm:py-32">
           <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
             <Reveal className="lg:col-span-5 lg:sticky lg:top-28">
-              <FounderPortrait className="aspect-[4/5]" />
+              <figure className="relative pr-4 pb-4 sm:pr-6 sm:pb-6">
+                {/* Offset ember outline gives the portrait depth */}
+                <span aria-hidden="true" className="absolute inset-0 top-4 left-4 sm:top-6 sm:left-6 rounded-[28px] border-2 border-ember" />
+                <FounderPortrait className="relative aspect-[4/5] shadow-2xl shadow-coal/20" />
+                <figcaption className="on-dark absolute left-4 bottom-0 sm:left-6 max-w-[85%] px-5 py-4 rounded-2xl bg-ink text-paper shadow-xl">
+                  <span className="block font-display text-lg leading-tight">{COMPANY.founder}</span>
+                  <span className="block mt-1 text-sm text-paper/65">{COMPANY.founderTitle} · {COMPANY.city}</span>
+                </figcaption>
+              </figure>
             </Reveal>
             <div className="lg:col-span-7">
               <SectionHeader eyebrow="Leadership" title={`${COMPANY.founder} (Thomax)`} />
               <Reveal delay={0.1}>
                 <p className="mt-3 font-mono text-[12px] uppercase tracking-[0.16em] text-muted">{COMPANY.founderTitle}</p>
                 <p className="mt-8 text-xl leading-relaxed text-ink/85">{FOUNDER.bio}</p>
+                <blockquote className="mt-10 pl-6 border-l-2 border-ember">
+                  <p className="font-display italic font-light text-2xl sm:text-[1.75rem] leading-snug text-ink">
+                    “Great work needs a clear message and a reliable system to carry it.”
+                  </p>
+                  <footer className="mt-3 text-sm text-muted">Thomax, on the philosophy behind Velocity Contents Lab</footer>
+                </blockquote>
+                <Link
+                  to="/book"
+                  className="group mt-8 inline-flex items-center gap-2 min-h-[44px] text-clay font-medium"
+                >
+                  Read his book, <span className="italic font-display">Where Strategy Meets Soul</span>
+                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                </Link>
               </Reveal>
 
               <div className="mt-12 grid sm:grid-cols-2 gap-10">
