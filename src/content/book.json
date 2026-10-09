@@ -1079,8 +1079,227 @@
       "number": 7,
       "slug": "the-content-to-revenue-system",
       "title": "The Content-to-Revenue System",
+      "subtitle": "The Content-to-Revenue System™",
+      "dmKeyword": "REVENUE",
       "week": 23,
-      "status": "coming_soon"
+      "readingTimeMinutes": 5,
+      "status": "published",
+      "epigraph": "Content earns attention. Systems turn it into revenue.",
+      "summary": "Why most content gets likes but not clients, and the five links that turn attention into revenue: Attract, Prove, Invite, Capture, Convert.",
+      "lead": "Chapter 6 gave you proof. This chapter joins everything we've built so far into one chain, so the attention your content earns finally has somewhere to go.",
+      "body": [
+        {
+          "type": "paragraph",
+          "text": "One sentence from a client explains what we do better than any service page I've written."
+        },
+        {
+          "type": "paragraph",
+          "text": "\"The automation service is the best. Now I make money while I sleep.\""
+        },
+        {
+          "type": "paragraph",
+          "text": "It came from House of Matiggy, a sole proprietor we support with content strategy and business automation. It's short and plain, and every time I read it, I notice the same thing."
+        },
+        {
+          "type": "paragraph",
+          "text": "It doesn't mention likes."
+        },
+        {
+          "type": "paragraph",
+          "text": "It doesn't mention followers, or reach, or the week a post went viral."
+        },
+        {
+          "type": "paragraph",
+          "text": "It mentions money. Arriving at a time the owner isn't working."
+        },
+        {
+          "type": "heading",
+          "text": "Attention is not the finish line"
+        },
+        {
+          "type": "paragraph",
+          "text": "Most founders aren't short of content. They post, sometimes every day. The posts collect reactions, a few kind comments, the occasional share."
+        },
+        {
+          "type": "paragraph",
+          "text": "Then nothing happens."
+        },
+        {
+          "type": "paragraph",
+          "text": "It's tempting to blame the content. Maybe the hook was weak. Maybe the timing was off. Sometimes that's true. But far more often, the content did its job. It earned attention. The problem is what happened next, which was nothing."
+        },
+        {
+          "type": "paragraph",
+          "text": "Someone reads your post, agrees with it, and scrolls on. Not because they weren't interested. Because you didn't give the interest anywhere to go."
+        },
+        {
+          "type": "paragraph",
+          "text": "Interest with nowhere to go simply fades."
+        },
+        {
+          "type": "paragraph",
+          "text": "This is the gap between content and a content system. Content earns attention. A system turns attention into revenue, consistently, whether or not you're online."
+        },
+        {
+          "type": "heading",
+          "text": "The five links"
+        },
+        {
+          "type": "paragraph",
+          "text": "Think of it as a chain. Each link hands the person on to the next one. If a single link is missing, the chain breaks, and the revenue never arrives, however strong the other links are."
+        },
+        {
+          "type": "steps",
+          "items": [
+            {
+              "title": "Attract",
+              "text": "Content that speaks to one buyer about one problem."
+            },
+            {
+              "title": "Prove",
+              "text": "Evidence placed exactly where doubt appears."
+            },
+            {
+              "title": "Invite",
+              "text": "One clear next step on every piece of content."
+            },
+            {
+              "title": "Capture",
+              "text": "Every reply lands somewhere and gets an answer, day or night."
+            },
+            {
+              "title": "Convert",
+              "text": "A real conversation, followed through to a decision."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "You'll recognise most of these. The earlier chapters of this book each built one of them. This chapter joins them together."
+        },
+        {
+          "type": "heading",
+          "text": "Link 1: Attract"
+        },
+        {
+          "type": "paragraph",
+          "text": "Content that tries to speak to everyone reaches no one in particular. Attraction starts with one buyer and one problem they already feel. The Velocity Distribution Engine from Chapter 5 then carries that idea to every platform where your buyer spends time."
+        },
+        {
+          "type": "paragraph",
+          "text": "The test is simple. If a stranger read your last post, could they tell who it was for and what problem it solves?"
+        },
+        {
+          "type": "heading",
+          "text": "Link 2: Prove"
+        },
+        {
+          "type": "paragraph",
+          "text": "Attention invites doubt. Is this person real? Have they done this before? Does it work for people like me?"
+        },
+        {
+          "type": "paragraph",
+          "text": "Chapter 6 showed you how to collect proof. In the chain, proof does its work when it's placed exactly where those doubts appear: a client's words beside your offer, a live example beside your claim, a real result beside your price."
+        },
+        {
+          "type": "heading",
+          "text": "Link 3: Invite"
+        },
+        {
+          "type": "paragraph",
+          "text": "This is where most content breaks. A post ends, and the reader has no idea what to do next. Or they get five options at once: follow, like, share, visit the website, book a call. Five options feel like none."
+        },
+        {
+          "type": "paragraph",
+          "text": "Give every piece of content one clear next step. Just one. At Velocity Contents Lab, every weekly post ends with a single keyword to send in a direct message. This week, it's REVENUE. One word, one action, one free guide in return."
+        },
+        {
+          "type": "paragraph",
+          "text": "An invitation should feel like a gift, not a demand. Offer something genuinely useful: a guide, a checklist, a short call to look at their situation."
+        },
+        {
+          "type": "heading",
+          "text": "Link 4: Capture"
+        },
+        {
+          "type": "paragraph",
+          "text": "Here's the uncomfortable question. When someone accepts your invitation, what happens?"
+        },
+        {
+          "type": "paragraph",
+          "text": "If the answer is \"they wait until I see the message,\" your chain has a gap. Messages arrive at midnight, during meetings, on Sunday afternoons. A slow reply cools interest. No reply loses it."
+        },
+        {
+          "type": "paragraph",
+          "text": "Capture means every response lands somewhere you can see it and gets an answer straight away. This is where automation earns its place. An automated assistant can reply instantly using answers you've approved, record the person's details, and offer the next step, such as a booking link. Decisions that need your judgement, like pricing or a custom proposal, still come to you. The waiting doesn't."
+        },
+        {
+          "type": "paragraph",
+          "text": "That's the \"while I sleep\" part. You wake up to a conversation, not a missed chance."
+        },
+        {
+          "type": "heading",
+          "text": "Link 5: Convert"
+        },
+        {
+          "type": "paragraph",
+          "text": "Capture starts a conversation. Conversion finishes it. The Discovery Build questions from Chapter 3 help you understand what the person really needs. The 7-Touch Fortune Framework from Chapter 1 keeps you present when life gets busy on their side."
+        },
+        {
+          "type": "paragraph",
+          "text": "Silence is not a no. Most conversations go quiet for ordinary reasons. Follow through, respectfully, until there's a clear yes or a clear no."
+        },
+        {
+          "type": "heading",
+          "text": "Where chains usually break"
+        },
+        {
+          "type": "paragraph",
+          "text": "When people look for the problem, they usually start with the content itself. Rewrite the hook. Post more often. Try a new platform. But the content is often fine. The leak is further down the chain."
+        },
+        {
+          "type": "paragraph",
+          "text": "No next step at the end of the post.\nA next step buried among four others.\nReplies that sit unanswered for days.\nInterested people whose details were never recorded.\nConversations that stopped after one message."
+        },
+        {
+          "type": "paragraph",
+          "text": "Notice that only the first two are content problems. The rest are system problems. You can't write your way out of a system problem."
+        },
+        {
+          "type": "heading",
+          "text": "Your next step"
+        },
+        {
+          "type": "paragraph",
+          "text": "Don't rebuild everything at once. Find your weakest link and strengthen that one first. A small fix in link three or four can matter more than another week of new posts."
+        },
+        {
+          "type": "paragraph",
+          "text": "The companion resource for this chapter, The Content-to-Revenue Map, includes a leak check of ten questions, the simplest setup for each link, and a plan to close your first gap in five days. You'll find it in the Resource Vault."
+        }
+      ],
+      "takeaways": [
+        "Content earns attention. Systems turn attention into revenue.",
+        "Interest with nowhere to go simply fades. Every piece of content needs one clear next step.",
+        "The chain has five links: Attract, Prove, Invite, Capture, Convert. One missing link breaks it.",
+        "Capture is where automation earns its place: instant replies, recorded details and an offered next step, day or night.",
+        "Most leaks are system problems, not content problems. Fix your weakest link first."
+      ],
+      "exercise": {
+        "title": "Trace One Post (30 minutes)",
+        "steps": [
+          "Pick your most recent post that got good engagement.",
+          "Write down the one next step it offered. If there wasn't one, that's your first leak.",
+          "Send the reply a buyer would send, and note how long it takes to get an answer.",
+          "Check whether that person's details would have been recorded anywhere.",
+          "Mark the first link that broke, and fix only that one this week."
+        ]
+      },
+      "nextChapter": {
+        "title": "Chapter 8: The 90-Day Visibility Sprint",
+        "text": "You now have a chain that turns attention into revenue. In Chapter 8, we plan the next 90 days: what to publish, where, and how often, so the system never runs out of fuel."
+      },
+      "file": "chapters/ch-07-the-content-to-revenue-system.md"
     },
     {
       "number": 8,
